@@ -3,7 +3,7 @@ import bestOfferSection from '../../mockApi/bestOffersSection'
 
 const BestOffersSection = () => {
 
-    
+
     return (
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 px-5 lg:px-10 mb-1 md:mb-10'>
             <div className='w-full col-start-1 col-end-2 bg-[color:var(--primary-color)] rounded-[15px] lg:pt-4'>
