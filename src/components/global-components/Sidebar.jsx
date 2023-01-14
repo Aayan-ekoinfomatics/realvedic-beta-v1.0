@@ -7,7 +7,7 @@ const Sidebar = () => {
 
     const [sidebarToggle, setSidebarToggle] = useRecoilState(sidebarAtom);
 
-    console.log(sidebarToggle)
+    // console.log(sidebarToggle)
 
   return (
     <>

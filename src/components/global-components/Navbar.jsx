@@ -15,9 +15,9 @@ const Navbar = () => {
 
     const [sidebarToggle, setSidebarToggle] = useRecoilState(sidebarAtom);
 
-    useEffect(() => {
-      console.log(sidebarToggle)
-    }, [sidebarToggle])
+    // useEffect(() => {
+    //   console.log(sidebarToggle)
+    // }, [sidebarToggle])
     
 
 

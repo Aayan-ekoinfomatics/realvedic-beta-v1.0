@@ -113,17 +113,17 @@ const SingleFoodProductSection = () => {
                     <div className='w-full flex flex-col justify-evenly items-center'>
                         <div className='w-[86%] md:w-[80%] mx-auto mb-4'>
                             <div className='w-full mt-10'>
-                                <h1 className='poppins text-[14px] md:text-[15px]'>{foodDetails?.blog?.content}</h1>
+                                <h1 className='poppins text-[12px] md:text-[14px] lg:text-[15px] '>{foodDetails?.blog?.content}</h1>
                             </div>
-                            <div className='w-[85%] mx-auto my-3 mt-6'>
+                            <div className='w-[90%] lg:w-[85%] mx-auto my-3 mt-6'>
                                 {
                                     foodDetails?.blog?.points?.map((data, i) => (
-                                        <li key={i} className='poppins text-[13px] md:text-[14px] my-1 md:my-2'>{data}</li>
+                                        <li key={i} className='poppins text-[12px] md:text-[13px] lg:text-[14px] my-1 md:my-2'>{data}</li>
                                     ))
                                 }
                             </div>
                         </div>
-                        <div className='w-full flex justify-center items-center mt-4'>
+                        <div className='w-full flex justify-center items-center pb-4'>
                             <button className='bg-[#371106] px-8 py-2 text-white'>Read More</button>
                         </div>
                     </div>
