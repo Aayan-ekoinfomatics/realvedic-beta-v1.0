@@ -43,7 +43,7 @@ const SmallImageCarousal = () => {
         // dots: true,
         arrows: false,
         infinite: true,
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
@@ -53,48 +53,50 @@ const SmallImageCarousal = () => {
 
     return (
         <>
-        <div className='hidden md:block w-full bg-[color:var(--primary-color)] my-6 py-2'>
-            <div className='flex justify-between items-center gap-2'>
-                <div className='w-full max-w-[80px] flex justify-center items-center ml-4 font-[500]'>
-                    <h1 className='poppins font-[600] text-[17px]'>Our Best Products</h1>
+            <div className='hidden md:block w-full bg-[color:var(--primary-color)] mt-10 py-2'>
+                <div className='flex justify-between items-center gap-2'>
+                    <div className='w-full max-w-[80px] flex justify-center items-center ml-4 font-[500]'>
+                        <h1 className='poppins font-[600] text-[17px]'>Our Best Products</h1>
+                    </div>
+                    <Slider
+                        className="w-full overflow-hidden"
+                        {...settings}
+                    >
+                        {
+                            landingPageSmallCarousal?.images?.map((data, index) => (
+                                <div className="w-full max-w-[150px] flex justify-center items-center outline-none cursor-pointer" key={index}>
+                                    <img src={data?.image} className=" w-full object-contain" />
+                                </div>
+                            ))
+                        }
+                    </Slider >
                 </div>
-                <Slider
-                    className="w-full overflow-hidden"
-                    {...settings}
-                >
-                    {
-                        landingPageSmallCarousal?.images?.map((data, index) => (
-                            <div className="w-full max-w-[150px] flex justify-center items-center outline-none cursor-pointer" key={index}>
-                                <img src={data?.image} className=" w-full object-contain" />
-                            </div>
-                        ))
-                    }
-                </Slider >
-            </div>
-        </div >
+            </div >
 
-        
-        
-        {/* mobile */}
-        <div className='block md:hidden w-full bg-[color:var(--primary-color)] my-4 py-2'>
-            <div className='flex justify-between items-center gap-2'>
-                <div className='w-full max-w-[60px] flex justify-center items-center font-[500]'>
+
+
+            {/* mobile */}
+            <div className='block md:hidden w-full px-4'>
+                <div className='w-[50%] mx-auto bg-[color:var(--primary-color)] flex justify-center items-center font-[500] mb-2 py-1 rounded-[12px]'>
                     <h1 className='poppins font-[500] text-[12px] pl-1'>Our Best Products</h1>
                 </div>
-                <Slider
-                    className="w-full overflow-hidden"
-                    {...mobileSettings}
-                >
-                    {
-                        landingPageSmallCarousal?.images?.map((data, index) => (
-                            <div className="w-full flex justify-center items-center outline-none cursor-pointer" key={index}>
-                                <img src={data?.image} className="min-w-[80px] w-full object-contain" />
-                            </div>
-                        ))
-                    }
-                </Slider >
+                <div className=' w-full bg-[color:var(--primary-color)] mb-14 py-2 rounded-[15px] mt-2'>
+                    <div className='flex justify-between items-center gap-2'>
+                        <Slider
+                            className="w-full overflow-hidden"
+                            {...mobileSettings}
+                        >
+                            {
+                                landingPageSmallCarousal?.images?.map((data, index) => (
+                                    <div className="w-full flex justify-center items-center outline-none cursor-pointer" key={index}>
+                                        <img src={data?.image} className="min-w-[80px] w-full object-contain" />
+                                    </div>
+                                ))
+                            }
+                        </Slider >
+                    </div>
+                </div >
             </div>
-        </div >
         </>
     )
 }

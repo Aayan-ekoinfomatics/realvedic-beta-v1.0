@@ -20,7 +20,7 @@ const foodDetails = {
     // ],
     blog: {
         title: 'Our special recipe!',
-        content: 'Soaking the lentils, rice, making the batter, fermenting the batter calls for time, planning and some prep work. So for your ease of understanding, I have divided this step by step guide into 4 main parts:',
+        content: 'Soaking the lentils, rice, making the batter, fermenting the batter calls for time, planning and some prep work. The steps are :',
         points: ['Soaking rice and lentils', 'Making dosa batter in a blender or mixer-grinder', 'Fermenting dosa batter', 'Making dosa']
     }
 }

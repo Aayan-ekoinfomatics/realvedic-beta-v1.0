@@ -4,7 +4,7 @@ import top_seller from '../../mockApi/topSellerSection'
 const TopSellers = () => {
   return (
 
-    <>
+    <div className='mt-[20px] mb-[20px]'>
       <div className='w-full flex justify-center items-center'>
         <h1 className='px-8 py-2 bg-[color:var(--primary-color)] rounded-[20px] poppins text-[19px] font-[500] my-8'>Top Sellers</h1>
       </div>
@@ -12,7 +12,7 @@ const TopSellers = () => {
         {
           top_seller?.products?.map((data, i) => {
             return (
-              <div key={i} className='w-full '>
+              <div key={i} className='w-full pt-2 px-2 pb-1'>
                 <div>
                   <div className='w-full bg-[#FCEDD1] flex justify-center items-center'>
                     <img src={data?.image} className='w-full max-w-[250px]' alt="" />
@@ -21,7 +21,7 @@ const TopSellers = () => {
                     <div className='w-full max-w-[140px] poppins text-[15px] font-[400]'><p>{data?.title}</p></div>
                     <div className='w-full flex flex-col gap-1 items-end'>
                       <div className='poppins text-[14px]'>{data?.weight}gm</div>
-                      <div className='poppins text-[16px]'>Rs {data?.price}</div>
+                      <div className='poppins text-[16px]'>₹ {data?.price}</div>
                     </div>
                   </div>
                   <div className='w-full flex flex-col justify-end items-end'>
@@ -38,7 +38,7 @@ const TopSellers = () => {
           })
         }
       </div>
-    </>
+    </div>
   )
 }
 

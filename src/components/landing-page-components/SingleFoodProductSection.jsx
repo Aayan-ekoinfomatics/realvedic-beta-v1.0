@@ -76,7 +76,7 @@ const SingleFoodProductSection = () => {
                 </div>
             </div> */}
 
-            <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
+            <div className='flex flex-col lg:flex-row gap-4 md:gap-8'>
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px] pb-6 md:pb-14'>
                     <h1 className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{foodDetails?.video_data?.title}</h1>
                     <div className='w-full'>
@@ -96,7 +96,7 @@ const SingleFoodProductSection = () => {
                         </div>
                         <div>
                             <p className='poppins text-[12px] md:text-[15px]'>{foodDetails?.food?.weight}gm</p>
-                            <p className='poppins text-[13px] md:text-[17px]'>Rs {foodDetails?.food?.price}</p>
+                            <p className='poppins text-[13px] md:text-[17px]'>₹ {foodDetails?.food?.price}</p>
                         </div>
                     </div>
                     <div className=' w-full md:w-[85%] flex justify-end mb-2 mt-4'>
@@ -123,8 +123,8 @@ const SingleFoodProductSection = () => {
                                 }
                             </div>
                         </div>
-                        <div className='w-full flex justify-center items-center pb-4'>
-                            <button className='bg-[#371106] px-8 py-2 text-white'>Read More</button>
+                        <div className='w-full flex justify-center items-center md:mt-[30px] mb-2'>
+                            <button className='bg-[#371106] px-8 py-2 text-white text-[13px] md:text-[15px]'>Read More</button>
                         </div>
                     </div>
                 </div>

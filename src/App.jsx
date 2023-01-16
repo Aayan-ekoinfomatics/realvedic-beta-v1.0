@@ -10,6 +10,7 @@ import SingleFoodProductSection from './components/landing-page-components/Singl
 import SingleImageCarousal from './components/landing-page-components/SingleImageCarousal'
 import SmallImageCarousal from './components/landing-page-components/SmallImageCarousal'
 import TopSellers from './components/landing-page-components/TopSellers'
+import SingleProduct from './components/pages/SingleProduct'
 
 
 function App() {
@@ -19,14 +20,15 @@ function App() {
     <div className="relative">
       <Sidebar />
       <Navbar />
-      <CategoryTabs />
+      {/* <CategoryTabs />
       <LandingPageBanners />
       <TopSellers />
       <SmallImageCarousal />
       <SingleImageCarousal />
       <SingleFoodProductSection />
       <BestOffersSection />
-      <BlogsSection />
+      <BlogsSection /> */}
+      <SingleProduct />
     </div>
   )
 }

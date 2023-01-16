@@ -36,7 +36,7 @@ const SingleImageCarousal = () => {
     };
 
     return (
-        <div className='w-[95%] mx-auto my-4 md:my-10'>
+        <div className='hidden md:block w-[80%] mx-auto my-4 md:my-[50px]'>
             <Slider
                 className="w-full px-4 md:px-10 overflow-hidden rounded-[15px] mx-1 md:rounded-[25px]"
                 {...settings}
