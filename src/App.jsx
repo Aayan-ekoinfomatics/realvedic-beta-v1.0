@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
+import Footer from './components/global-components/Footer'
 import Navbar from './components/global-components/Navbar'
 import Sidebar from './components/global-components/Sidebar'
 import BestOffersSection from './components/landing-page-components/BestOffersSection'
@@ -29,6 +30,7 @@ function App() {
       <BestOffersSection />
       <BlogsSection /> */}
       <SingleProduct />
+      <Footer/>
     </div>
   )
 }

@@ -13,12 +13,12 @@ const product_data = {
         original_price: '125',
         offer_price: '120',
         single_image: dosa1,
-        images: [dosa2, dosa3, dosa4, dosa5],
+        images: [dosa1, dosa2, dosa3, dosa4, dosa5],
         pack_sizes: [
-            {weight: '100', price: '125'},
-            {weight: '250', price: '285'},
-            {weight: '500', price: '410'},
-            {weight: '1', price: '600'},
+            {weight: '100', price: '125', offer_price: '120'},
+            {weight: '250', price: '335', offer_price: '300'},
+            {weight: '500', price: '410', offer_price: '380'},
+            {weight: '1', price: '520', offer_price: '480'},
         ]
     },
     benifits: {
@@ -36,6 +36,15 @@ const product_data = {
     how_we_make_it: {
         title: 'How we make it?',
         description: 'We prefer manufacturing our products in small batches to maintain the standard and quality. Each ingredient is handpicked carefully and then roasted to perfection. It is then blended and stored in a clean and hygienic place before it is delivered to your doorstep.',
+    },
+    nutrition: {
+        title: 'Nutritional Info per 100g (Approx)*',
+        values: [
+            {title: 'Total Fat', value: '3.2 g'},
+            {title: 'Protien', value: '10 g'},
+            {title: 'Carbohydrate   ', value: '70.2 g'},
+            {title: 'Energy', value: '348.6 kcal'},
+        ],
     },
 };
 
