@@ -11,25 +11,24 @@ import SingleFoodProductSection from './components/landing-page-components/Singl
 import SingleImageCarousal from './components/landing-page-components/SingleImageCarousal'
 import SmallImageCarousal from './components/landing-page-components/SmallImageCarousal'
 import TopSellers from './components/landing-page-components/TopSellers'
+import LandingPage from './components/pages/LandingPage'
 import SingleProduct from './components/pages/SingleProduct'
 
 
 function App() {
   const [count, setCount] = useState(0)
 
+  // inside useEffect make the landing page call and set it to a recoil state
+
+
   return (
     <div className="relative">
       <Sidebar />
       <Navbar />
-      {/* <CategoryTabs />
-      <LandingPageBanners />
-      <TopSellers />
-      <SmallImageCarousal />
-      <SingleImageCarousal />
-      <SingleFoodProductSection />
-      <BestOffersSection />
-      <BlogsSection /> */}
-      <SingleProduct />
+      <div className=' md:mt-16 lg:mt-20 xl:mt-24'>
+      <LandingPage />
+      {/* <SingleProduct /> */}
+      </div>
       <Footer/>
     </div>
   )

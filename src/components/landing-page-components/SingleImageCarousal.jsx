@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import carousalData from '../../mockApi/landingPageSingleImageCarousal';
 import leftArrow from '../../assets/icons/carousal-left-round.svg'
 import rightArrow from '../../assets/icons/carousal-right-round.svg'
+import { useRecoilState } from 'recoil';
+import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
+import { VITE_BASE_LINK } from '../../../baseLink';
 
 const PreviousBtn = (props) => {
     const { className, onClick } = props;
@@ -25,6 +28,12 @@ const NextBtn = (props) => {
 
 const SingleImageCarousal = () => {
 
+    const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
+
+    // useEffect(() => {
+    //   console.log(landingApiData)
+    // }, [landingApiData])
+
     let settings = {
         // arrows: true,
         infinite: true,
@@ -44,9 +53,9 @@ const SingleImageCarousal = () => {
                 nextArrow={<NextBtn />}
             >
                 {
-                    carousalData?.images?.map((data, index) => (
+                    landingApiData?.large_carousal_images?.map((data, index) => (
                         <div className="w-full flex justify-center items-center outline-none border-2 border-[#696969] rounded-[15px] md:rounded-[25px] cursor-pointer z-[100]" key={index}>
-                            <img src={data?.image} className=" w-full object-contain z-[100] rounded-[15px] md:rounded-[25px]" />
+                            <img src={VITE_BASE_LINK + data?.image} className=" w-full object-contain z-[100] rounded-[15px] md:rounded-[25px]" />
                         </div>
                     ))
                 }

@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRecoilState } from 'recoil';
+import { VITE_BASE_LINK } from '../../../baseLink';
 import top_seller from '../../mockApi/topSellerSection'
+import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
 
 const TopSellers = () => {
+
+  const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
+
+  // useEffect(() => {
+  //   console.log(landingApiData)
+  // }, [landingApiData])
+
+
   return (
 
     <div className='mt-[20px] mb-[20px]'>
@@ -10,12 +21,12 @@ const TopSellers = () => {
       </div>
       <div className='w-full grid grid-cols-1 md:grid-cols-2 lg:flex gap-4 md:gap-8 px-10 mb-10'>
         {
-          top_seller?.products?.map((data, i) => {
+          landingApiData?.top_seller_products?.map((data, i) => {
             return (
               <div key={i} className='w-full pt-2 px-2 pb-1'>
                 <div>
                   <div className='w-full bg-[#FCEDD1] flex justify-center items-center'>
-                    <img src={data?.image} className='w-full max-w-[250px]' alt="" />
+                    <img src={VITE_BASE_LINK + data?.image} className='w-full max-w-[250px]' alt="" />
                   </div>
                   <div className='w-full flex justify-between items-center'>
                     <div className='w-full max-w-[140px] poppins text-[15px] font-[400]'><p>{data?.title}</p></div>

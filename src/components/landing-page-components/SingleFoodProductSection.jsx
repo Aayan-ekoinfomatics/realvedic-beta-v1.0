@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import yt from '../../assets/images/youtube.png'
 import product from '../../assets/images/single_product.png'
 import foodDetails from '../../mockApi/singleFoodProductLandingPage'
+import { useRecoilState } from 'recoil'
+import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom'
+import { VITE_BASE_LINK } from '../../../baseLink'
+import YouTube from 'react-youtube'
 
 const SingleFoodProductSection = () => {
+
+    const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
+
+    useEffect(() => {
+        console.log(landingApiData?.single_product_details?.food)
+    }, [landingApiData])
+
+    const opts = {
+        height: "200",
+        width: "100%",
+      };
+
     return (
         // <div className='w-full grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-4 px-5 md:px-10 mb-6 border border-red-500'>
         <div className='w-full px-4 md:px-10 mb-6'>
@@ -78,21 +94,35 @@ const SingleFoodProductSection = () => {
 
             <div className='flex flex-col lg:flex-row gap-4 md:gap-8'>
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px] pb-6 md:pb-14'>
-                    <h1 className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{foodDetails?.video_data?.title}</h1>
-                    <div className='w-full'>
-                        <img src={foodDetails?.video_data?.video} className='max-h-[350px] w-full' alt="" />
+                    <h1 className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.video_data?.title}</h1>
+                    <div className='w-full flex justify-center items-center h-full'>
+                        {/* <img src={VITE_BASE_LINK + landingApiData?.single_product_details?.video_data?.video} className='max-h-[350px] w-full' alt="" /> */}
+                        <YouTube
+                            // videoId={data?.video_id}
+                            videoId={
+                                landingApiData?.single_product_details?.video_data?.video
+                                    .split("/")
+                                    .reverse()[0]
+                                    .includes("watch?v=")
+                                    ? landingApiData?.single_product_details?.video_data?.video.split("watch?v=").reverse()[0]
+                                    : landingApiData?.single_product_details?.video_data?.video.split("/").reverse()[0]
+                            }
+                            opts={opts}
+                            className="w-full"
+                        />
+                        {/* video */}
                     </div>
                 </div>
 
 
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px]'>
-                    <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{foodDetails?.food?.title}</p>
+                    <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.food?.title}</p>
                     <div className='w-[80%] md:w-[65%] mx-auto flex justify-center items-center bg-[#FCEDD1] mt-6'>
-                        <img src={foodDetails?.food?.image} className='w-[200px]' alt="" />
+                        <img src={VITE_BASE_LINK + landingApiData?.single_product_details?.food?.image} className='w-[200px]' alt="" />
                     </div>
                     <div className='w-[80%] md:w-[65%] mx-auto flex justify-between my-1'>
                         <div className='max-w-[130px]'>
-                            <p className='poppins text-[13px] md:text-[17px]'>{foodDetails?.food?.title}</p>
+                            <p className='poppins text-[13px] md:text-[17px]'>{landingApiData?.single_product_details?.food?.title}</p>
                         </div>
                         <div>
                             <p className='poppins text-[12px] md:text-[15px]'>{foodDetails?.food?.weight}gm</p>
@@ -109,15 +139,15 @@ const SingleFoodProductSection = () => {
 
 
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px]'>
-                    <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{foodDetails?.blog?.title}</p>
+                    <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.blog?.title}</p>
                     <div className='w-full flex flex-col justify-evenly items-center'>
                         <div className='w-[86%] md:w-[80%] mx-auto mb-4'>
                             <div className='w-full mt-10'>
-                                <h1 className='poppins text-[12px] md:text-[14px] lg:text-[15px] '>{foodDetails?.blog?.content}</h1>
+                                <h1 className='poppins text-[12px] md:text-[14px] lg:text-[15px] '>{landingApiData?.single_product_details?.blog?.Content}</h1>
                             </div>
                             <div className='w-[90%] lg:w-[85%] mx-auto my-3 mt-6'>
                                 {
-                                    foodDetails?.blog?.points?.map((data, i) => (
+                                    landingApiData?.single_product_details?.blog?.points?.map((data, i) => (
                                         <li key={i} className='poppins text-[12px] md:text-[13px] lg:text-[14px] my-1 md:my-2'>{data}</li>
                                     ))
                                 }

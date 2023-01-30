@@ -34,20 +34,19 @@ const SingleProduct = () => {
         pauseOnHover: true,
     };
 
-    useEffect(() => {
-        //   setPackSizeSelect({
-        //     weight: product_data?.product_details?.pack_sizes[0],
-        //     price: product_data?.product_details?.pack_sizes[0],
-        //   })
-        // console.log(packSizeSelect)
-    }, [packSizeSelect])
+    // useEffect(() => {
+    //       setPackSizeSelect({
+    //         weight: product_data?.product_details?.pack_sizes[0],
+    //         price: product_data?.product_details?.pack_sizes[0],
+    //       })
+    // }, [packSizeSelect])
 
 
     return (
         <div className='w-full mb-4'>
 
             {/* header */}
-            <div className='w-full flex justify-between items-center px-4 xl:px-16 mt-4 md:mt-[70px] xl:mt-[80px] mb-10'>
+            <div className=' w-full flex justify-between items-center px-4 xl:px-16 mt-10 md:mt-[150px] xl:mt-[190px] mb-10'>
                 <div className='w-full max-w-[20px]'>
                     <img src={back} className='w-[10px] md:w-[13px] xl:w-[15px] cursor-pointer' alt="" />
                 </div>
@@ -76,7 +75,7 @@ const SingleProduct = () => {
                 <div className='w-[60%] flex justify-end'>
 
                     {/* vertical images */}
-                    <div className='w-[20%] flex flex-col justify-center gap-3 xl:justify-evenly items-end'>
+                    <div className='w-[20%] flex flex-col justify-center xl:justify-evenly items-end'>
                         {
                             product_data?.product_details?.images?.map((data, i) => {
                                 return (
@@ -156,7 +155,7 @@ const SingleProduct = () => {
             </div>
 
             {/* product details mobile */}
-            <div className='block md:hidden w-full px-4'>
+            <div className='block md:hidden w-full px-4 '>
 
                 {/* slider */}
                 <div className='w-full'>

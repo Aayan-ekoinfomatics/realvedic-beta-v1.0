@@ -23,7 +23,7 @@ const Navbar = () => {
 
     return (
         <>
-        <nav className='hidden md:block w-full bg-[color:var(--primary-color)] z-[400]'>
+        <nav className='hidden md:block w-full bg-[color:var(--primary-color)] z-[400] fixed top-0'>
             <div className='w-full flex justify-between py-2'>
 
                 {/* logo */}

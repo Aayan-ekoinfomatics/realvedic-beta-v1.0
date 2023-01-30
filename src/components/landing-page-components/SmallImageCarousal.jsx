@@ -6,6 +6,9 @@ import landingPageSmallCarousal from '../../mockApi/landingPageSmallCarousal'
 // import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
+import { useRecoilState } from 'recoil';
+import { VITE_BASE_LINK } from '../../../baseLink';
 
 const PreviousBtn = (props) => {
     const { className, onClick } = props;
@@ -27,6 +30,8 @@ const NextBtn = (props) => {
 };
 
 const SmallImageCarousal = () => {
+
+    const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
     let settings = {
         // dots: true,
@@ -63,9 +68,9 @@ const SmallImageCarousal = () => {
                         {...settings}
                     >
                         {
-                            landingPageSmallCarousal?.images?.map((data, index) => (
+                            landingApiData?.small_carousal_images?.map((data, index) => (
                                 <div className="w-full max-w-[150px] flex justify-center items-center outline-none cursor-pointer" key={index}>
-                                    <img src={data?.image} className=" w-full object-contain" />
+                                    <img src={VITE_BASE_LINK + data?.image} className=" w-full object-contain" />
                                 </div>
                             ))
                         }
