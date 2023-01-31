@@ -23,9 +23,9 @@ const CategoryTabs = () => {
         pauseOnHover: true,
     };
 
-    useEffect(() => {
-      console.log(landingApiData)
-    }, [])
+    // useEffect(() => {
+    //   console.log(landingApiData)
+    // }, [])
     
     
 

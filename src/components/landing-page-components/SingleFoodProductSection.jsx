@@ -11,12 +11,12 @@ const SingleFoodProductSection = () => {
 
     const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
-    useEffect(() => {
-        console.log(landingApiData?.single_product_details?.food)
-    }, [landingApiData])
+    // useEffect(() => {
+    //     console.log(landingApiData?.single_product_details?.food)
+    // }, [landingApiData])
 
     const opts = {
-        height: "200",
+        height: 300,
         width: "100%",
       };
 
@@ -93,6 +93,8 @@ const SingleFoodProductSection = () => {
             </div> */}
 
             <div className='flex flex-col lg:flex-row gap-4 md:gap-8'>
+
+
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px] pb-6 md:pb-14'>
                     <h1 className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.video_data?.title}</h1>
                     <div className='w-full flex justify-center items-center h-full'>
@@ -131,7 +133,7 @@ const SingleFoodProductSection = () => {
                     </div>
                     <div className=' w-full md:w-[85%] flex justify-end mb-2 mt-4'>
                         <div className='w-full flex flex-col items-end pr-8 md:pr-4'>
-                            <button className='bg-[#FCF55C] text-[13px] md:text-[15px] px-2 md:px-4 py-1 '>ADD TO CART</button>
+                            <button className='bg-[#FCF55C] active:scale-[0.96] active:bg-[#dad24a] text-[13px] md:text-[15px] px-2 md:px-4 py-1 '>ADD TO CART</button>
                             <p className='text-[12px] md:text-[13px] underline'>View more</p>
                         </div>
                     </div>
@@ -140,12 +142,12 @@ const SingleFoodProductSection = () => {
 
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px]'>
                     <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.blog?.title}</p>
-                    <div className='w-full flex flex-col justify-evenly items-center'>
-                        <div className='w-[86%] md:w-[80%] mx-auto mb-4'>
-                            <div className='w-full mt-10'>
+                    <div className='w-full flex flex-col justify-center items-center'>
+                        <div className='w-[86%] md:w-[80%] mx-auto mb-2'>
+                            <div className='w-full mt-5'>
                                 <h1 className='poppins text-[12px] md:text-[14px] lg:text-[15px] '>{landingApiData?.single_product_details?.blog?.Content}</h1>
                             </div>
-                            <div className='w-[90%] lg:w-[85%] mx-auto my-3 mt-6'>
+                            <div className='w-[90%] lg:w-[85%] mx-auto mt-6 mb-4 lg:mb-8'>
                                 {
                                     landingApiData?.single_product_details?.blog?.points?.map((data, i) => (
                                         <li key={i} className='poppins text-[12px] md:text-[13px] lg:text-[14px] my-1 md:my-2'>{data}</li>
@@ -153,52 +155,14 @@ const SingleFoodProductSection = () => {
                                 }
                             </div>
                         </div>
-                        <div className='w-full flex justify-center items-center md:mt-[30px] mb-2'>
-                            <button className='bg-[#371106] px-8 py-2 text-white text-[13px] md:text-[15px]'>Read More</button>
+                        <div className='w-full flex justify-center items-center mb-3'>
+                            <button className='bg-[#371106] px-8 py-2 text-white text-[13px] md:text-[15px] active:scale-[0.96] active:bg-[#371106d7]'>Read More</button>
                         </div>
                     </div>
                 </div>
+
+
             </div>
-
-            {/* <div className='flex flex-col md:hidden gap-3 px-5'>
-                <div className='flex-1 bg-[color:var(--primary-color)]'>
-                    <p>{foodDetails?.video_data?.title}</p>
-                    <img src={foodDetails?.video_data?.video} alt="" />
-                </div>
-
-                <div className='flex-1 flex gap-2'>
-                    <div className='flex-1 bg-[color:var(--primary-color)]'>
-                        <p>{foodDetails?.food?.title}</p>
-                        <div className='w-full'>
-                            <img src={foodDetails?.food?.image} alt="" />
-                        </div>
-                        <div className='w-full'>
-                            <p>aaaaaaaaaaaaaa</p>                            
-                            <p>aaaaaaaaaaaaaa</p>                            
-                            <p>aaaaaaaaaaaaaa</p>                            
-                            <p>aaaaaaaaaaaaaa</p>                            
-                        </div>
-                    </div>
-                    <div className='flex-1 bg-[color:var(--primary-color)]'>
-                        <p>{foodDetails?.blog?.title}</p>
-                        <div className='w-full'>
-                            <p className='poppins text-[12px]'>{foodDetails?.blog?.content}</p>
-                            <div className='w-full'>
-                                {
-                                    foodDetails?.blog?.points?.map((data, i) => (
-                                        <li className='poppins text-[10px]'>{data}</li>
-                                    ))
-                                }
-                            </div>
-                        </div>
-                        <div className='w-full flex justify-center items-center'>
-                            <button className='px-5 py-2 text-white'>Read More</button>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
-
-
         </div>
     )
 }

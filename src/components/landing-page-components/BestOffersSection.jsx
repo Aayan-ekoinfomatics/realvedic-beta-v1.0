@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRecoilState } from 'recoil';
 import bestOfferSection from '../../mockApi/bestOffersSection'
+import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
 
 const BestOffersSection = () => {
 
+    const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
+
+    // useEffect(() => {
+    //     console.log(landingApiData?.best_offers?.soup)
+    // }, [landingApiData])
+
 
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 px-5 lg:px-10 mb-1 md:mb-10'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 px-5 lg:px-10 mb-1'>
             <div className='w-full col-start-1 col-end-2 bg-[color:var(--primary-color)] rounded-[15px] lg:pt-4'>
                 <h1 className='poppins text-center py-3 text-[20px] lg:text-[25px] font-[500]'>{bestOfferSection?.soup?.title}</h1>
                 <div className='w-full lg:my-5 lg:mt-10 flex justify-center items-center'>

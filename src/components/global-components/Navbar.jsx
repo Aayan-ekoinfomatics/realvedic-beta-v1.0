@@ -10,6 +10,7 @@ import cart from '../../assets/icons/cart.svg'
 import sidebar_icon from '../../assets/icons/sidebar-icon.svg'
 import sidebarAtom from '../../recoil/atoms/sidebarAtom'
 import { useRecoilState } from 'recoil'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
 
@@ -27,9 +28,9 @@ const Navbar = () => {
             <div className='w-full flex justify-between py-2'>
 
                 {/* logo */}
-                <div className='w-full max-w-[260px] flex justify-center items-center'>
+                <NavLink to='/' className='w-full max-w-[260px] flex justify-center items-center'>
                     <img src={logo} className="cursor-pointer" alt="" />
-                </div>
+                </NavLink>
 
                 {/* nav items */}
                 <div className='w-full max-w-[1000px] flex justify-evenly items-center'>
@@ -39,9 +40,9 @@ const Navbar = () => {
                     <div className='w-fit cursor-pointer'>
                         <img src={mom_baby} className='w-full max-w-[83px]' alt="" />
                     </div>
-                    <div className='w-fit cursor-pointer'>
+                    <NavLink to='/all-products' className='w-fit cursor-pointer'>
                         <img src={products} className='w-full max-w-[55px]' alt="" />
-                    </div>
+                    </NavLink>
                     <div className='w-fit cursor-pointer'>
                         <img src={doctors} className='w-full max-w-[47px]' alt="" />
                     </div>

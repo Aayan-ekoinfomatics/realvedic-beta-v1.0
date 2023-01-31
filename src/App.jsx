@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import Footer from './components/global-components/Footer'
 import Navbar from './components/global-components/Navbar'
@@ -11,6 +12,7 @@ import SingleFoodProductSection from './components/landing-page-components/Singl
 import SingleImageCarousal from './components/landing-page-components/SingleImageCarousal'
 import SmallImageCarousal from './components/landing-page-components/SmallImageCarousal'
 import TopSellers from './components/landing-page-components/TopSellers'
+import AllProductsView from './components/pages/AllProductsView'
 import LandingPage from './components/pages/LandingPage'
 import SingleProduct from './components/pages/SingleProduct'
 
@@ -26,8 +28,11 @@ function App() {
       <Sidebar />
       <Navbar />
       <div className=' md:mt-16 lg:mt-20 xl:mt-24'>
-      <LandingPage />
-      {/* <SingleProduct /> */}
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/single-product/:product_id' element={<SingleProduct />} />
+          <Route path='/all-products' element={<AllProductsView />} />
+        </Routes>
       </div>
       <Footer/>
     </div>

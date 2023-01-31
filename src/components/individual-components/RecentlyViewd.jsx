@@ -28,7 +28,7 @@ const RecentlyViewd = () => {
                         </div>
                     </div>
                     <div className='w-full flex justify-end items-center mt-1'>
-                        <butto className='bg-[#FCF55C] active:bg-[#f5ec4b] px-8 py-2 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]'>ADD TO CART</butto>
+                        <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-8 py-2 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]'>ADD TO CART</button>
                     </div>
                 </div>
             ))
