@@ -18,6 +18,11 @@ const AllProductsView = () => {
       })
     }, [])
 
+    useEffect(() => {
+    //   console.log(allproductsApiData)
+    }, [allproductsApiData])
+    
+
 
     return (
         <div className='w-full mb-5'>
@@ -51,13 +56,16 @@ const AllProductsView = () => {
                 {/* products */}
                 <div className='w-full grid grid-cols-4 gap-8 mt-10'>
                     {
+                    allproductsApiData?.length > 0 ? 
+                    <>
+                    {
                         allproductsApiData?.map((data, i) => (
-                            <Link key={i} to={`/single-product/` + data?.id} className='w-full flex flex-col items-center shadow-md bg-[#fcfcfc]'>
+                            <Link key={i} to={`/single-product/` + data?.id} className='w-full flex flex-col items-center shadow-md bg-[#fcfcfc] pt-2   '>
                                 <div className='w-full flex justify-center items-center'>
                                     <img src={VITE_BASE_LINK + data?.image} className='w-[400px]' alt="" />
                                 </div>
                                 <div className='w-full flex justify-between items-start px-2 pb-2'>
-                                    <div className='text-[16px] poppins font-[500]'>
+                                    <div className='text-[16px] w-[60%] poppins font-[500]'>
                                         {data?.title}
                                     </div>
                                     <div className='poppins flex flex-col justify-end items-center gap-1'>
@@ -68,6 +76,12 @@ const AllProductsView = () => {
                             </Link>
                         ))
                     }
+                    </>
+                :
+                <div className=' border'>
+                    <h1 className='w-fit'>no products</h1>
+                </div>
+                }
                 </div>
             </div>
         </div>
