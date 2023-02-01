@@ -9,7 +9,7 @@ import { useRecoilState } from 'recoil'
 
 const AllProductsView = () => {
 
-    const [allproductsApiData, setAllproductsApiData] = useState()
+    const [allproductsApiData, setAllproductsApiData] = useState();
 
     useEffect(() => {
       axios.get(VITE_BASE_LINK + 'all_product_view').then((response) => {
