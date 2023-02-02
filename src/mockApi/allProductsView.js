@@ -1,6 +1,12 @@
 import img from '../assets/images/immu-milk.png'
 
 const allProducts = {
+    category: 'All Products',
+    // category: 'Spices',
+    // category: 'Blends',
+    // category: 'Mixes',
+    // category: 'Beverages',
+    // category: 'Soup & Noodles',
     products: [
         {id: '223' , title: 'Immu Milk', image: img, price: '120', weight: '100', },
         {id: '223' , title: 'Immu Milk', image: img, price: '120', weight: '100', },
