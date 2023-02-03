@@ -15,9 +15,14 @@ import SmallImageCarousal from './components/landing-page-components/SmallImageC
 import TopSellers from './components/landing-page-components/TopSellers'
 import AboutUsPage from './components/pages/AboutUsPage'
 import AllProductsView from './components/pages/AllProductsView'
+import Blogs from './components/pages/Blogs'
 import CancellationPolicyPage from './components/pages/CancellationPolicyPage'
 import Cart from './components/pages/Cart'
+import DoctorsPage from './components/pages/DoctorsPage'
 import LandingPage from './components/pages/LandingPage'
+import LoginPage from './components/pages/LoginPage'
+import MyAccount from './components/pages/MyAccount'
+import SignUpPage from './components/pages/SignUpPage'
 import SingleProduct from './components/pages/SingleProduct'
 import TermsAndConditionsPage from './components/pages/TermsAndConditionsPage'
 
@@ -35,10 +40,15 @@ function App() {
       <div className=' md:mt-16 lg:mt-20 xl:mt-24'>
         <Routes>
           <Route path='/' element={<LandingPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignUpPage />} />
           <Route path='/single-product/:product_id' element={<SingleProduct />} />
           <Route path='/all-products/:category_id' element={<AllProductsView />} />
           <Route path='/about-us' element={<AboutUsPage />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/blogs' element={<Blogs />} />
+          <Route path='/doctors' element={<DoctorsPage />} />
+          <Route path='/account' element={<MyAccount />} />
           <Route path='/cancellation-policy' element={<CancellationPolicyPage />} />
           <Route path='/terms-conditions' element={<TermsAndConditionsPage />} />
           {/* <Route path='/test' element={<ProductCard id='2' title='Test Product' image='' weight='250' price='100' />} /> */}

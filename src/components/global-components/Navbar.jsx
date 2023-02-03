@@ -37,9 +37,9 @@ const Navbar = () => {
 
                     {/* nav items */}
                     <div className='w-full max-w-[1000px] flex justify-evenly items-center'>
-                        <div className='w-fit cursor-pointer'>
+                        <Link to='/blogs' className='w-fit cursor-pointer'>
                             <img src={blog} className='w-full max-w-[40px]' alt=""/>
-                        </div>
+                        </Link>
                         {/* <div className='w-fit cursor-pointer'>
                             <img src={mom_baby} className='w-full max-w-[83px]' alt="" />
                         </div> */}
@@ -55,16 +55,16 @@ const Navbar = () => {
                                 }
                             </div>
                         </div>
-                        <div className='w-fit cursor-pointer'>
+                        <Link to='/doctors' className='w-fit cursor-pointer'>
                             <img src={doctors} className='w-full max-w-[47px]' alt="" />
-                        </div>
+                        </Link>
                     </div>
 
                     {/* icon */}
                     <div className='w-full max-w-[200px] mr-[40px] flex justify-around items-center'>
-                        <div className='w-fit cursor-pointer'>
+                        <Link to='/account' className='w-fit cursor-pointer'>
                             <img src={profile} className="w-full max-w-[25px]" alt="" />
-                        </div>
+                        </Link>
                         <div className='w-fit cursor-pointer'>
                             <img src={search} className="w-full max-w-[25px]" alt="" />
                         </div>

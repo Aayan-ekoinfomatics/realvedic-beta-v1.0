@@ -88,7 +88,6 @@ const AllProductsView = () => {
                                         .map((data, i) => (
 
                                             <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} />
-
                                         ))
                                 }
                             </>

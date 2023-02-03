@@ -28,7 +28,7 @@ const SingleProduct = () => {
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0); 
 
-    const [packSizeSelect, setPackSizeSelect] = useState(productData?.product_details?.pack_sizes[selectedWeightIndex])
+    const [packSizeSelect, setPackSizeSelect] = useState()
 
     let sliderSettings = {
         dots: true,
@@ -52,10 +52,11 @@ const SingleProduct = () => {
     useEffect(() => {
         // let formdata = new FormData()
         // formdata.append('product_id', params?.product_id)
-        axios.get( VITE_BASE_LINK + 'single_product_view').then((response) => {
+        axios.get( VITE_BASE_LINK + 'single_product_view?product_id=' + params?.product_id).then((response) => {
         //   console.log(response?.data)
+          console.log(response?.data?.product_details?.pack_sizes)
         setProductData(response?.data)
-        setPackSizeSelect(response?.data?.product_details?.pack_sizes[selectedWeightIndex])
+        setPackSizeSelect(response?.data?.product_details?.pack_size[selectedWeightIndex])
         })
       }, [])
 
@@ -116,7 +117,7 @@ const SingleProduct = () => {
                 </div>
 
                 {/* product description */}
-                <div className='w-[40%] flex justify-center items-center xl:pr-20'>
+                <div className='w-[30%] flex justify-center items-center xl:pr-20'>
                     <div className='w-full max-w-[620px]'>
                         <h1 className='poppins text-[30px] py-2 font-[600]'>{productData?.product_details?.title}</h1>
                         <div className='w-full py-2 mt-2'>
@@ -154,7 +155,7 @@ const SingleProduct = () => {
                             {/* dropdown */}
                             <div className={`w-full mx-auto absolute top-0 mt-[98px] shadow-md bg-[color:var(--primary-color)] opacity-70 transition-all duration-300 z-[500] ${dropdownOpen ? 'h-[200px] overflow-y-scroll ease-in py-2' : 'h-0 ease-out overflow-hidden p-0'}`}>
                                 {
-                                    productData?.product_details?.pack_sizes?.map((data, i) => (
+                                    productData?.product_details?.pack_size?.map((data, i) => (
                                         <div key={i} className='w-full flex justify-between py-3 border-b cursor-pointer active:scale-[0.99] active:bg-[#C57963] px-4' onClick={() => {
                                             setPackSizeSelect(data)
                                             setDropdownOpen(false)

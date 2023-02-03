@@ -11,6 +11,8 @@ import down from '../../assets/icons/down_arrow.svg'
 
 
 import cartData from "../../mockApi/cartDataApi";
+import axios from "axios";
+import { VITE_BASE_LINK } from "../../../baseLink";
 
 
 const CartPage = () => {
@@ -25,6 +27,13 @@ const CartPage = () => {
     //     setCartArray(cartItems);
     //   }, []);
 
+    useEffect(() => {
+        let formdata = new FormData();
+        formdata.append('token', 'pbkdf2_sha256$390000$ATPA5wbz5hTMacZSTCv3O1$JjjjbunvnurIO+bG6IZu6urtVUX0HHsevG1UHBOQDK0=')
+        axios.post(VITE_BASE_LINK + 'user_cart_view', formdata).then((response) => {
+            console.log(response?.data)
+        })
+    }, [])
 
 
     return (

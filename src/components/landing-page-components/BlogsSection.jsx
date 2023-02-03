@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { VITE_BASE_LINK } from '../../../baseLink';
 import blog_data from '../../mockApi/blogsSection'
@@ -16,9 +17,9 @@ const BlogsSection = () => {
 
     return (
         <>
-            <div className='w-full flex justify-center items-center mb-4'>
+            <Link to='/blogs' className='w-full flex justify-center items-center mb-4'>
                 <h1 className='px-8 py-2 bg-[color:var(--primary-color)] rounded-[20px] poppins text-[19px] font-[500] my-8'>Top Blogs</h1>
-            </div>
+            </Link>
             <div className='w-[95%] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:gird-cols-4 place-items-center gap-4 lg:flex justify-evenly xl:justify-between items-center mb-10'>
                 {
                     landingApiData?.blog?.map((data, i) => (

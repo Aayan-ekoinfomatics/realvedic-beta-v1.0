@@ -8,6 +8,7 @@
 :root {
   /* --primary-color: #F8441D; */
   --primary-color: #FDCAB5;
+  --button-primary: #FCF55C;
   /* --primary-color: #FDCAB5; */
   
 }
@@ -36,4 +37,13 @@
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #929292;
+}
+
+.truncate {
+  /* width: 400px; */
+  padding: 10px;
+  /* background: #f2f2f2; */
+  overflow: hidden;
+  white-space: nowrap;        
+  text-overflow: ellipsis;
 }
