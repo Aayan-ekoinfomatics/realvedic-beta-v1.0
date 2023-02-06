@@ -18,21 +18,22 @@ import { Link } from "react-router-dom";
 
 const CartPage = () => {
     // GlobalVariables
-    //   const [cartData, setCartData] = useRecoilState(cartPageAtom);
+    //   const [cartData, setCartData] = useRecoilState(cartPageAtom)
 
     // local variables
-    const [cartArray, setCartArray] = useState([]);
+    const [cartDataApi, setCartDataApi] = useState([]);
     const [priceBreakdown, setPriceBreakdown] = useState(false);
 
-    //   useEffect(() => {
-    //     setCartArray(cartItems);
-    //   }, []);
+    // useEffect(() => {
+    //     console.log(cartDataApi)
+    // }, [])
 
     useEffect(() => {
         let formdata = new FormData();
-        formdata.append('token', 'pbkdf2_sha256$390000$ATPA5wbz5hTMacZSTCv3O1$JjjjbunvnurIO+bG6IZu6urtVUX0HHsevG1UHBOQDK0=')
-        axios.post(VITE_BASE_LINK + 'user_cart_view', formdata).then((response) => {
+        formdata.append('token', localStorage.getItem('token'))
+        axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
             console.log(response?.data)
+            setCartDataApi(response?.data)
         })
     }, [])
 
@@ -105,7 +106,7 @@ const CartPage = () => {
 
                             {/* table content */}
                             <div className=" max-h-[40vh]  overflow-y-scroll mt-2">
-                                {cartData?.cartItems?.map((data, index) => {
+                                {cartDataApi?.cartItems?.map((data, index) => {
                                     return (
                                         <div
                                             key={index}

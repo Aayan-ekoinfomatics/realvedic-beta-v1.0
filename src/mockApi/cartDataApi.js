@@ -117,6 +117,6 @@ const cartData = {
         total: '1250',
         final_price: '1300',
     }
-};
+};  
 
 export default cartData

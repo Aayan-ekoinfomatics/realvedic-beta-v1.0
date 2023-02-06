@@ -63,7 +63,7 @@ const ProductCard = (props) => {
                     <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-3 shadow-md py-1 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={() => {
                         let formdata = new FormData();
                         formdata.append('product_id', props?.id);
-                        formdata.append('token', 'pbkdf2_sha256$390000$ATPA5wbz5hTMacZSTCv3O1$JjjjbunvnurIO+bG6IZu6urtVUX0HHsevG1UHBOQDK0=');
+                        formdata.append('token', localStorage.getItem('token'));
                         formdata.append('size', props?.weight[activeIndex]);
                         formdata.append('price', props?.price[activeIndex]),
                         axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
