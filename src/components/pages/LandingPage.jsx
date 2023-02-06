@@ -18,7 +18,7 @@ const LandingPage = () => {
 
     useEffect(() => {
         axios.get( VITE_BASE_LINK + 'write_data').then((response) => {
-        //   console.log(response?.data)
+          console.log(response?.data)
           setLandingApiData(response?.data)
         })
       }, [])

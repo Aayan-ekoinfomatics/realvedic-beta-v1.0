@@ -1,1 +1,2 @@
-export const VITE_BASE_LINK = 'http://192.168.1.3:8000/';
+export const VITE_BASE_LINK = 'http://192.168.1.13:8000/';
+// export const VITE_BASE_LINK = 'http://test.vanamamalai.us/';

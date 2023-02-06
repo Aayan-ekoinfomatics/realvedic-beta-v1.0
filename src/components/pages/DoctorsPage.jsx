@@ -1,6 +1,6 @@
 import React from 'react'
 import banner from '../../assets/images/category-image.jpg'
-import check from '../../assets/icons/thin-tick-b&w.svg'
+import check from '../../assets/icons/tick-green.svg'
 import doc_img from '../../assets/images/about-us.png'
 
 

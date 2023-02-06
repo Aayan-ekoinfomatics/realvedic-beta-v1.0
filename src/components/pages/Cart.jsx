@@ -7,12 +7,13 @@ import cartPageAtom from "../../recoil/atoms/cartPageAtom";
 
 // Media files
 import cross from "../../assets/icons/cross.svg";
-import down from '../../assets/icons/down_arrow.svg'
+import down from '../../assets/icons/down-arrow-thin.svg'
 
 
 import cartData from "../../mockApi/cartDataApi";
 import axios from "axios";
 import { VITE_BASE_LINK } from "../../../baseLink";
+import { Link } from "react-router-dom";
 
 
 const CartPage = () => {
@@ -170,10 +171,10 @@ const CartPage = () => {
                                 <div className="flex md:hidden justify-center gap-2 items-center z-[100]" onClick={() => setPriceBreakdown(!priceBreakdown)}>
                                     <h1 className="text-[12px] ">Price Breakup</h1>
                                     <div>
-                                        <img src={down} className={`w-[20px] transition-all duration-300 ${priceBreakdown ? '' : 'rotate-180'}`} alt="" />
+                                        <img src={down} className={`w-[14px] transition-all duration-300 ${priceBreakdown ? '' : 'rotate-180'}`} alt="" />
                                     </div>
                                 </div>
-                                <div className={`absolute bottom-[20px] transition-all duration-300 overflow-hidden rounded-t-[10px] z-[100] ${priceBreakdown ? 'h-[190px] ease-in' : 'h-0 p-0 ease-out'} bg-[#f5f5f5] w-full`}>
+                                <div className={`absolute bottom-[20px] transition-all duration-300 overflow-hidden rounded-t-[10px] z-[110] ${priceBreakdown ? 'h-[190px] ease-in' : 'h-0 p-0 ease-out'} bg-white w-full`}>
                                     <div className="w-full px-8 pt-2 flex flex-col justify-between xl:px-12">
                                         <div className="">
                                             <div className="w-full flex justify-between items-end my-4">
@@ -194,10 +195,10 @@ const CartPage = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div className={`fixed bg-black inset-0 opacity-50 z-[90] ${priceBreakdown ? 'block' : 'hidden'}`} onClick={() => setPriceBreakdown(false)}>
-
-                                    </div> */}
                                 </div>
+                                    <div className={`fixed bg-black inset-0 opacity-20 ${priceBreakdown ? 'block' : 'hidden'}`} onClick={() => setPriceBreakdown(false)}>
+
+                                    </div>
                             </div>
                             <div className="flex flex-col md:gap-5   justify-between  items-center md:items-end w-full">
                                 <div className="flex justify-center items-center gap-3">
@@ -208,9 +209,9 @@ const CartPage = () => {
                                 </div>
 
                                 <div>
-                                    <div className="bg-[#FCF55C] active:scale-[0.96] cursor-pointer active:bg-[#ddd650] px-5 py-2 md:p-4 md:px-10 font-[600]  text-[18px] ">
+                                    <Link to='/checkout' className="bg-[#FCF55C] active:scale-[0.96] cursor-pointer active:bg-[#ddd650] px-5 py-2 md:p-4 md:px-10 font-[600]  text-[18px] ">
                                         CHECKOUT
-                                    </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

@@ -22,24 +22,6 @@ const ProductCard = (props) => {
 
     return (
         <>
-            {/* <div className='w-full flex flex-col items-center shadow-md bg-[#fcfcfc] pt-2 max-w-[350px]'>
-            <Link to={`/single-product/` + props?.id} className='w-full flex justify-center items-center'>
-                <img src={props?.image} className='w-[400px]' alt="" />
-                <img src={VITE_BASE_LINK + props?.image} className='w-[400px]' alt="" />
-            </Link>
-            <div className='w-full flex justify-between items-start px-2 pb-2'>
-                <div className='text-[16px] w-[60%] poppins font-[500]'>
-                    {props?.title}
-                </div>
-                <div className='poppins flex flex-col justify-end items-center gap-1'>
-                    <div className='text-[14px] bg-[#FFF5D1] px-[4px]'>{props?.weight}m</div>
-                    <div className='text-[16px] font-[500]'>Rs {props?.price}</div>
-                </div>
-            </div>
-            <div className='w-full flex justify-end pb-2 pr-2'>
-                <button className='px-4 py-2  bg-[#FCF55C] active:scale-[0.96] active:bg-[#d3cc4b] poppins text-[17px]'>ADD TO CART</button>
-            </div>
-        </div> */}
 
             <div className='w-full border shadow-md p-2'>
                 <Link to={`/single-product/` + props?.id} className='w-full flex justify-center items-center'>
@@ -50,7 +32,7 @@ const ProductCard = (props) => {
                         <h1 className='poppins text-[15px] font-[600]'>{props?.title}</h1>
                     </div>
                     <div className='w-fit p-1 px-[6px] flex justify-end items-center relative bg-[#ECECEC]'>
-                        <h1 className='poppins text-[13px] font-[600]' onClick={() => {
+                        <h1 className='poppins text-[13px] font-[600] cursor-pointer' onClick={() => {
                             console.log('clicked')
                             setVariantDropdown(!variantDropdown);
                             if (selectedProductID) {
@@ -60,13 +42,13 @@ const ProductCard = (props) => {
                                 setSelectedProductID(props?.id)
                             }
                         }}>{props?.weight[activeIndex]}gm</h1>
-                        <div className={`w-full overflow-hidden absolute top-[100%] transition-all duration-300 bg-white shadow-2xl ${variantDropdown === true ? 'max-h-[120px] px-2 py-4 ease-in' : 'max-h-0 ease-out'}`}>
+                        <div className={`w-full overflow-hidden absolute top-[100%] transition-all duration-300 bg-white shadow-2xl ${variantDropdown === true ? 'max-h-[120px] px-2 py-3 ease-in' : 'max-h-0 ease-out'}`}>
                             {
                                 props?.weight?.map((data, i) => (
                                     <div key={i} onClick={() => {
                                         setVariantDropdown(false);
                                         setActiveIndex(i)
-                                    }} className='border-b py-1 text-[13px] poppins'>{data}</div>
+                                    }} className='border-b py-1 text-[12px] poppins cursor-pointer'>{data}</div>
                                 ))
                             }
                         </div>
@@ -78,7 +60,7 @@ const ProductCard = (props) => {
                     </div>
                 </div>
                 <div className='w-full flex justify-end items-center mt-1'>
-                    <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-8 py-2 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={() => {
+                    <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-3 shadow-md py-1 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={() => {
                         let formdata = new FormData();
                         formdata.append('product_id', props?.id);
                         formdata.append('token', 'pbkdf2_sha256$390000$ATPA5wbz5hTMacZSTCv3O1$JjjjbunvnurIO+bG6IZu6urtVUX0HHsevG1UHBOQDK0=');
@@ -95,6 +77,7 @@ const ProductCard = (props) => {
                     }}>ADD TO CART</button>
                 </div>
             </div>
+
         </>
 
 
