@@ -14,28 +14,29 @@ import cartData from "../../mockApi/cartDataApi";
 import axios from "axios";
 import { VITE_BASE_LINK } from "../../../baseLink";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const CartPage = () => {
     // GlobalVariables
-    //   const [cartData, setCartData] = useRecoilState(cartPageAtom)
+    const [cartDataApi, setCartDataApi] = useRecoilState(cartPageAtom)
+
 
     // local variables
-    const [cartDataApi, setCartDataApi] = useState([]);
     const [priceBreakdown, setPriceBreakdown] = useState(false);
 
-    // useEffect(() => {
-    //     console.log(cartDataApi)
-    // }, [])
 
+    // api calls
     useEffect(() => {
         let formdata = new FormData();
         formdata.append('token', localStorage.getItem('token'))
         axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
-            console.log(response?.data)
+            // console.log(response?.data)
             setCartDataApi(response?.data)
         })
     }, [])
+
+    // useEffect(() => { console.log(cartDataApi) }, [cartDataApi])
 
 
     return (
@@ -53,14 +54,16 @@ const CartPage = () => {
                         <h1 className="text-[16px] text-[#5B5B5B]">Items</h1>
 
                         <div className="">
-                            {cartData?.cartItems?.map((data, index) => {
+                            {cartDataApi?.cartItems?.map((data, index) => {
                                 return (
                                     <div key={index}>
                                         <div className="border-b py-5">
                                             <div className="flex flex-col gap-2 items-start justify-between relative  ">
                                                 <div className="flex justify-between items-start w-full">
                                                     <div className="flex gap-5">
-                                                        <div className="bg-[#e9e8e8] w-[40px] aspect-square"></div>
+                                                        <div className="w-[40px] aspect-square">
+                                                            <img src={VITE_BASE_LINK + data?.image} className='' alt="" />
+                                                        </div>
                                                         <h1 className="text-[12px]">{data?.name}</h1>
                                                     </div>
 
@@ -113,15 +116,61 @@ const CartPage = () => {
                                             className="grid grid-cols-[50%_12.5%_12.5%_12.5%_12.5%]  my-5"
                                         >
                                             <div className="flex items-center gap-5 ">
-                                                <span className="bg-[#e9e8e8] w-[40px] h-[40px] inline-block"></span>
+                                                <span className="w-[40px] h-[40px] inline-block">
+                                                    <img src={VITE_BASE_LINK + data?.image} className='w-full' alt="" />
+                                                </span>
                                                 <span>{data?.name}</span>
                                             </div>
                                             <div className="text-center">{data?.unit_price}</div>
                                             <div className="text-center flex justify-center items-start gap-4 ">
-                                                <span className="cursor-pointer">-</span>
+                                                <span className="cursor-pointer" onClick={async () => {
+                                                    let formdata = new FormData()
+                                                    formdata.append('prod_id', data?.product_id)
+                                                    formdata.append('token', localStorage.getItem('token'))
+                                                    formdata.append('update_type', '-')
+                                                    await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                                        console.log(response?.data)
+                                                        toast.warn('Item quantity decreased', {
+                                                            position: "top-right",
+                                                            autoClose: 2000,
+                                                            hideProgressBar: false,
+                                                            closeOnClick: true,
+                                                            pauseOnHover: true,
+                                                            // draggable: true,
+                                                            progress: undefined,
+                                                            theme: "light",
+                                                        })
+                                                    })
+                                                    await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                                        // console.log(response?.data)
+                                                        setCartDataApi(response?.data)
+                                                    })
+                                                }}>-</span>
                                                 <span> {data?.quantity}</span>
 
-                                                <span className="cursor-pointer">+</span>
+                                                <span className="cursor-pointer" onClick={async () => {
+                                                    let formdata = new FormData()
+                                                    formdata.append('prod_id', data?.product_id)
+                                                    formdata.append('token', localStorage.getItem('token'))
+                                                    formdata.append('update_type', '+')
+                                                    await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                                        console.log(response?.data)
+                                                        toast.warn('Item quantity increased', {
+                                                            position: "top-right",
+                                                            autoClose: 2000,
+                                                            hideProgressBar: false,
+                                                            closeOnClick: true,
+                                                            pauseOnHover: true,
+                                                            // draggable: true,
+                                                            progress: undefined,
+                                                            theme: "light",
+                                                        })
+                                                    })
+                                                    await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                                        // console.log(response?.data)
+                                                        setCartDataApi(response?.data)
+                                                    })
+                                                }}>+</span>
                                             </div>
                                             <div className="flex item-start justify-center  ">
                                                 <div className=" min-w-[60px]">
@@ -132,8 +181,30 @@ const CartPage = () => {
                                             <div className="">
                                                 <img
                                                     src={cross}
-                                                    alt="..."
+                                                    alt="X"
                                                     className="cursor-pointer mx-auto w-[18px]"
+                                                    onClick={async () => {
+                                                        let formdata = new FormData()
+                                                        formdata.append('prod_id', data?.product_id)
+                                                        formdata.append('token', localStorage.getItem('token'))
+                                                        await axios.post(VITE_BASE_LINK + 'CartitemDelete', formdata).then((response) => {
+                                                            console.log(response?.data)
+                                                            toast.warn('Item deleted successfully', {
+                                                                position: "top-right",
+                                                                autoClose: 2000,
+                                                                hideProgressBar: false,
+                                                                closeOnClick: true,
+                                                                pauseOnHover: true,
+                                                                // draggable: true,
+                                                                progress: undefined,
+                                                                theme: "light",
+                                                            })
+                                                        })
+                                                        await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                                            // console.log(response?.data)
+                                                            setCartDataApi(response?.data)
+                                                        })
+                                                    }}
                                                 />
                                             </div>
                                         </div>
@@ -142,30 +213,32 @@ const CartPage = () => {
                             </div>
 
                         </div>
+
+                        {/* checkout for pc */}
                         <div className="w-[60%] mx-auto xl:w-[30%] flex flex-col justify-between xl:px-12">
                             <h1 className="text-center">Cart</h1>
                             <div className="">
                                 <div className="w-full flex justify-between items-end my-4">
                                     <h1 className="text-[14px]">Sub Total:</h1>
-                                    <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.subtotal}</h1>
+                                    <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.subtotal}</h1>
                                 </div>
                                 <div className="w-full flex justify-between items-center my-4">
                                     <h1 className="text-[14px]">Shipping:</h1>
-                                    <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.shipping}</h1>
+                                    <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.shipping}</h1>
                                 </div>
                                 <div className="w-full flex justify-between items-center my-4">
                                     <h1 className="text-[14px]">Tax:</h1>
-                                    <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.tax}</h1>
+                                    <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.tax}</h1>
                                 </div>
                                 <div className="w-full flex justify-between items-center my-4">
                                     <h1 className="text-[14px]">Total:</h1>
-                                    <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.total}</h1>
+                                    <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.final_price}</h1>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Checkout */}
+                    {/* Checkout for mobile */}
                     <div className="sticky md:static bottom-0 right-0 left-0 md:mt-[60px] md:pr-[170px] py-4 md:py-8 bg-[color:var(--primary-color)] md:bg-white">
                         <div className="w-[85%] mx-auto md:w-full md:mx-0">
                             <div className="w-full relative mb-4">
@@ -180,32 +253,32 @@ const CartPage = () => {
                                         <div className="">
                                             <div className="w-full flex justify-between items-end my-4">
                                                 <h1 className="text-[14px]">Sub Total:</h1>
-                                                <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.subtotal}</h1>
+                                                <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.subtotal}</h1>
                                             </div>
                                             <div className="w-full flex justify-between items-center my-4">
                                                 <h1 className="text-[14px]">Shipping:</h1>
-                                                <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.shipping}</h1>
+                                                <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.shipping}</h1>
                                             </div>
                                             <div className="w-full flex justify-between items-center my-4">
                                                 <h1 className="text-[14px]">Tax:</h1>
-                                                <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.tax}</h1>
+                                                <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.tax}</h1>
                                             </div>
                                             <div className="w-full flex justify-between items-center my-4">
                                                 <h1 className="text-[14px]">Total:</h1>
-                                                <h1 className="text-[16px] font-[500]">₹ {cartData?.cart_total?.total}</h1>
+                                                <h1 className="text-[16px] font-[500]">₹ {cartDataApi?.cart_total?.final_price}</h1>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                    <div className={`fixed bg-black inset-0 opacity-20 ${priceBreakdown ? 'block' : 'hidden'}`} onClick={() => setPriceBreakdown(false)}>
+                                <div className={`fixed bg-black inset-0 opacity-20 ${priceBreakdown ? 'block' : 'hidden'}`} onClick={() => setPriceBreakdown(false)}>
 
-                                    </div>
+                                </div>
                             </div>
                             <div className="flex flex-col md:gap-5   justify-between  items-center md:items-end w-full">
                                 <div className="flex justify-center items-center gap-3">
                                     <h2 className="text-black  text-[17px]">Final Price :</h2>
                                     <h1 className="text-black font-extrabold text-[21px] ">
-                                        ₹ <span>{cartData?.cart_total?.final_price}</span>
+                                        ₹ <span>{cartDataApi?.cart_total?.final_price}</span>
                                     </h1>
                                 </div>
 
@@ -223,9 +296,6 @@ const CartPage = () => {
                 </div>
 
             </div>
-            {/* <div className="hidden md:block">
-        <Footer />
-      </div> */}
         </div>
     );
 };

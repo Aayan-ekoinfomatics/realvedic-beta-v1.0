@@ -47,3 +47,15 @@
   white-space: nowrap;        
   text-overflow: ellipsis;
 }
+
+/* Accordian */
+.accordian_open {
+  max-height: 500px;
+  animation: open 0.3s ease-in;
+}
+
+.accordian_close {
+  animation: close 0.3s ease-out;
+
+  max-height: 0px;
+}

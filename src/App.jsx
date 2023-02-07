@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import reactLogo from './assets/react.svg'
 import MyOrders from './components/account-page-components/MyOrders'
 import SingleOrderDetails from './components/account-page-components/SingleOrderDetails'
@@ -29,6 +30,7 @@ import OrderConfirmedPage from './components/pages/OrderConfirmedPage'
 import SignUpPage from './components/pages/SignUpPage'
 import SingleProduct from './components/pages/SingleProduct'
 import TermsAndConditionsPage from './components/pages/TermsAndConditionsPage'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
 
 
   return (
+    <>
     <div className="relative">
       <Sidebar />
       <Navbar />
@@ -64,6 +67,8 @@ function App() {
       </div>
       <Footer/>
     </div>
+      <ToastContainer />
+    </>
   )
 }
 

@@ -74,6 +74,8 @@ const Footer = () => {
 
   return (
     <footer className="bg-[color:var(--primary-color)] pt-10 text-[#FCEDD1]">
+
+
       {/* Mobile & Tablet footer */}
       <div className="mx-auto w-[85%] pb-3 md:hidden">
         {footerData?.map((data, index) => {
@@ -87,7 +89,7 @@ const Footer = () => {
                 }}
                 className=" border-b-2 border-b-[#FCEDD1] transition-all cursor-pointer "
               >
-                <div className="flex justify-between items-center py-5">
+                <div className="flex justify-between items-center py-5 ">
                   <h1 className="font-semibold">{data?.heading}</h1>
                   <img
                     src={arrow}
@@ -100,10 +102,10 @@ const Footer = () => {
               </div>
 
               <div
-                className={`overflow-y-hidden ${
+                className={`overflow-y-hidden transition-all duration-300 ${
                   selectedHeading === data?.heading
-                    ? "accordian_open  border-b-2 border-b-[#FCEDD1]"
-                    : "accordian_close"
+                    ? "accordian_open ease-in border-b-2 border-b-[#FCEDD1]"
+                    : "accordian_close ease-out"
                 }  `}
               >
                 <div className="h-fit py-4">
@@ -141,6 +143,8 @@ const Footer = () => {
           </h1>
         </div>
       </div>
+
+
 
       {/* PC footer */}
       <div className="hidden md:block">
@@ -200,6 +204,8 @@ const Footer = () => {
 
         <div className="bg-[#7B4E41] h-[50px]"></div>
       </div>
+
+
     </footer>
   );
 };

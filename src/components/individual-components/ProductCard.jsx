@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { VITE_BASE_LINK } from '../../../baseLink'
 
 const ProductCard = (props) => {
@@ -13,11 +14,7 @@ const ProductCard = (props) => {
 
 
     useEffect(() => {
-        // console.log(selectedProductID, 'product id')
-        // console.log(props?.weight[activeIndex])
-        // console.log(props?.price[activeIndex])
-        // console.log(activeIndex, 'index')
-    }, [selectedProductID, variantDropdown, activeIndex]);
+    }, []);
 
 
     return (
@@ -60,7 +57,7 @@ const ProductCard = (props) => {
                     </div>
                 </div>
                 <div className='w-full flex justify-end items-center mt-1'>
-                    <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-3 shadow-md py-1 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={() => {
+                    <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-3 shadow-md py-1 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={async () => {
                         let formdata = new FormData();
                         formdata.append('product_id', props?.id);
                         formdata.append('token', localStorage.getItem('token'));
@@ -69,7 +66,17 @@ const ProductCard = (props) => {
                         axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
                             console.log(response?.data)
                             if(response?.data?.status === true) {
-                                alert(response?.data?.message)
+                                // alert(response?.data?.message)
+                                toast.success(response?.data?.message, {
+                                    position: "top-right",
+                                    autoClose: 2000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    // draggable: true,
+                                    progress: undefined,
+                                    theme: "light",
+                                })
                             }else{
                                 console.log('sklnaso')
                             }

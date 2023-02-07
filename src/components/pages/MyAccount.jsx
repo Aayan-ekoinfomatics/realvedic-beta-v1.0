@@ -10,9 +10,9 @@ const MyAccount = () => {
     const [view, setView] = useState('accountDetails');
 
 
-    useEffect(() => {
-        console.log(saveEditData)
-    }, [saveEditData])
+    // useEffect(() => {
+    //     console.log(saveEditData)
+    // }, [saveEditData])
 
 
     return (

@@ -1,39 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import item from '../../assets/images/about-us.png'
 import edit from '../../assets/icons/edit.svg'
 import cross from '../../assets/icons/cross.svg';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { VITE_BASE_LINK } from '../../../baseLink';
 
 const CheckoutPage = () => {
 
     const [popUpView, setPopUpView] = useState(false);
 
-    const checkout_data = {
-        personal_info: {
-            first_name: 'Vivek',
-            last_name: 'Khanal',
-            email: 'vivek@gmail.com',
-            phone_code: '+91',
-            phone_number: '7784555487',
-        },
-        address_info: {
-            address_line_1: 'Realvedic, 76, 7th B cross',
-            address_line_2: 'Kormangla 4th B block',
-            city: 'Bengaluru',
-            state: 'Karnataka',
-            pincode: '50306',
-            country: 'India',
-        },
-        items: [
-            { title: 'Garlic Rasam Powder | Instant Mix ', price: '180', quanity: '1', image: item, id: 0 },
-            { title: 'Lemon Grass Rasam | Instant Mix ', price: '180', quanity: '2', image: item, id: 1 },
-            { title: 'Garlic Rasam Powder | Instant Mix ', price: '180', quanity: '4', image: item, id: 2 },
-        ],
-        item_total: '540',
-        delivery_charges: '40',
-        order_total: '580',
+    const [checkoutData, setCheckoutData] = useState({});
 
-    };
+    // const checkout_data = {
+    //     personal_info: {
+    //         first_name: 'Vivek',
+    //         last_name: 'Khanal',
+    //         email: 'vivek@gmail.com',
+    //         phone_code: '+91',
+    //         phone_number: '7784555487',
+    //     },
+    //     address_info: {
+    //         address_line_1: 'Realvedic, 76, 7th B cross',
+    //         address_line_2: 'Kormangla 4th B block',
+    //         city: 'Bengaluru',
+    //         state: 'Karnataka',
+    //         pincode: '50306',
+    //         country: 'India',
+    //     },
+    //     items: [
+    //         { title: 'Garlic Rasam Powder | Instant Mix ', price: '180', quanity: '1', image: item, id: 0 },
+    //         { title: 'Lemon Grass Rasam | Instant Mix ', price: '180', quanity: '2', image: item, id: 1 },
+    //         { title: 'Garlic Rasam Powder | Instant Mix ', price: '180', quanity: '4', image: item, id: 2 },
+    //     ],
+    //     item_total: '540',
+    //     delivery_charges: '40',
+    //     order_total: '580',
+
+    // };
+
+    useEffect(() => {
+        let formdata = new FormData()
+        formdata.append('token', localStorage.getItem('token'))
+        axios.post(VITE_BASE_LINK + 'checkout', formdata).then((response) => {
+            // console.log(response?.data)
+            setCheckoutData(response?.data)
+        })
+    }, [])
 
 
     return (
@@ -67,20 +80,22 @@ const CheckoutPage = () => {
                             <div className='w-full grid-cols-1 grid md:grid-cols-2 mx-auto'>
                                 <div className='flex justify-start gap-2 items-center my-2'>
                                     <h1 className='text-[13px] font-[500]'>Name:</h1>
-                                    <h1 className='text-[13px]'>{checkout_data?.personal_info?.first_name} {checkout_data?.personal_info?.last_name}</h1>
+                                    <h1 className='text-[13px]'>{checkoutData?.personal_info?.first_name} {checkoutData?.personal_info?.last_name}</h1>
                                 </div>
                                 <div className='flex justify-start gap-2 items-center my-2'>
                                     <h1 className='text-[13px] font-[500]'>Phone number:</h1>
-                                    <h1 className='text-[13px]'>{checkout_data?.personal_info?.phone_code} {checkout_data?.personal_info?.phone_number}</h1>
+                                    <h1 className='text-[13px]'>{checkoutData?.personal_info?.phone_code} {checkoutData?.personal_info?.phone_number}</h1>
                                 </div>
                                 <div className='flex justify-start gap-2 items-center my-2'>
                                     <h1 className='text-[13px] font-[500]'>Email:</h1>
-                                    <h1 className='text-[13px]'>{checkout_data?.personal_info?.email}</h1>
+                                    <h1 className='text-[13px]'>{checkoutData?.personal_info?.email}</h1>
                                 </div>
                             </div>
-                            <div className='w-fit absolute bottom-0 right-0 mr-3 mb-2'>
-                                <img src={edit} className='w-[15px] cursor-pointer' alt="" onClick={() => setPopUpView(true)} />
-                            </div>
+                            <Link to='/account' className='w-fit absolute bottom-0 right-0 mr-3 mb-2'>
+                                <img src={edit} className='w-[15px] cursor-pointer' alt="" 
+                                // onClick={() => setPopUpView(true)}
+                                 />
+                            </Link>
                         </div>
 
 
@@ -89,11 +104,20 @@ const CheckoutPage = () => {
                             <h1 className='text-[15px] font-[600] mb-3'>Address Information</h1>
                             <h1 className='text-[13px] font-[500] mt-4 mb-3'>Address:</h1>
                             <div className='w-full items-center'>
-                                <h1 className='text-[13px] flex flex-col'><span className=''>{checkout_data?.address_info?.address_line_1}</span><span className=''>{checkout_data?.address_info?.address_line_2}</span><span className=''>{checkout_data?.address_info?.pincode}</span></h1>
+                                <h1 className='text-[13px] flex flex-col'>
+                                    <span className=''>{checkoutData?.address_info?.address_line_1}</span>
+                                    <span className=''>{checkoutData?.address_info?.address_line_2}</span>
+                                    <span className=''>{checkoutData?.address_info?.city}</span>
+                                    <span className=''>{checkoutData?.address_info?.state}</span>
+                                    <span className=''>{checkoutData?.address_info?.country}</span>
+                                    <span className=''>{checkoutData?.address_info?.pincode}</span>
+                                </h1>
                             </div>
-                            <div className='w-fit absolute bottom-0 right-0 mr-3 mb-2'>
-                                <img src={edit} className='w-[15px] cursor-pointer' alt="" onClick={() => setPopUpView(true)} />
-                            </div>
+                            <Link to='/account' className='w-fit absolute bottom-0 right-0 mr-3 mb-2'>
+                                <img src={edit} className='w-[15px] cursor-pointer' alt=""
+                                // onClick={() => setPopUpView(true)}
+                                 />
+                            </Link>
                         </div>
 
 
@@ -112,19 +136,23 @@ const CheckoutPage = () => {
                             <div className='w-full md:px-4'>
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[13px]'>Order Value:</h1>
-                                    <h1 className='text-[13px]'>Rs {checkout_data?.item_total}</h1>
+                                    <h1 className='text-[13px]'>Rs {checkoutData?.item_total}</h1>
                                 </div>
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[13px]'>Discount:</h1>
                                     <h1 className='text-[13px]'></h1>
                                 </div>
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
+                                    <h1 className='text-[13px]'>Tax:</h1>
+                                    <h1 className='text-[13px]'>Rs {checkoutData?.tax}</h1>
+                                </div>
+                                <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[13px]'>Delivery charges:</h1>
-                                    <h1 className='text-[13px]'>Rs {checkout_data?.delivery_charges}</h1>
+                                    <h1 className='text-[13px]'>Rs {checkoutData?.shipping}</h1>
                                 </div>
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[14px] font-[600]'>Total:</h1>
-                                    <h1 className='text-[14px] font-[600]'>Rs {checkout_data?.order_total}</h1>
+                                    <h1 className='text-[14px] font-[600]'>Rs {checkoutData?.final_price}</h1>
                                 </div>
                                 <div className='w-full flex justify-between items-center mt-20 mb-3'>
                                     <h1 className='text-[14px] font-[600]'>Items</h1>
@@ -132,18 +160,18 @@ const CheckoutPage = () => {
                                 </div>
                                 <div className='w-full max-h-[200px] overflow-y-scroll md:px-3'>
                                     {
-                                        checkout_data?.items?.map((data, i) => (
+                                        checkoutData?.items?.map((data, i) => (
                                             <div className='w-full flex justify-start items-start gap-2 my-2' key={i}>
                                                 <div className='w-fit'>
-                                                    <img src={data?.image} className='w-[60px]' alt="" />
+                                                    <img src={VITE_BASE_LINK + data?.image} className='w-[60px]' alt="" />
                                                 </div>
                                                 <div className='w-full flex flex-col'>
                                                     <div className='w-full flex flex-col md:flex-row md:justify-between md:items-center'>
-                                                        <h1 className='text-[11px] md:text-[13px] font-[500]'>{data?.title}</h1>
+                                                        <h1 className='text-[11px] md:text-[13px] font-[500]'>{data?.name}</h1>
                                                         <h1 className='text-[11px] md:text-[13px] font-[500]'>Rs {data?.price}</h1>
                                                     </div>
-                                                    <h1 className='text-[9px]'>qty: x{data?.quanity}</h1>
-                                                    <h1 className='text-[9px]'>product code: {data?.id}</h1>
+                                                    <h1 className='text-[9px]'>qty: x{data?.quantity}</h1>
+                                                    <h1 className='text-[9px]'>product code: {data?.product_id}</h1>
                                                 </div>
                                             </div>
                                         ))
