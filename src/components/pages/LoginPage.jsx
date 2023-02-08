@@ -5,7 +5,7 @@ import fb from '../../assets/icons/facebook-blue.svg'
 import google from '../../assets/icons/google.svg'
 import axios from 'axios'
 import { VITE_BASE_LINK } from '../../../baseLink'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
 
@@ -75,7 +75,7 @@ const LoginPage = () => {
                         }}>Login</button>
                     </div>
                     <div className='w-full flex justify-center items-center'>
-                        <h1 className='text-[10px]'>New here? Sign up!</h1>
+                        <Link to='/signup'><h1 className='text-[10px]'>New here? Sign up!</h1></Link>
                     </div>
                 </div>
             </div>

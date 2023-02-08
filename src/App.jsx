@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import reactLogo from './assets/react.svg'
 import MyOrders from './components/account-page-components/MyOrders'
@@ -31,6 +31,7 @@ import SignUpPage from './components/pages/SignUpPage'
 import SingleProduct from './components/pages/SingleProduct'
 import TermsAndConditionsPage from './components/pages/TermsAndConditionsPage'
 import 'react-toastify/dist/ReactToastify.css';
+import ProtectedRoute from './helpers/routes/ProtectedRoute'
 
 
 function App() {
@@ -41,32 +42,41 @@ function App() {
 
   return (
     <>
-    <div className="relative">
-      <Sidebar />
-      <Navbar />
-      <div className=' md:mt-16 lg:mt-20 xl:mt-24'>
-        <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/single-product/:product_id' element={<SingleProduct />} />
-          <Route path='/all-products/:category_id' element={<AllProductsView />} />
-          <Route path='/about-us' element={<AboutUsPage />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/checkout' element={<CheckoutPage />} />
-          <Route path='/orders' element={<MyOrders />} />
-          <Route path='/order-confirmed' element={<OrderConfirmedPage />} />
-          <Route path='/account/orders/:order_id' element={<SingleOrderDetails />} />
-          <Route path='/blogs' element={<Blogs />} />
-          <Route path='/doctors' element={<DoctorsPage />} />
-          <Route path='/account' element={<MyAccount />} />
-          <Route path='/cancellation-policy' element={<CancellationPolicyPage />} />
-          <Route path='/terms-conditions' element={<TermsAndConditionsPage />} />
-          {/* <Route path='/test' element={<ProductCard id='2' title='Test Product' image='' weight='250' price='100' />} /> */}
-        </Routes>
+      <div className="relative">
+        <Sidebar />
+        <Navbar />
+        <div className=' md:mt-16 lg:mt-20 xl:mt-24'>
+          <Routes>
+
+
+            <Route element={<ProtectedRoute />}  >
+              {/* <Route path="/" element /> */}
+              <Route path="*" element={<Navigate replace to='/' />} />
+              <Route path='/checkout' element={<CheckoutPage />} />
+              <Route path='/orders' element={<MyOrders />} />
+              <Route path='/order-confirmed' element={<OrderConfirmedPage />} />
+              <Route path='/account/orders/:order_id' element={<SingleOrderDetails />} />
+              <Route path='/account' element={<MyAccount />} />
+            </Route>
+
+
+            <Route path='*' element={<Navigate to={localStorage.getItem("status") === 'true' ? '/' : '/login'} replace={true} />} />
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
+            <Route path='/single-product/:product_id' element={<SingleProduct />} />
+            <Route path='/all-products/:category_id' element={<AllProductsView />} />
+            <Route path='/about-us' element={<AboutUsPage />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/blogs' element={<Blogs />} />
+            <Route path='/doctors' element={<DoctorsPage />} />
+            <Route path='/cancellation-policy' element={<CancellationPolicyPage />} />
+            <Route path='/terms-conditions' element={<TermsAndConditionsPage />} />
+            {/* <Route path='/test' element={<ProductCard id='2' title='Test Product' image='' weight='250' price='100' />} /> */}
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer/>
-    </div>
       <ToastContainer />
     </>
   )

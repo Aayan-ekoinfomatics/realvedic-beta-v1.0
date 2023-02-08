@@ -5,6 +5,7 @@ import fb from '../../assets/icons/facebook-blue.svg'
 import google from '../../assets/icons/google.svg'
 import axios from 'axios'
 import { VITE_BASE_LINK } from '../../../baseLink'
+import { Link } from 'react-router-dom'
 
 const SignUpPage = () => {
 
@@ -138,9 +139,9 @@ const SignUpPage = () => {
                     <div className='w-full my-2'>
                         <button className='w-full py-2 flex justify-center items-center text-[17px] bg-[color:var(--button-primary)] active:scale-[0.96] active:bg-[#d6cf4c] shadow-md tracking-[1px]' onClick={signUp}>Sign Up</button>
                     </div>
-                    {/* <div className='w-full flex justify-center items-center'>
-                        <h1 className='text-[10px]'>New here? Sign up!</h1>
-                    </div> */}
+                    <div className='w-full flex justify-center items-center'>
+                        <Link to='/login'><h1 className='text-[10px]'>Already have an account? Log in.</h1></Link>
+                    </div>
                 </div>
             </div>
         </div>

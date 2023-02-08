@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import banner from '../../assets/images/category-image.jpg'
 import check from '../../assets/icons/tick-green.svg'
 import doc_img from '../../assets/images/about-us.png'
+import axios from 'axios'
+import { VITE_BASE_LINK } from '../../../baseLink'
 
 
 const DoctorsPage = () => {
+
+  const [docData, setDocData] = useState();
+
+  const [formData, setFormData] = useState({});
 
   const doctor_page_data = {
     consultation: [
@@ -20,6 +26,13 @@ const DoctorsPage = () => {
       { id: 3, title: 'Dr. T. Ashok Kumar', education: '(B.A.M.S.)', experience: '10 Years', speciality: 'Ayurveda, Arthritis, Diabetes Management, Respiratory Allergies', available: 'All days except Sunday (6pm - 8pm)', image: doc_img },
     ],
   };
+
+  useEffect(() => {
+    axios.get(VITE_BASE_LINK + 'doctor_detail_view  ').then((response) => {
+      console.log(response?.data)
+      setDocData(response?.data)
+    })
+  }, [])
 
 
   return (
@@ -46,10 +59,10 @@ const DoctorsPage = () => {
           <div className='w-[85%] xl:w-[70%] mx-auto grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3 justify-items-center place-items-start mt-20'>
 
             {
-              doctor_page_data?.doctors?.map((data, i) => (
-                <div className='w-fit flex flex-col justify-between h-full items-center'>
+              docData?.map((data, i) => (
+                <div key={i} className='w-fit flex flex-col justify-between h-full items-center'>
                   <div className='w-fit pb-2'>
-                    <img src={data?.image} className='w-[200px]' alt="" />
+                    <img src={VITE_BASE_LINK + data?.images} className='w-[200px]' alt="" />
                     <h1 className='text-[15px] font-[600] poppins py-t text-center pt-2'>{data?.title}</h1>
                     <h1 className='text-[13px] poppins text-center'>{data?.education}</h1>
                   </div>
@@ -89,30 +102,50 @@ const DoctorsPage = () => {
           <div className='w-full max-w-[450px]'>
             <div className='w-full flex justify-between gap-2 pt-1'>
               <div className=''>
-                <input type="text" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter first name' />
+                <input onChange={(e) => setFormData({
+                  ...formData,
+                  first_name: e?.target?.value
+                })} type="text" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter first name' />
               </div>
               <div className=''>
-                <input type="text" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter last name' />
+                <input onChange={(e) => setFormData({
+                  ...formData,
+                  last_name: e?.target?.value
+                })} type="text" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter last name' />
               </div>
             </div>
             <div className='w-full flex justify-center items-center pt-1'>
               <div className='w-full'>
-                <input type="email" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter email' />
+                <input onChange={(e) => setFormData({
+                  ...formData,
+                  email: e?.target?.value
+                })} type="email" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter email' />
               </div>
             </div>
             <div className='w-full flex justify-center items-center pt-1'>
               <div className='w-full'>
-                <input type="number" min={0} className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter phone number' />
+                <input onChange={(e) => setFormData({
+                  ...formData,
+                  number: e?.target?.value
+                })} type="number" min={0} className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter phone number' />
               </div>
             </div>
             <div className='w-full flex justify-center items-center pt-1'>
               <div className='w-full'>
                 {/* <input type="text" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter email' /> */}
-                <textarea name="" id="" cols="30" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter comments' ></textarea>
+                <textarea onChange={(e) => setFormData({
+                  ...formData,
+                  comments: e?.target?.value
+                })} name="" id="" cols="30" className='w-full text-[12px] md:text-[14px] py-2 px-2 outline-none rounded-[10px] border border-[#D9D9D9]' placeholder='enter comments' ></textarea>
               </div>
             </div>
-            <div className='w-full flex justify-center items-center'>
-              <button className='px-4 py-2 bg-[color:var(--button-primary)] text-[15px] poppins font-[500] rounded-[10px]'>Submit</button>
+            <div className='w-full flex justify-center items-center mt-2'>
+              <button className='px-4 py-2 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96] text-[15px] poppins font-[500] rounded-[10px]' onClick={() => {
+                axios.post(VITE_BASE_LINK + '', formData).then((response) => {
+                  console.log(response?.data)
+                  // alert(response?.data?.message)
+                })
+              }}>Submit</button>
             </div>
           </div>
         </div>

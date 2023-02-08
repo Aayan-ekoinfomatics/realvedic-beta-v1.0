@@ -13,6 +13,7 @@ import RecentlyViewd from '../individual-components/RecentlyViewd'
 import axios from 'axios'
 import { VITE_BASE_LINK } from '../../../baseLink'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const SingleProduct = () => {
 
@@ -26,7 +27,7 @@ const SingleProduct = () => {
 
     const [selectedWeightIndex, setSelectedWeightIndex] = useState(0);
 
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0); 
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
     const [packSizeSelect, setPackSizeSelect] = useState()
 
@@ -50,19 +51,20 @@ const SingleProduct = () => {
     // }, [packSizeSelect])
 
     useEffect(() => {
-        // let formdata = new FormData()
-        // formdata.append('product_id', params?.product_id)
-        axios.get( VITE_BASE_LINK + 'single_product_view?product_id=' + params?.product_id).then((response) => {
-        //   console.log(response?.data)
-          console.log(response?.data?.product_details?.pack_sizes)
-        setProductData(response?.data)
-        setPackSizeSelect(response?.data?.product_details?.pack_size[selectedWeightIndex])
+        let formdata = new FormData()
+        formdata.append('prod_id', params?.product_id)
+        axios.post(VITE_BASE_LINK + 'single_product_view', formdata).then((response) => {
+            console.log(response?.data)
+            console.log(response?.data?.product_details?.pack_sizes)
+            setProductData(response?.data)
+            setPackSizeSelect(response?.data?.product_details?.pack_size[selectedWeightIndex])
         })
-      }, [])
+    }, [])
 
-    //   useEffect(() => {
-    //     console.log(packSizeSelect)
-    //   }, [packSizeSelect])
+    useEffect(() => {
+        console.log(productData)
+        console.log(packSizeSelect)
+    }, [productData])
 
 
     return (
@@ -135,9 +137,85 @@ const SingleProduct = () => {
                             </div>
                         </div>
                         <div className='w-full flex py-2 mt-4'>
-                            <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border'>-</div>
-                            <div className='w-full text-[23px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center'>ADD TO CART</div>
-                            <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border'>+</div>
+
+
+                            {/* <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border' onClick={async () => {
+                                let formdata = new FormData()
+                                formdata.append('prod_id', productData?.product_details?.id)
+                                formdata.append('token', localStorage.getItem('token'))
+                                formdata.append('size', packSizeSelect?.weight);
+                                formdata.append('price', packSizeSelect?.price),
+                                formdata.append('update_type', '-')
+                                await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                    console.log(response?.data)
+                                    toast.warn('Item quantity increased', {
+                                        position: "top-right",
+                                        autoClose: 2000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                    })
+                                })
+                                await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                    setCartDataApi(response?.data)
+                                })
+                            }}>-</div> */}
+
+
+                            <div className='w-full text-[23px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center' onClick={() => {
+                                let formdata = new FormData();
+                                formdata.append('product_id', productData?.product_details?.id);
+                                formdata.append('token', localStorage.getItem('token'));
+                                formdata.append('size', packSizeSelect?.weight);
+                                formdata.append('price', packSizeSelect?.price),
+                                    axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
+                                        console.log(response?.data)
+                                        if (response?.data?.status === true) {
+                                            // alert(response?.data?.message)
+                                            toast.success(response?.data?.message, {
+                                                position: "top-right",
+                                                autoClose: 2000,
+                                                hideProgressBar: false,
+                                                closeOnClick: true,
+                                                pauseOnHover: true,
+                                                // draggable: true,
+                                                progress: undefined,
+                                                theme: "light",
+                                            })
+                                        } else {
+                                            console.log('error in backend')
+                                        }
+                                    })
+                            }}>ADD TO CART</div>
+
+
+                            {/* <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border' onClick={async () => {
+                                let formdata = new FormData()
+                                formdata.append('prod_id', productData?.product_details?.id)
+                                formdata.append('token', localStorage.getItem('token'))
+                                formdata.append('size', packSizeSelect?.weight);
+                                formdata.append('price', packSizeSelect?.price),
+                                formdata.append('update_type', '+')
+                                await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                    console.log(response?.data)
+                                    toast.warn('Item quantity increased', {
+                                        position: "top-right",
+                                        autoClose: 2000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                    })
+                                })
+                                await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                    setCartDataApi(response?.data)
+                                })
+                            }}>+</div> */}
+
+
                         </div>
 
                         {/* pack sizes */}
@@ -161,7 +239,7 @@ const SingleProduct = () => {
                                             setDropdownOpen(false)
                                         }}>
                                             <div className='w-fit text-[16px] poppins'>
-                                                {data?.weight}{data?.weight === '1' ? <span>kg</span> : <span>  m</span>}
+                                                {data?.weight}{data?.weight === '1' || data?.weight === '5' ? <span>kg</span> : <span> gm</span>}
                                             </div>
                                             <div className='w-fit text-[16px] poppins'>
                                                 Rs {data?.price}
@@ -187,7 +265,7 @@ const SingleProduct = () => {
                         dotsClass="slick-dots"
                         {...sliderSettings}
                     >
-                        {product_data?.product_details?.images?.map((data, i) => (
+                        {productData?.product_details?.images?.map((data, i) => (
                             <div key={i} className=" max-w-[100%] h-[100%]">
                                 <img
                                     src={data}
@@ -201,9 +279,9 @@ const SingleProduct = () => {
 
                 {/* title & description */}
                 <div className='w-full mt-4'>
-                    <h1 className='poppins text-[20px] font-[700]'>{product_data?.product_details?.title}</h1>
+                    <h1 className='poppins text-[20px] font-[700]'>{productData?.product_details?.title}</h1>
                     <div className='w-full mt-2'>
-                        <p className='poppins text-[14px] '>{product_data?.product_details?.description}</p>
+                        <p className='poppins text-[14px] '>{productData?.product_details?.description}</p>
                     </div>
                 </div>
 
@@ -223,7 +301,7 @@ const SingleProduct = () => {
                 {/* add to cart button */}
                 <div className='w-full flex py-2'>
                     <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border'>-</div>
-                    <div className='w-full text-[16px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center'>ADD TO CART</div>
+                    <div className='w-full text-[16px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center' >ADD TO CART</div>
                     <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border'>+</div>
                 </div>
 
@@ -241,7 +319,7 @@ const SingleProduct = () => {
                     {/* dropdown */}
                     <div className={`w-full mx-auto absolute top-0 mt-[98px] shadow-md bg-[#ffe2d7] transition-all duration-300 z-[500] ${dropdownOpen ? 'h-[200px] overflow-y-scroll ease-in py-2' : 'h-0 ease-out overflow-hidden p-0'}`}>
                         {
-                            product_data?.product_details?.pack_sizes?.map((data, i) => (
+                            productData?.product_details?.pack_sizes?.map((data, i) => (
                                 <div key={i} className='w-full flex justify-between py-3 border-b cursor-pointer active:scale-[0.99] active:bg-[#C57963] px-4' onClick={() => {
                                     setPackSizeSelect(data)
                                     setDropdownOpen(false)

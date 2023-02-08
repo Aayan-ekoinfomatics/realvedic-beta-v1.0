@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react'
 import item from '../../assets/images/about-us.png'
 import edit from '../../assets/icons/edit.svg'
 import cross from '../../assets/icons/cross.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { VITE_BASE_LINK } from '../../../baseLink';
+import { toast } from 'react-toastify';
 
 const CheckoutPage = () => {
 
     const [popUpView, setPopUpView] = useState(false);
 
     const [checkoutData, setCheckoutData] = useState({});
+
+    const navigate = useNavigate();
 
     // const checkout_data = {
     //     personal_info: {
@@ -39,11 +42,126 @@ const CheckoutPage = () => {
 
     // };
 
+    // this function will handel payment when user submit his/her money
+    // and it will confim if payment is successfull or not
+
+
+    const handlePaymentSuccess = async (response) => {
+        try {
+            let bodyData = new FormData();
+
+            // we will send the response we've got from razorpay to the backend to validate the payment
+            bodyData.append("response", JSON.stringify(response));
+            bodyData.append("token", localStorage.getItem("token"));
+            bodyData.append("amount", checkoutData?.final_price);
+
+            await axios({
+                url: VITE_BASE_LINK + `handle_payment_success`,
+                method: "POST",
+                data: bodyData,
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((res) => {
+                    console.log(res)
+                    console.log("Everything is OK!");
+                    toast.success(`Payment completed successfully`, {
+                        position: "top-right",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        progress: undefined,
+                        theme: "light",
+                    })
+                    navigate('/order-confirmed')
+                    // setName(checkoutData?.form?.content[0]?.value);
+                    // setAmount(checkoutData?.checkout_data?.total?.amount);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        } catch (error) {
+            console.log(console.error());
+        }
+    };
+
+    // this will load a script tag which will open up Razorpay payment card to make //transactions
+    const loadScript = () => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        document.body.appendChild(script);
+    };
+
+    const showRazorpay = async () => {
+        // console.log()
+        const res = await loadScript();
+
+        let bodyData = new FormData();
+
+        // we will pass the amount and product name to the backend using form data
+        // bodyData.append("amount", product?.price.toString());
+        // bodyData.append("name", product?.product_name);
+
+        bodyData.append("amount", checkoutData?.final_price);
+        bodyData.append("name", checkoutData?.personal_info?.first_name);
+        bodyData.append("token", localStorage.getItem("token"));
+
+        const data = await axios({
+            url: VITE_BASE_LINK + `start_payment`,
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            data: bodyData,
+        }).then((res) => {
+            console.log(res)
+            return res;
+        });
+
+        // in data we will receive an object from the backend with the information about the payment
+        //that has been made by the user
+
+        var options = {
+            key_id: 'rzp_test_gHJS0k5aSWUMQc', // in react your environment variable must start with REACT_APP_
+            key_secret: '8hPVwKRnj4DZ7SB1wyW1miaf',
+            amount: data.data.payment.amount,
+            currency: "INR",
+            name: "Org. Name",
+            description: "Test teansaction",
+            image: "", // add image url
+            order_id: data.data.payment.id,
+            handler: function (response) {
+                // we will handle success by calling handlePaymentSuccess method and
+                // will pass the response that we've got from razorpay
+                handlePaymentSuccess(response);
+            },
+            prefill: {
+                name: "User's name",
+                email: "User's email",
+                contact: "User's phone",
+            },
+            notes: {
+                address: "Razorpay Corporate Office",
+            },
+            theme: {
+                color: "#3399cc",
+            },
+        };
+
+        var rzp1 = new window.Razorpay(options);
+        rzp1.open();
+    };
+
+
     useEffect(() => {
         let formdata = new FormData()
         formdata.append('token', localStorage.getItem('token'))
         axios.post(VITE_BASE_LINK + 'checkout', formdata).then((response) => {
-            // console.log(response?.data)
+            console.log(response?.data)
             setCheckoutData(response?.data)
         })
     }, [])
@@ -92,9 +210,9 @@ const CheckoutPage = () => {
                                 </div>
                             </div>
                             <Link to='/account' className='w-fit absolute bottom-0 right-0 mr-3 mb-2'>
-                                <img src={edit} className='w-[15px] cursor-pointer' alt="" 
+                                <img src={edit} className='w-[15px] cursor-pointer' alt=""
                                 // onClick={() => setPopUpView(true)}
-                                 />
+                                />
                             </Link>
                         </div>
 
@@ -116,7 +234,7 @@ const CheckoutPage = () => {
                             <Link to='/account' className='w-fit absolute bottom-0 right-0 mr-3 mb-2'>
                                 <img src={edit} className='w-[15px] cursor-pointer' alt=""
                                 // onClick={() => setPopUpView(true)}
-                                 />
+                                />
                             </Link>
                         </div>
 
@@ -188,9 +306,7 @@ const CheckoutPage = () => {
 
 
                 <div className='w-full flex justify-end items-center mt-4 px-4'>
-                    <Link to='/order-confirmed'>
-                        <button className='text-[14px font-[500] px-4 py-2 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]'>CONTINUE</button>
-                    </Link>
+                    <button className='text-[14px font-[500] px-4 py-2 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]' onClick={() => showRazorpay()}>CONTINUE</button>
                 </div>
 
 

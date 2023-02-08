@@ -21,14 +21,14 @@ const AllProductsView = () => {
     useEffect(() => {
 
         axios.get(VITE_BASE_LINK + 'categoryPage?category='+ params?.category_id ).then((response) => { 
-            // console.log(response?.data)
+            console.log(response?.data)
             setAllproductsApiData(response?.data)
         })
     }, [params])
 
-    useEffect(() => {
-        console.log(params)
-    }, [allproductsApiData])
+    // useEffect(() => {
+    //     console.log(params)
+    // }, [allproductsApiData])
 
 
 
@@ -37,8 +37,8 @@ const AllProductsView = () => {
 
             {/* banner */}
             <div className='w-full flex justify-center items-center relative bg-[color:var(--primary-color)] mb-4'>
-                <img src={banner} className='' alt="" />
-                <h1 className='text-[20px] md:text-[40px] xl:text-[55px] poppins absolute bottom-[30%] md:bottom-[80px] left-[5%] md:left-[40px] font-[600]'>{allproductsApiData?.category}</h1>
+                <img src={VITE_BASE_LINK + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" />
+                <h1 className='text-[20px] md:text-[40px] xl:text-[65px] poppins absolute bottom-[30%] md:bottom-[80px] left-[5%] md:left-[40px] font-[600]'>{allproductsApiData?.category}</h1>
             </div>
 
             <div className='w-full flex justify-between items-center px-4 lg:px-8'>
