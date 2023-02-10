@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import reactLogo from './assets/react.svg'
 import MyOrders from './components/account-page-components/MyOrders'
@@ -32,12 +32,38 @@ import SingleProduct from './components/pages/SingleProduct'
 import TermsAndConditionsPage from './components/pages/TermsAndConditionsPage'
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './helpers/routes/ProtectedRoute'
+import { VITE_BASE_LINK } from '../baseLink'
+import axios from 'axios'
+import cartPageAtom from './recoil/atoms/cartPageAtom'
+import { atom, useRecoilState } from 'recoil'
+import cartProductIDs from './recoil/atoms/cartProductsIDs'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
-  // inside useEffect make the landing page call and set it to a recoil state
+  const [cartData, setCartData] = useRecoilState(cartPageAtom)
+  
+  const [cartProductId, setCartProductId] = useRecoilState(cartProductIDs)
+
+  const location = useLocation()
+
+  useEffect(() => {
+    let formdata = new FormData();
+    formdata.append('token', localStorage.getItem('token'))
+    axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+        // console.log(response?.data)
+        setCartData(response?.data)
+        setCartProductId(response?.data?.cartItems?.map((data, i) => {
+          return data?.product_id
+        }))
+    })
+}, [location])
+
+
+// useEffect(() => {
+//   console.log('eitu e hoi clg', cartProductId)
+// }, [cartProductId])
 
 
   return (
@@ -45,7 +71,7 @@ function App() {
       <div className="relative">
         <Sidebar />
         <Navbar />
-        <div className=' md:mt-16 lg:mt-20 xl:mt-24'>
+        <div className=' md:mt-16 lg:mt-20 xl:mt-[90px]'>
           <Routes>
 
 

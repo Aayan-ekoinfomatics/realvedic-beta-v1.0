@@ -9,10 +9,18 @@ import { useRecoilState } from 'recoil'
 import ProductCard from '../individual-components/ProductCard'
 import search from '../../assets/icons/search.svg'
 import RecentlyViewd from '../individual-components/RecentlyViewd'
+import cartProductIDs from '../../recoil/atoms/cartProductsIDs'
+import down from '../../assets/icons/down_arrow.svg'
+import tabData from '../../mockApi/categoryTabs'
+import CategoryTabs from '../landing-page-components/CategoryTabs'
 
 const AllProductsView = () => {
 
     const [allproductsApiData, setAllproductsApiData] = useState();
+
+    const [cartProductId, setCartProductId] = useRecoilState(cartProductIDs)
+
+    const [categoryDropDown, setCategoryDropDown] = useState(null);
 
     const [searchData, setSearchData] = useState('');
 
@@ -20,28 +28,35 @@ const AllProductsView = () => {
 
     useEffect(() => {
 
-        axios.get(VITE_BASE_LINK + 'categoryPage?category='+ params?.category_id ).then((response) => { 
+        axios.get(VITE_BASE_LINK + 'categoryPage?category=' + params?.category_id + "&token=" + localStorage.getItem('token')).then((response) => {
             console.log(response?.data)
             setAllproductsApiData(response?.data)
         })
     }, [params])
 
-    // useEffect(() => {
-    //     console.log(params)
-    // }, [allproductsApiData])
+
+
+
+
+    useEffect(() => {
+        console.log("allproductsApiData", allproductsApiData?.products?.length > 0)
+    }, [allproductsApiData])
 
 
 
     return (
         <div className='w-full mb-5'>
 
+            <CategoryTabs />
+
             {/* banner */}
             <div className='w-full flex justify-center items-center relative bg-[color:var(--primary-color)] mb-4'>
-                <img src={VITE_BASE_LINK + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" />
+                {/* <img src={VITE_BASE_LINK + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" /> */}
+                <img src="../bannerNew.jpg" className='w-full object-cover bg-bottom' alt="" />
                 <h1 className='text-[20px] md:text-[40px] xl:text-[65px] poppins absolute bottom-[30%] md:bottom-[80px] left-[5%] md:left-[40px] font-[600]'>{allproductsApiData?.category}</h1>
             </div>
 
-            <div className='w-full flex justify-between items-center px-4 lg:px-8'>
+            {/* <div className='w-full flex justify-between items-center px-4 lg:px-8'>
                 <div className='border border-[#696969b6] rounded-[15px] bg-white flex px-2 py-2 w-full max-w-[150px] md:max-w-[300px]'>
                     <span className=' flex justify-center items-center'><img src={search} className="w-[16px]" /></span><input className='rounded-[15px] text-[13px] poppins w-full outline-none pl-2' placeholder='Search Products' onChange={(e) => {
                         setSearchData(e?.target?.value)
@@ -50,19 +65,41 @@ const AllProductsView = () => {
                 <div className='w-fit flex justify-center items-center gap-1'>
                     <h1 className='poppins text-[12px]'>Total Products : <span className='poppins text-[13px] font-[500]'>{allProducts?.products?.length}</span></h1>
                 </div>
-            </div>
+            </div> */}
 
-            <div className='w-full flex gap-4 pt-10 pb-10'>
+            <div className='w-full flex gap-4 pb-10 px-5'>
 
                 {/* filters */}
-                <div className='hidden md:block w-[20%] bg- px-2 pt-4 poppins'>
+                <div className='hidden md:block w-[30%] lg:w-[20%] bg- px-2 pt-4 poppins'>
                     <div className='w-full sticky top-[150px]'>
-                        <h1 className='text-[17px] pb-4'>Filters</h1>
+                        <h1 className='text-[17px] pb-4'>Categories</h1>
                         {
-                            allProducts?.filters?.map((data, i) => (
-                                <div key={i} className='w-full py-3 flex justify-between items-center border-b'>
-                                    <label className='text-[13px]' htmlFor={data?.title}>{data?.title}</label>
-                                    <input type="checkbox" name={data?.title} className='w-[10px]' />
+                            allProducts?.categories?.map((data, i) => (
+                                <div key={i} className='w-full py-3 flex flex-col justify-center items-center border-b'>
+                                    <div className='text-[13px] w-full flex justify-between items-center' htmlFor={data?.title} onClick={() => categoryDropDown === data?.title ? setCategoryDropDown(null) : setCategoryDropDown(data?.title)}>
+                                        <h1 className='text-[13px]'>{data?.title}</h1>
+                                        <div className='cursor-pointer'>
+                                            <div className='w-fit'>
+                                                <img src={down} className='w-[20px]' alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={`w-full flex justify-center items-center top-[80%] overflow-hidden transition-all duration-300 ${categoryDropDown === data?.title ? 'max-h-[500px] overflow-y-scroll' : 'max-h-0'}`}>
+                                        <div className='w-full flex flex-col mt-2 pl-2'>
+                                            {
+                                                data?.products?.map((sub_data, sub_index) => (
+                                                    <div key={sub_index} className='w-full mb-1 flex justify-start items-center gap-3'>
+                                                        <div className='w-fit'>
+                                                            <img src={sub_data?.image} className='w-[35px]' alt="" />
+                                                        </div>
+                                                        <div>
+                                                            <h1 className='text-[12px]'>{sub_data?.title}</h1>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
                             ))
                         }
@@ -72,34 +109,44 @@ const AllProductsView = () => {
                 {/* products */}
                 <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 mt-10 px-4 md:pr-4'>
                     {
-                        allproductsApiData?.products?.length > 0 ? 
-                        // allProducts?.products?.length > 0 ?
+                        allproductsApiData?.products?.length > 0 ?
+                            // allProducts?.products?.length > 0 ?
                             <>
                                 {
                                     // allProducts?.products
-                                    allproductsApiData?.products
-                                        .filter((filterValue) => {
-                                            if (searchData === '') {
-                                                return filterValue
-                                            } else if (filterValue?.title?.toLowerCase().includes(searchData?.toLowerCase())) {
-                                                return filterValue
-                                            }
-                                        })
-                                        .map((data, i) => (
 
-                                            <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} />
-                                        ))
+                                    // .filter((filterValue) => {
+                                    //     if (searchData === '') {
+                                    //         return filterValue
+                                    //     } else if (filterValue?.title?.toLowerCase().includes(searchData?.toLowerCase())) {
+                                    //         return filterValue
+                                    //     }
+                                    // })
+                                    allproductsApiData?.products?.map((data, i) => {
+                                        return (
+                                            <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} status={data?.cart_status} />
+                                        )
+                                        // console.log('lalalalalalalalalal', cartProductId?.includes(data?.id))
+                                        // if (cartProductId?.includes(data?.id)) {
+                                        //     return (
+
+                                        //         <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} />
+                                        //     )
+                                        // } else {
+                                        //     return 'aaaaa'
+                                        // }
+                                    })
                                 }
                             </>
                             :
-                            <div className=' border'>
+                            <div className='w-[80vw] mx-auto flex justify-center items-center border'>
                                 <h1 className='w-fit'>no products</h1>
                             </div>
                     }
                 </div>
             </div>
             {
-                allProducts?.category === 'All Products' ?
+                allproductsApiData?.category === 'All Products' ?
                     ''
                     :
                     <RecentlyViewd />

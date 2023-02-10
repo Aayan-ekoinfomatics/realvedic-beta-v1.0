@@ -1,8 +1,29 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { VITE_BASE_LINK } from '../../../baseLink'
 import tick from '../../assets/icons/tick-green.svg'
 import item from '../../assets/images/about-us.png'
 
 const SingleOrderDetails = () => {
+
+    const params = useParams();
+
+    const [orderData, setOrderData] = useState();
+
+    useEffect(() => {
+        let formdata = new FormData();
+        formdata.append('token', localStorage.getItem('token'))
+        formdata.append('order_id', params?.order_id)
+        axios.post(VITE_BASE_LINK + 'single_order_view', formdata).then((response) => {
+            // console.log(response?.data)
+            setOrderData(response?.data)
+        })
+    }, [])
+
+    useEffect(() => {
+        console.log(orderData)
+    }, [orderData])
 
     const order_details = {
         status: 'Delivered',
@@ -43,25 +64,25 @@ const SingleOrderDetails = () => {
                         <div className='w-full max-w-[200px]'>
 
                             <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                                <div className='w-full flex gap-4 justify-center items-center'>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' ? 'grayscale-100' : 'grayscale'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
                                     <div className='w-full text-[16px] font-[600]'>Order received</div>
                                 </div>
-                                <div className='w-full flex gap-4 justify-center items-center'>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' || orderData?.order_details?.status === 'Dispatched' ? 'grayscale-100' : 'grayscale'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
                                     <div className='w-full text-[16px] font-[600]'>Order procesed</div>
                                 </div>
-                                <div className='w-full flex gap-4 justify-center items-center'>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' || orderData?.order_details?.status === 'Dispatched' || orderData?.order_details?.status === 'On the Way' ? 'grayscale-100' : 'grayscale'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
                                     <div className='w-full text-[16px] font-[600]'>Dispatched</div>
                                 </div>
-                                <div className='w-full flex gap-4 justify-center items-center'>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' || orderData?.order_details?.status === 'Dispatched' || orderData?.order_details?.status === 'On the Way' || orderData?.order_details?.status === 'Delivered' ? 'grayscale-100' : 'grayscale'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
@@ -81,15 +102,15 @@ const SingleOrderDetails = () => {
                         <h1 className='text-center text-[18px] md:text-[22px] font-[500] mb-7'>Items</h1>
                         <div className='w-full'>
                             {
-                                order_details?.items?.map((data, i) => (
+                                orderData?.order_details?.items?.map((data, i) => (
                                     <div key={i} className='flex gap-3 justify-start items-center mb-10'>
                                         <div className='w-fit'>
-                                            <img src={data?.image} className='w-full max-w-[220px]' alt="" />
+                                            <img src={VITE_BASE_LINK + data?.image} className='w-full max-w-[220px]' alt="" />
                                         </div>
                                         <div className='w-full flex flex-col justify-start items-center'>
                                             <div className='w-full flex justify-between isolate md:flex-col'>
                                                 <h1 className='text-[13px] md:text-[15px] font-[500]'>{data?.title}</h1>
-                                                <h1 className='text-[13px] font-[300]'>Rs {data?.price}</h1>
+                                                {/* <h1 className='text-[13px] font-[300]'>Rs {data?.price_per_unit}</h1> */}
                                             </div>
                                             <div className='w-full'>
                                                 <div className='w-full flex justify-between items-start'>
@@ -98,11 +119,11 @@ const SingleOrderDetails = () => {
                                                 </div>
                                                 <div className='w-full flex justify-between items-start'>
                                                     <h1 className='text-[14px] text-[#696969b6] font-[300]'>Pack Size</h1>
-                                                    <h1 className='text-[13px] font-[300]'>{data?.weight}gm</h1>
+                                                    <h1 className='text-[13px] font-[300]'>{data?.size}gm</h1>
                                                 </div>
                                                 <div className='w-full flex justify-between items-start'>
                                                     <h1 className='text-[14px] font-[500]'>Total</h1>
-                                                    <h1 className='text-[16px] font-[500]'>Rs {data?.price}</h1>
+                                                    <h1 className='text-[16px] font-[500]'>Rs {data?.price_per_unit}</h1>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,13 +138,13 @@ const SingleOrderDetails = () => {
                 <div className='w-[90%] md:w-[70%] xl:w-[60%] mx-auto bg-[#eeeeeeb6] px-8 md:px-20 py-10 md:py-12 shadow-lg'>
                     <div className='w-full'>
                         <h1 className='text-[15px] font-[500] mb-3'>Delivery Address</h1>
-                        <h1 className='text-[15px] font-[300]'>{order_details?.customer_name},</h1>
-                        <h1 className='text-[15px] font-[300]'><span className='mr-2'>{order_details?.phone_code}</span>{order_details?.phone_number},</h1>
-                        <h1 className='text-[15px] font-[300]'>{order_details?.address_line_1},</h1>
-                        <h1 className='text-[15px] font-[300]'>{order_details?.address_line_2},</h1>
-                        <h1 className='text-[15px] font-[300]'>{order_details?.city}, {order_details?.state}</h1>
-                        <h1 className='text-[15px] font-[300]'>{order_details?.pincode}</h1>
-                        <h1 className='text-[15px] font-[300] mb-6'>{order_details?.country}</h1>
+                        <h1 className='text-[15px] font-[300]'>{orderData?.customer_name},</h1>
+                        <h1 className='text-[15px] font-[300]'><span className='mr-2'>{orderData?.phone_code}</span>{orderData?.phone_number},</h1>
+                        <h1 className='text-[15px] font-[300]'>{orderData?.address_line_1},</h1>
+                        <h1 className='text-[15px] font-[300]'>{orderData?.address_line_2},</h1>
+                        <h1 className='text-[15px] font-[300]'>{orderData?.city}, {orderData?.state}</h1>
+                        <h1 className='text-[15px] font-[300]'>{orderData?.pincode}</h1>
+                        <h1 className='text-[15px] font-[300] mb-6'>{orderData?.country}</h1>
                         <h1 className='text-[15px] font-[500]'>Mode of Payment</h1>
                         <h1 className='text-[15px] font-[300]'>Other payment options</h1>
                     </div>

@@ -31,12 +31,12 @@ const CartPage = () => {
         let formdata = new FormData();
         formdata.append('token', localStorage.getItem('token'))
         axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
-            // console.log(response?.data)
+            console.log(response?.data)
             setCartDataApi(response?.data)
         })
     }, [])
 
-    useEffect(() => { console.log(cartDataApi) }, [cartDataApi])
+    // useEffect(() => { console.log(cartDataApi) }, [cartDataApi])
 
 
     return (

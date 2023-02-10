@@ -33,7 +33,7 @@ const CategoryTabs = () => {
 
   return (
     <>
-    <div className='flex w-full h-full items-center justify-between gap-5 px-2 md:px-4 py-3 md:py-6 overflow-x-scroll scrollbar-hide'>
+    {/* <div className='flex w-full h-full items-center justify-between gap-5 px-2 md:px-4 py-3 md:py-6 overflow-x-scroll scrollbar-hide'>
         {
             landingApiData?.tab?.map((data, i) => (
                 <Link to={`all-products/` + data?.id} key={i} className={`w-full flex items-center min-w-[130px] md:min-w-[222px] rounded-[13px] pl-3 pr-1 py-1 justify-between`} style={{backgroundColor: data?.color}}>
@@ -42,6 +42,21 @@ const CategoryTabs = () => {
                     </div>
                     <div className='w-fit'>
                         <img src={VITE_BASE_LINK + data?.image} className='' alt="" />
+                    </div>
+                </Link>
+            ))
+        }
+    </div> */}
+
+    <div className='flex w-full h-full items-center justify-between gap-5 px-2 xl:px-20 pb-3 pt-3 overflow-x-scroll scrollbar-hide sticky top-[9%] bg-white z-[200] shadow-md'>
+        {
+            tabData?.tab?.map((data, i) => (
+                <Link to={`/all-products/` + data?.id} key={i} className={`w-full flex flex-col lg:flex-row items-center hover:bg-[#e6e6e6] px-2 py-1 pb-2 justify-center gap-3 ${data?.title === 'Noodles & Pasta' ? '' : 'border-r'}`}>
+                    <div className='w-fit h-full'>
+                        <img src={data?.image} className='w-[30px]' alt="" />
+                    </div>
+                    <div className='text-center w-fit h-full'>
+                        <h1 className='helvetica text-[12px] font-[500] poppins pt-1'>{data?.title}</h1>
                     </div>
                 </Link>
             ))

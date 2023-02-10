@@ -17,13 +17,10 @@ const MyAccount = () => {
 
     return (
         <div className='w-full flex flex-col md:flex-row gap-20 md:gap-0 justify-center items-start'>
-            <div className='w-full md:max-w-[200px] md:mt-20 md:pl-5 fixed top-[10%] md:top-[10%] md:left-0 bg-white z-[100] md:bg-transparent shadow-md md:shadow-none py-4 md:py-0 '>
-                {/* <h1 className='text-[30px] font-[700] pb-5 text-center md:text-left'>Account</h1> */}
+            <div className='w-full md:max-w-[200px] md:mt-20 md:pl-5 fixed top-[13%] md:left-0 bg-white z-[100] md:bg-transparent shadow-md md:shadow-none py-4 md:py-0 '>
                 <div className='w-full grid grid-cols-2 justify-items-center gap-2 md:block poppins'>
                     <h1 className={`text-[13px] md:text-[14px] xl:text-[16px] py-1 cursor-pointer ${ view === 'accountDetails' ? 'font-[700]' : ''}`} onClick={() => setView('accountDetails')}>Account Details</h1>
                     <h1 className={`text-[13px] md:text-[14px] xl:text-[16px] py-1 cursor-pointer ${ view === 'orderDetails' ? 'font-[700]' : ''}`} onClick={() => setView('orderDetails')}>My Orders</h1>
-                    {/* <h1 className='text-[13px] md:text-[14px] xl::text-[16px] py-1'>Contact Us</h1>
-                    <h1 className='text-[13px] md:text-[14px] xl::text-[16px] py-1'>Payment</h1> */}
                 </div>
             </div>
             {

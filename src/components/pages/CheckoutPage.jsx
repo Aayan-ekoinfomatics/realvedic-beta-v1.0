@@ -54,6 +54,7 @@ const CheckoutPage = () => {
             bodyData.append("response", JSON.stringify(response));
             bodyData.append("token", localStorage.getItem("token"));
             bodyData.append("amount", checkoutData?.final_price);
+            bodyData.append("items", JSON.stringify(checkoutData?.items))
 
             await axios({
                 url: VITE_BASE_LINK + `handle_payment_success`,

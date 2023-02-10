@@ -3,7 +3,7 @@ import back from '../../assets/icons/back_button.svg'
 import fb from '../../assets/icons/facebook.svg'
 import gmail from '../../assets/icons/gmail.svg'
 import twitter from '../../assets/icons/twitter.svg'
-import product_data from '../../mockApi/singleProductApi'
+// import product_data from '../../mockApi/singleProductApi'
 import down from '../../assets/icons/down_arrow.svg'
 import Slider from 'react-slick'
 import leaf from '../../assets/icons/leaf.svg'
@@ -14,6 +14,8 @@ import axios from 'axios'
 import { VITE_BASE_LINK } from '../../../baseLink'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import allProducts from '../../mockApi/allProductsView'
+import arrow_down from '../../assets/icons/arrow_icon.svg'
 
 const SingleProduct = () => {
 
@@ -22,6 +24,8 @@ const SingleProduct = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const [productData, setProductData] = useState();
+
+    const [categoryDropDown, setCategoryDropDown] = useState(null);
 
     const navigate = useNavigate();
 
@@ -64,14 +68,54 @@ const SingleProduct = () => {
     useEffect(() => {
         console.log(productData)
         console.log(packSizeSelect)
+        // console.log(productData?.product_details?.pack_size[selectedWeightIndex])
     }, [productData])
 
 
     return (
-        <div className='w-full mb-4'>
+        <div className='w-full flex gap-3'>
+            <div className='hidden md:block w-full max-w-[200px] lg:max-w-[250px] bg-white bg- px-2 pt-[130px] top-0 poppins sticky left-[1%] h-fit'>
+                <div className='w-full '>
+                    <h1 className='text-[17px] pb-4'>Categories</h1>
+                    {
+                        allProducts?.categories?.map((data, i) => (
+                            <div key={i} className='w-full py-3 flex flex-col justify-center items-center border-b'>
+                                <div className='text-[13px] w-full flex justify-between items-center' htmlFor={data?.title} onClick={() => categoryDropDown === data?.title ? setCategoryDropDown(null) : setCategoryDropDown(data?.title)}>
+                                    <h1 className='text-[13px]'>{data?.title}</h1>
+                                    <div className='cursor-pointer'>
+                                        <div className='w-fit'>
+                                            <img src={down} className='w-[20px]' alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={`w-full flex justify-center items-center top-[80%] overflow-hidden transition-all duration-300 ${categoryDropDown === data?.title ? 'max-h-[500px] overflow-y-scroll' : 'max-h-0'}`}>
+                                    <div className='w-full flex flex-col mt-2 pl-2'>
+                                        {
+                                            data?.products?.map((sub_data, sub_index) => (
+                                                <div key={sub_index} className='w-full mb-1 flex justify-start items-center gap-3'>
+                                                    <div className='w-fit'>
+                                                        <img src={sub_data?.image} className='w-[35px]' alt="" />
+                                                    </div>
+                                                    <div>
+                                                        <h1 className='text-[12px]'>{sub_data?.title}</h1>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+
+        <div className='w-full mb-4 relative pr-3 pt-5'>
+
+
 
             {/* header */}
-            <div className=' w-full flex justify-between items-center px-4 xl:px-16 mt-10 md:mt-[150px] xl:mt-[190px] mb-10'>
+            <div className=' w-full flex justify-between items-center px-4 xl:px-16 mt-10 mb-10'>
                 <div className='w-full max-w-[20px]'>
                     <img src={back} className='w-[10px] md:w-[13px] xl:w-[15px] cursor-pointer' alt="" onClick={() => navigate(-1)} />
                 </div>
@@ -93,11 +137,12 @@ const SingleProduct = () => {
                 </div>
             </div>
 
+
             {/* product details desktop */}
-            <div className='hidden w-full md:flex px-5 xl:px-16 pb-10'>
+            <div className='hidden w-full md:flex md:flex-col lg:flex-row px-5 xl:px-16 pb-10'>
 
                 {/* product images */}
-                <div className='w-[60%] flex justify-end'>
+                <div className='flex-1 min-h-[400px] lg:w-[60%] flex justify-end'>
 
                     {/* vertical images */}
                     <div className='w-[20%] flex flex-col justify-center xl:justify-evenly items-end'>
@@ -119,20 +164,20 @@ const SingleProduct = () => {
                 </div>
 
                 {/* product description */}
-                <div className='w-[30%] flex justify-center items-center xl:pr-20'>
+                <div className='flex-1 lg:w-[40%] flex justify-center items-center '>
                     <div className='w-full max-w-[620px]'>
-                        <h1 className='poppins text-[30px] py-2 font-[600]'>{productData?.product_details?.title}</h1>
+                        <h1 className='poppins text-[25px] py-2 font-[600]'>{productData?.product_details?.title}</h1>
                         <div className='w-full py-2 mt-2'>
-                            <p className='poppins text-[17px]'>{productData?.product_details?.description}</p>
+                            <p className='poppins text-[14px]'>{productData?.product_details?.description}</p>
                         </div>
                         <div className='w-full'>
                             <div className='w-full mt-4'>
-                                <p className='text-[25px] font-[500] line-through'>₹ {packSizeSelect?.price}</p>
+                                <p className='text-[20px] font-[500] line-through'>₹ {packSizeSelect?.price}</p>
                             </div>
                             <div className='w-full flex justify-between'>
-                                <div className='w-full flex gap-3'>
-                                    <p className='text-[25px] font-[500] popins opacity-60'>Offer Price :-</p>
-                                    <p className='text-[25px] font-[500] popins'>₹ {packSizeSelect?.Offer_price}</p>
+                                <div className='w-full flex items-center gap-3'>
+                                    <p className='text-[14px] font-[500] popins opacity-60'>Offer Price :-</p>
+                                    <p className='text-[20px] font-[500] popins'>₹ {packSizeSelect?.Offer_price}</p>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +209,7 @@ const SingleProduct = () => {
                             }}>-</div> */}
 
 
-                            <div className='w-full text-[23px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center' onClick={() => {
+                            <div className='w-full text-[18px]  py-[10px] font-[500] bg-[color:var(--button-primary)] shadow-md active:scale-[0.96] flex justify-center items-center' onClick={() => {
                                 let formdata = new FormData();
                                 formdata.append('product_id', productData?.product_details?.id);
                                 formdata.append('token', localStorage.getItem('token'));
@@ -223,18 +268,18 @@ const SingleProduct = () => {
                         <div className='w-full mt-6 relative'>
                             <p className='text-[20px] font-[500] pb-3'>Pack Sizes</p>
                             <div className='w-full flex justify-between pb-4'>
-                                <div className='w-fit font-[500] py-[10px] text-[15px] poppins flex justify-center items-center bg-[color:var(--primary-color)] pl-2'>{packSizeSelect?.weight}{packSizeSelect?.weight === '1' ? <span>kg</span> : <span>m</span>}</div>
-                                <div className='w-full text-[23px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center'>Rs {packSizeSelect?.price}</div>
-                                <div className='w-fit px-4 text-[30px] poppins flex justify-center items-center bg-[#C57963] cursor-pointer' onClick={() => setDropdownOpen(!dropdownOpen)}>
-                                    <img src={down} className='w-[22px]' alt="" />
+                                <div className='w-fit font-[500] py-[10px] text-[15px] poppins flex justify-center items-center bg-gray-200 pl-2'>{packSizeSelect?.weight}{packSizeSelect?.weight === '1' ? <span>kg</span> : <span>m</span>}</div>
+                                <div className='w-full text-[20px] py-[10px] font-[500] bg-gray-200 flex justify-center items-center'>Rs {packSizeSelect?.price}</div>
+                                <div className='w-fit px-4 text-[30px] poppins flex justify-center items-center bg-[color:var(--button-primary)] cursor-pointer' onClick={() => setDropdownOpen(!dropdownOpen)}>
+                                    <img src={arrow_down} className='w-[22px] rotate-180 opacity-80' alt="" />
                                 </div>
                             </div>
 
                             {/* dropdown */}
-                            <div className={`w-full mx-auto absolute top-0 mt-[98px] shadow-md bg-[color:var(--primary-color)] opacity-70 transition-all duration-300 z-[500] ${dropdownOpen ? 'h-[200px] overflow-y-scroll ease-in py-2' : 'h-0 ease-out overflow-hidden p-0'}`}>
+                            <div className={`w-full mx-auto absolute top-0 mt-[98px] shadow-md bg-gray-200 transition-all duration-300 z-[500] ${dropdownOpen ? 'h-[200px] overflow-y-scroll ease-in py-2' : 'h-0 ease-out overflow-hidden p-0'}`}>
                                 {
                                     productData?.product_details?.pack_size?.map((data, i) => (
-                                        <div key={i} className='w-full flex justify-between py-3 border-b cursor-pointer active:scale-[0.99] active:bg-[#C57963] px-4' onClick={() => {
+                                        <div key={i} className='w-full flex justify-between py-3 border-b border-[#cecece] cursor-pointer active:scale-[0.99] active:bg-[#C57963] px-4' onClick={() => {
                                             setPackSizeSelect(data)
                                             setDropdownOpen(false)
                                         }}>
@@ -259,7 +304,7 @@ const SingleProduct = () => {
             <div className='block md:hidden w-full px-4 '>
 
                 {/* slider */}
-                <div className='w-full'>
+                <div className='w-full min-h-[200px]'>
                     < Slider
                         className="w-full overflow-hidden"
                         dotsClass="slick-dots"
@@ -286,14 +331,14 @@ const SingleProduct = () => {
                 </div>
 
                 {/* prices */}
-                <div className='w-full mt-4'>
+                <div className='w-full mt-4 border border-red-500'>
                     <div className='w-full'>
                         <p className='text-[23px] font-[500] line-through'>₹ {packSizeSelect?.price}</p>
                     </div>
                     <div className='w-full flex justify-between'>
                         <div className='w-full flex gap-3'>
                             <p className='text-[23px] font-[500] popins opacity-60'>Offer Price :-</p>
-                            <p className='text-[23px] font-[500] popins'>₹ {packSizeSelect?.offer_price}</p>
+                            <p className='text-[23px] font-[500] popins'>₹ {packSizeSelect?.Offer_price}</p>
                         </div>
                     </div>
                 </div>
@@ -319,7 +364,7 @@ const SingleProduct = () => {
                     {/* dropdown */}
                     <div className={`w-full mx-auto absolute top-0 mt-[98px] shadow-md bg-[#ffe2d7] transition-all duration-300 z-[500] ${dropdownOpen ? 'h-[200px] overflow-y-scroll ease-in py-2' : 'h-0 ease-out overflow-hidden p-0'}`}>
                         {
-                            productData?.product_details?.pack_sizes?.map((data, i) => (
+                            productData?.product_details?.pack_size?.map((data, i) => (
                                 <div key={i} className='w-full flex justify-between py-3 border-b cursor-pointer active:scale-[0.99] active:bg-[#C57963] px-4' onClick={() => {
                                     setPackSizeSelect(data)
                                     setDropdownOpen(false)
@@ -412,6 +457,7 @@ const SingleProduct = () => {
 
             {/* recently viewed */}
             <RecentlyViewd />
+        </div>
         </div>
     )
 }

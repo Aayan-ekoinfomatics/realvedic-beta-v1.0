@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { VITE_BASE_LINK } from '../../../baseLink';
-import DatePicker from 'react-date-picker';
 import { toast } from 'react-toastify';
 
 const AccountDetails = () => {
