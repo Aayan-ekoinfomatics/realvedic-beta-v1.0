@@ -1,15 +1,18 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useRecoilState } from 'recoil'
 import { VITE_BASE_LINK } from '../../../baseLink'
 import cartPageAtom from '../../recoil/atoms/cartPageAtom'
 import arrow from '../../assets/images/down-arrow.png'
+import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom'
 
 const ProductCard = (props) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
+
+    const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
     const [variantDropdown, setVariantDropdown] = useState(false);
 
@@ -17,10 +20,14 @@ const ProductCard = (props) => {
 
     const [cartData, setCartData] = useRecoilState(cartPageAtom)
 
+    const location = useLocation();
+
 
     useEffect(() => {
-        console.log(props)
-    }, [props]);
+        console.log("cartData", cartData)
+
+     
+    }, [cartData]);
 
 
     return (
@@ -31,11 +38,11 @@ const ProductCard = (props) => {
                     <img src={VITE_BASE_LINK + props?.image} className='w-full' alt="" />
                 </Link>
                 <div className='w-full flex justify-between items-center mt-1'>
-                    <div className='w-[60%]'>
+                    <div className='w-full lg:w-[51%] xl:w-auto'>
                         <h1 className='poppins text-[13px]'>{props?.title}</h1>
                     </div>
                     <div className='w-fit pt-1 px-[6px] flex justify-end items-center relative gap-2 cursor-pointer' onClick={() => {
-                        console.log('clicked')
+                        // console.log('clicked')
                         setVariantDropdown(!variantDropdown);
                         if (selectedProductID) {
                             setSelectedProductID(null);
@@ -105,20 +112,26 @@ const ProductCard = (props) => {
                                                         })
                                                     })
                                                     await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
-                                                        // console.log(response?.data)
+                                                        console.log(response?.data)
                                                         setCartData(response?.data)
                                                     })
+                                                    if (location?.pathname === "/") {
+                                                        await axios.get(VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
+                                                            // console.log(response?.data)
+                                                            setLandingApiData(response?.data)
+                                                        })
+                                                    }
                                                 }}>-</button>
-                                                <p className='text-[17px] font-[500] w-full max-w-[100px] bg-white border border-[#696969] px-6'>
+                                                <span className='text-[17px] font-[500] w-full max-w-[100px] bg-white border border-[#696969] px-6'>
                                                     {
                                                         cartData?.cartItems?.map((data, i) => {
                                                             if (data?.product_id == props?.id) {
-                                                                return <h1>{data?.quantity}</h1>
+                                                                return <h1 key={i}>{data?.quantity}</h1>
                                                             }
                                                         })
                                                     }
-                                                </p>
-                                                <button className='text-[18px] px-2 bg-[#b4b4b4]' onClick={ async () => {
+                                                </span>
+                                                <button className='text-[18px] px-2 bg-[#b4b4b4]' onClick={async () => {
                                                     let formdata = new FormData()
                                                     formdata.append('prod_id', props?.id)
                                                     formdata.append('token', localStorage.getItem('token'))
@@ -140,6 +153,12 @@ const ProductCard = (props) => {
                                                         // console.log(response?.data)
                                                         setCartData(response?.data)
                                                     })
+                                                    if (location?.pathname === "/") {
+                                                        await axios.get(VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
+                                                            // console.log(response?.data)
+                                                            setLandingApiData(response?.data)
+                                                        })
+                                                    }
                                                 }}>+</button>
                                             </div>
                                         </div>
@@ -152,13 +171,13 @@ const ProductCard = (props) => {
                                             </div>
                                             <button className='bg-[#FCF55C] w-full max-w-[80px] active:bg-[#f5ec4b] px-3 shadow-md py-[2px] poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={async () => {
                                                 let formdata = new FormData();
-                                                console.log(props.id)
+                                                // console.log(props.id)
                                                 formdata.append('product_id', props?.id);
                                                 formdata.append('token', localStorage.getItem('token'));
                                                 formdata.append('size', props?.weight[activeIndex]);
                                                 formdata.append('price', props?.price[activeIndex]),
-                                                await axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
-                                                        console.log(response?.data)
+                                                    await axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
+                                                        // console.log(response?.data)
                                                         if (response?.data?.status === true) {
                                                             toast.success(response?.data?.message, {
                                                                 position: "top-right",
@@ -170,13 +189,19 @@ const ProductCard = (props) => {
                                                                 theme: "light",
                                                             })
                                                         } else {
-                                                            console.log('sklnaso')
+                                                            // console.log('sklnaso')
                                                         }
                                                     })
                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
-                                                    console.log(response?.data)
+                                                    // console.log(response?.data)
                                                     setCartData(response?.data)
                                                 })
+                                                if (location?.pathname === "/") {
+                                                    await axios.get(VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
+                                                        // console.log(response?.data)
+                                                        setLandingApiData(response?.data)
+                                                    })
+                                                }
                                             }}>+ ADD</button>
                                         </div>
                                 }
@@ -190,13 +215,13 @@ const ProductCard = (props) => {
                                 </div>
                                 <button className='bg-[#FCF55C] w-full max-w-[80px] active:bg-[#f5ec4b] px-3 shadow-md py-[2px] poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]' onClick={async () => {
                                     let formdata = new FormData();
-                                    console.log(props.id)
+                                    // console.log(props.id)
                                     formdata.append('product_id', props?.id);
                                     formdata.append('token', localStorage.getItem('token'));
                                     formdata.append('size', props?.weight[activeIndex]);
                                     formdata.append('price', props?.price[activeIndex]),
                                         await axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
-                                            console.log(response?.data)
+                                            // console.log(response?.data)
                                             if (response?.data?.status === true) {
                                                 toast.success(response?.data?.message, {
                                                     position: "top-right",
@@ -208,13 +233,19 @@ const ProductCard = (props) => {
                                                     theme: "light",
                                                 })
                                             } else {
-                                                console.log('sklnaso')
+                                                // console.log('sklnaso')
                                             }
                                         })
-                                        await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                    await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                        // console.log(response?.data)
+                                        setCartData(response?.data)
+                                    })
+                                    if (location?.pathname === "/") {
+                                        await axios.get(VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
                                             // console.log(response?.data)
-                                            setCartData(response?.data)
+                                            setLandingApiData(response?.data)
                                         })
+                                    }
                                 }}>+ ADD</button>
                             </div>
                     }

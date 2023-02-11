@@ -14,10 +14,11 @@ import TopSellers from '../landing-page-components/TopSellers'
 
 const LandingPage = () => {
 
+
     const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
     useEffect(() => {
-        axios.get( VITE_BASE_LINK + 'write_data').then((response) => {
+        axios.get( VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
           // console.log(response?.data)
           setLandingApiData(response?.data)
         })

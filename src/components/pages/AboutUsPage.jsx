@@ -12,13 +12,7 @@ const AboutUsPage = () => {
             message:
                 "Technocrat entrepreneur with over 20+ years experience. He is the founder and CEO of EKO Infomatics Solutions. Head of Decision Science Team at GE and VP Research and Analytics at WNS. He dons many hats and loves the challenges of a startup.",
         },
-        {
-            name: "Rangarajan Venkatraman",
-            designation: "Co-Founder & CEO",
-            profile_img: picture,
-            message:
-                "Entrepreneur with over 10 years of experience in the hospitality industry. His foray began in 2010 when he entered his family's F&B outfit. He has built and managed operations for several businesses in the F&B sector. He specializes in manufacturing, operations and process development.",
-        },
+        // 3215
         {
             name: "Rajlaxmi Shivram",
             designation: "Head of Product Development",
@@ -26,16 +20,10 @@ const AboutUsPage = () => {
             message:
                 "Ex-Portfolio head in the Ecommerce vertical in HDFC Bank and has an overall experience of around 20 years. She loves dabbling in new ideas. Being a mother of a toddler, she has been trying hard to get her hands on healthy options in the market and aims to bridge that gap through Realvedic products. ",
         },
-        {
-            name: "Rangarajan Venkatraman",
-            designation: "Co-Founder & CEO",
-            profile_img: picture,
-            message:
-                "Entrepreneur with over 10 years of experience in the hospitality industry. His foray began in 2010 when he entered his family's F&B outfit. He has built and managed operations for several businesses in the F&B sector. He specializes in manufacturing, operations and process development.",
-        },
+        // 3215
     ];
     return (
-        <div className="">
+        <div className="poppins">
             {/* Our story */}
             <div>
                 <div className="w-fit mx-auto pt-10">
@@ -52,13 +40,13 @@ const AboutUsPage = () => {
                     wholesome nutrition in the right amount through guidance and carefully
                     curated products.
                 </p>
-                <h3 className="font-extrabold text-center mt-20 mb-2 text-2xl md:text-3xl  w-[85%] lg:w-[60%] xl:w-[55%] md:w-[70%] mx-auto">
+                <h3 className="font-semibold text-center mt-20 mb-2 text-2xl md:text-3xl  w-[85%] lg:w-[60%] xl:w-[55%] md:w-[70%] mx-auto">
                     A Shloka from the ancient book Sushrutasamhita, Sutrasthan
                 </h3>
                 <p className="mb-14 text-center text-[#5B5B5B] font-extrabold w-[85%] lg:w-[60%] md:w-[70%] mx-auto ">
                     (Chapter 15, Shloka 10)
                 </p>
-                <h3 className="font-extrabold text-center  mb-14 italic text-2xl md:text-3xl w-[85%] lg:w-[60%] md:w-[70%] xl:w-[55%] mx-auto">
+                <h3 className="font-[400px] text-center  mb-14 italic text-2xl md:text-3xl w-[85%] lg:w-[60%] md:w-[70%] xl:w-[55%] mx-auto">
                     ''Samadosha, Samagnischa, Samadhatumalkriyah- Prasannatmendriyamanah,
                     Swasth- a iti abhidhiyate"
                 </h3>

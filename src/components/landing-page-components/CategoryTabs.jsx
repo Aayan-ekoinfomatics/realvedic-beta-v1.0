@@ -48,10 +48,10 @@ const CategoryTabs = () => {
         }
     </div> */}
 
-    <div className='flex w-full h-full items-center justify-between gap-5 px-2 xl:px-20 pb-3 pt-3 overflow-x-scroll scrollbar-hide sticky top-[9%] bg-white z-[200] shadow-md'>
+    <div className='flex w-full h-full items-center justify-between gap-5 px-2 xl:px-20 pb-3 overflow-x-scroll scrollbar-hide sticky top-[71px] bg-white z-[200] shadow-md'>
         {
             tabData?.tab?.map((data, i) => (
-                <Link to={`/all-products/` + data?.id} key={i} className={`w-full flex flex-col lg:flex-row items-center hover:bg-[#e6e6e6] px-2 py-1 pb-2 justify-center gap-3 ${data?.title === 'Noodles & Pasta' ? '' : 'border-r'}`}>
+                <Link to={`/all-products/` + data?.id} key={i} className={`w-full flex flex-col lg:flex-row items-center hover:bg-[#e6e6e6] px-2 pb-2 justify-center gap-3 ${data?.title === 'Noodles & Pasta' ? '' : 'border-r'}`}>
                     <div className='w-fit h-full'>
                         <img src={data?.image} className='w-[30px]' alt="" />
                     </div>

@@ -233,7 +233,7 @@ const Navbar = () => {
                     <div className='w-[70%] flex justify-start items-center gap-14 pl-14'>
                         <div className='w-fit'>
                             <NavLink to='/' className='flex justify-center items-center'>
-                                <img src={logo} className="cursor-pointer w-[90px]" alt="" />
+                                <img src={logo} className="cursor-pointer w-[70px]" alt="" />
                             </NavLink>
                         </div>
                         <div className='w-[70%]'>
@@ -287,7 +287,7 @@ const Navbar = () => {
                                                                 formdata.append('size', data?.size)
                                                                 formdata.append('update_type', '-')
                                                                 await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
-                                                                    console.log(response?.data)
+                                                                    // console.log(response?.data)
                                                                     toast.warn('Item quantity decreased', {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
@@ -299,7 +299,7 @@ const Navbar = () => {
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
-                                                                    console.log(response?.data)
+                                                                    // console.log(response?.data)
                                                                     setCartData(response?.data)
                                                                 })
                                                             }}>-</div>
@@ -312,7 +312,7 @@ const Navbar = () => {
                                                                 formdata.append('size', data?.size)
                                                                 formdata.append('update_type', '+')
                                                                 await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
-                                                                    console.log(response?.data)
+                                                                    // console.log(response?.data)
                                                                     toast.warn('Item quantity increased', {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
@@ -339,7 +339,7 @@ const Navbar = () => {
                                                                 formdata.append('price', data?.unit_price)
                                                                 formdata.append('size', data?.size)
                                                                 await axios.post(VITE_BASE_LINK + 'CartitemDelete', formdata).then((response) => {
-                                                                    console.log(response?.data)
+                                                                    // console.log(response?.data)
                                                                     toast.warn('Item deleted successfully', {
                                                                         position: "top-right",
                                                                         autoClose: 2000,

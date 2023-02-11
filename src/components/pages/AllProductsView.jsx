@@ -18,6 +18,8 @@ const AllProductsView = () => {
 
     const [allproductsApiData, setAllproductsApiData] = useState();
 
+    const [sidebarCategory, setSidebarCategory] = useState();
+
     const [cartProductId, setCartProductId] = useRecoilState(cartProductIDs)
 
     const [categoryDropDown, setCategoryDropDown] = useState(null);
@@ -34,13 +36,16 @@ const AllProductsView = () => {
         })
     }, [params])
 
-
-
-
-
     useEffect(() => {
-        console.log("allproductsApiData", allproductsApiData?.products?.length > 0)
-    }, [allproductsApiData])
+        axios.get(VITE_BASE_LINK + 'NavbarCategoryView').then((response) => {
+            console.log(response?.data)
+            setSidebarCategory(response?.data)
+        })
+    }, [])
+
+    // useEffect(() => {
+    //     console.log("allproductsApiData", allproductsApiData?.products?.length > 0)
+    // }, [allproductsApiData])
 
 
 
@@ -74,34 +79,38 @@ const AllProductsView = () => {
                     <div className='w-full sticky top-[150px]'>
                         <h1 className='text-[17px] pb-4'>Categories</h1>
                         {
-                            allProducts?.categories?.map((data, i) => (
-                                <div key={i} className='w-full py-3 flex flex-col justify-center items-center border-b'>
-                                    <div className='text-[13px] w-full flex justify-between items-center' htmlFor={data?.title} onClick={() => categoryDropDown === data?.title ? setCategoryDropDown(null) : setCategoryDropDown(data?.title)}>
-                                        <h1 className='text-[13px]'>{data?.title}</h1>
-                                        <div className='cursor-pointer'>
-                                            <div className='w-fit'>
-                                                <img src={down} className='w-[20px]' alt="" />
+                            sidebarCategory?.map((data, i) => {
+                            if (data?.category !== 'All Products') {
+                                return (
+                                    <div key={i} className='w-full py-3 flex flex-col justify-center items-center border-b'>
+                                        <div className='text-[13px] w-full flex justify-between items-center' htmlFor={data?.title} onClick={() => categoryDropDown === data?.category ? setCategoryDropDown(null) : setCategoryDropDown(data?.category)}>
+                                            <h1 className='text-[13px]'>{data?.category}</h1>
+                                            <div className='cursor-pointer'>
+                                                <div className='w-fit'>
+                                                    <img src={down} className='w-[20px]' alt="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className={`w-full flex justify-center items-center top-[80%] overflow-hidden transition-all duration-300 ${categoryDropDown === data?.category ? 'max-h-[500px] overflow-y-scroll' : 'max-h-0'}`}>
+                                            <div className='w-full flex flex-col mt-2 pl-2'>
+                                                {
+                                                    data?.items?.map((sub_data, sub_index) => (
+                                                        <Link to={`/single-product/` + sub_data?.id} key={sub_index} className='w-full mb-1 flex justify-start items-center gap-3'>
+                                                            <div className='w-fit'>
+                                                                <img src={VITE_BASE_LINK + sub_data?.image} className='w-[35px]' alt="" />
+                                                            </div>
+                                                            <div>
+                                                                <h1 className='text-[12px]'>{sub_data?.title}</h1>
+                                                            </div>
+                                                        </Link>
+                                                    ))
+                                                }
                                             </div>
                                         </div>
                                     </div>
-                                    <div className={`w-full flex justify-center items-center top-[80%] overflow-hidden transition-all duration-300 ${categoryDropDown === data?.title ? 'max-h-[500px] overflow-y-scroll' : 'max-h-0'}`}>
-                                        <div className='w-full flex flex-col mt-2 pl-2'>
-                                            {
-                                                data?.products?.map((sub_data, sub_index) => (
-                                                    <div key={sub_index} className='w-full mb-1 flex justify-start items-center gap-3'>
-                                                        <div className='w-fit'>
-                                                            <img src={sub_data?.image} className='w-[35px]' alt="" />
-                                                        </div>
-                                                        <div>
-                                                            <h1 className='text-[12px]'>{sub_data?.title}</h1>
-                                                        </div>
-                                                    </div>
-                                                ))
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
+                                )
+                            }
+                        })
                         }
                     </div>
                 </div>

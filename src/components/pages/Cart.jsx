@@ -10,7 +10,7 @@ import cross from "../../assets/icons/cross.svg";
 import down from '../../assets/icons/down-arrow-thin.svg'
 
 
-import cartData from "../../mockApi/cartDataApi";
+// import cartData from "../../mockApi/cartDataApi";
 import axios from "axios";
 import { VITE_BASE_LINK } from "../../../baseLink";
 import { Link } from "react-router-dom";
@@ -31,7 +31,7 @@ const CartPage = () => {
         let formdata = new FormData();
         formdata.append('token', localStorage.getItem('token'))
         axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
-            console.log(response?.data)
+            // console.log(response?.data)
             setCartDataApi(response?.data)
         })
     }, [])
@@ -98,7 +98,7 @@ const CartPage = () => {
                     <div className="w-[85%] mx-auto hidden md:flex gap-20 xl:gap-0 flex-col xl:flex-row pb-4">
 
                         {
-                            cartData?.cartItems?.length > 0 ?
+                            cartDataApi?.cartItems?.length > 0 ?
                                 <>
                                     <div className="w-full">
 
@@ -138,7 +138,7 @@ const CartPage = () => {
                                                                 formdata.append('update_type', '-')
                                                                 await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
                                                                     console.log(response?.data)
-                                                                    toast.warn('Item quantity decreased', {
+                                                                    toast.warn(response?.data?.message, {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
                                                                         hideProgressBar: false,
@@ -165,7 +165,7 @@ const CartPage = () => {
                                                                 formdata.append('update_type', '+')
                                                                 await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
                                                                     console.log(response?.data)
-                                                                    toast.warn('Item quantity increased', {
+                                                                    toast.warn(response?.data?.message, {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
                                                                         hideProgressBar: false,
@@ -200,7 +200,7 @@ const CartPage = () => {
                                                                     formdata.append('price', data?.unit_price)
                                                                     formdata.append('size', data?.size)
                                                                     await axios.post(VITE_BASE_LINK + 'CartitemDelete', formdata).then((response) => {
-                                                                        console.log(response?.data)
+                                                                        // console.log(response?.data)
                                                                         toast.warn('Item deleted successfully', {
                                                                             position: "top-right",
                                                                             autoClose: 2000,
@@ -298,7 +298,7 @@ const CartPage = () => {
                             </div>
 
                             {
-                                cartData?.cartItems?.length > 0 ?
+                                cartDataApi?.cartItems?.length > 0 ?
                                     <div className="flex flex-col md:gap-5   justify-between  items-center md:items-end w-full">
                                         <div className="flex justify-center items-center gap-3">
                                             <h2 className="text-black  text-[17px]">Final Price :</h2>

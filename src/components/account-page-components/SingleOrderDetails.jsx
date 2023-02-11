@@ -64,25 +64,31 @@ const SingleOrderDetails = () => {
                         <div className='w-full max-w-[200px]'>
 
                             <div className='w-full flex flex-col gap-5 justify-center items-center'>
-                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' ? 'grayscale-100' : 'grayscale'}`}>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' ? 'grayscale-100' : 'grayscale text-[#696969b6]'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
                                     <div className='w-full text-[16px] font-[600]'>Order received</div>
                                 </div>
-                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' || orderData?.order_details?.status === 'Dispatched' ? 'grayscale-100' : 'grayscale'}`}>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' && orderData?.order_details?.status === 'Processed' ? 'grayscale-100' : 'grayscale text-[#696969b6]'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
                                     <div className='w-full text-[16px] font-[600]'>Order procesed</div>
                                 </div>
-                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' || orderData?.order_details?.status === 'Dispatched' || orderData?.order_details?.status === 'On the Way' ? 'grayscale-100' : 'grayscale'}`}>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' && orderData?.order_details?.status === 'Dispatched' && orderData?.order_details?.status === 'Processed' ? 'grayscale-100' : 'grayscale text-[#696969b6]'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
                                     <div className='w-full text-[16px] font-[600]'>Dispatched</div>
                                 </div>
-                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' || orderData?.order_details?.status === 'Dispatched' || orderData?.order_details?.status === 'On the Way' || orderData?.order_details?.status === 'Delivered' ? 'grayscale-100' : 'grayscale'}`}>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' && orderData?.order_details?.status === 'Dispatched' && orderData?.order_details?.status === 'On the Way' && orderData?.order_details?.status === 'Processed' ? 'grayscale-100' : 'grayscale text-[#696969b6]'}`}>
+                                    <div className='w-fit flex justify-center items-center'>
+                                        <img src={tick} className='w-[28px]' alt="" />
+                                    </div>
+                                    <div className='w-full text-[16px] font-[600]'>On the way</div>
+                                </div>
+                                <div className={`w-full flex gap-4 justify-center items-center ${orderData?.order_details?.status === 'Placed' && orderData?.order_details?.status === 'Processed' && orderData?.order_details?.status === 'Dispatched' && orderData?.order_details?.status === 'On the Way' && orderData?.order_details?.status === 'Delivered' ? 'grayscale-100' : 'grayscale text-[#696969b6]'}`}>
                                     <div className='w-fit flex justify-center items-center'>
                                         <img src={tick} className='w-[28px]' alt="" />
                                     </div>
