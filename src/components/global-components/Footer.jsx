@@ -52,16 +52,21 @@ const Footer = () => {
       contents: [
         {
           linkName: "info@realvedic.com",
+          linkTo: '/'
         },
         {
           linkName: "+91-8860227160",
+          linkTo: '/'
         },
         {
           linkName: facebook,
+          linkTo: 'https://www.facebook.com/realvedic1',
+          linkTo_2: 'https://www.instagram.com/realvedic1/',
           linkName2: instagram,
         },
         {
           linkName: instagram,
+          linkTo: 'https://www.instagram.com/realvedic1/'
         },
       ],
     },
@@ -73,7 +78,7 @@ const Footer = () => {
   // #C57963 extra color option footer from old project
 
   return (
-    <footer className="bg-[color:var(--primary-color)] pt-10 text-[#FCEDD1]">
+    <footer className="bg-[color:var(--primary-color)] pt-10 text-[#555555]">
 
 
       {/* Mobile & Tablet footer */}
@@ -94,31 +99,47 @@ const Footer = () => {
                   <img
                     src={arrow}
                     alt="..."
-                    className={`  ${
-                      selectedHeading === data?.heading ? "rotate-180" : ""
-                    } `}
+                    className={`  ${selectedHeading === data?.heading ? "rotate-180" : ""
+                      } `}
                   />
                 </div>
               </div>
 
               <div
-                className={`overflow-y-hidden transition-all duration-300 ${
-                  selectedHeading === data?.heading
-                    ? "accordian_open ease-in border-b-2 border-b-[#FCEDD1]"
-                    : "accordian_close ease-out"
-                }  `}
+                className={`overflow-y-hidden transition-all duration-300 ${selectedHeading === data?.heading
+                  ? "accordian_open ease-in border-b-2 border-b-[#FCEDD1]"
+                  : "accordian_close ease-out"
+                  }  `}
               >
                 <div className="h-fit py-4">
                   {data?.contents?.map((links, index) => {
                     return (
                       <div key={index} className="py-1">
                         {links?.linkName === facebook ||
-                        links?.linkName === instagram ? (
-                          <img
-                            src={links?.linkName}
-                            alt={links?.linkName}
-                            className="w-[40px] my-1 cursor-pointer"
-                          />
+                          links?.linkName === instagram ? (
+                          <div>
+                            {
+                              links?.linkName === facebook &&
+                              <a href='https://www.facebook.com/realvedic1' target='_blank' rel="noreferrer">
+                                <img
+                                  src={links?.linkName}
+                                  alt={links?.linkName}
+                                  className="w-[40px] my-1 cursor-pointer"
+                                />
+                              </a>
+                            }
+
+                            {
+                              links?.linkName === instagram &&
+                              <a href='https://www.instagram.com/realvedic1/' target='_blank' rel="noreferrer">
+                                <img
+                                  src={links?.linkName}
+                                  alt={links?.linkName}
+                                  className="w-[40px] my-1 cursor-pointer"
+                                />
+                              </a>
+                            }
+                          </div>
                         ) : (
                           <h1 className="hover:underline underline-offset-4 cursor-pointer transition">
                             {links?.linkTo ? (
@@ -138,7 +159,7 @@ const Footer = () => {
         })}
 
         <div className="flex justify-center items-end h-[200px] w-full ">
-          <h1 className="opacity-[35%] font-bold">
+          <h1 className="opacity-[35%] font-bold text-[#555555]">
             © {new Date().getFullYear()} Realvedic Powered by Ekoinfomatics
           </h1>
         </div>
@@ -159,22 +180,28 @@ const Footer = () => {
                     return (
                       <div key={index} className="">
                         {links?.linkName === facebook ||
-                        links?.linkName2 === instagram ? (
+                          links?.linkName2 === instagram ? (
                           <div className="flex gap-2 items-center mb-1">
-                            <img
-                              src={links?.linkName2}
-                              alt={links?.linkName2}
-                              className="w-[40px] my-1 cursor-pointer  "
-                            />
-                            <img
-                              src={links?.linkName}
-                              alt={links?.linkName}
-                              className="w-[40px] my-1 cursor-pointer  "
-                            />
+                            <a target='_blank' rel="noreferrer" href={links?.linkTo_2}>
+                              <img
+                                src={links?.linkName2}
+                                alt={links?.linkName2}
+                                className="w-[40px] my-1 cursor-pointer  "
+                              />
+                            </a>
+
+                            <a target='_blank' rel="noreferrer" href={links?.linkTo}>
+                              <img
+                                src={links?.linkName}
+                                alt={links?.linkName}
+                                className="w-[40px] my-1 cursor-pointer  "
+                              />
+                            </a>
+
                           </div>
                         ) : (
                           <div className="mb-1">
-                            <h1 className="hover:underline underline-offset-4 cursor-pointer transition">
+                            <div className="hover:underline underline-offset-4 cursor-pointer transition">
                               {links?.linkName === instagram ? (
                                 " "
                               ) : links?.linkTo ? (
@@ -184,7 +211,10 @@ const Footer = () => {
                               ) : (
                                 links?.linkName
                               )}
-                            </h1>
+
+
+
+                            </div>
                           </div>
                         )}
                       </div>
@@ -197,7 +227,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-20 mx-auto w-[85%]">
-          <h1 className="font-bold text-xl text-center pb-5 text-[#FCEDD1]">
+          <h1 className="font-bold text-xl text-center pb-5 text-[#555555]">
             © {new Date().getFullYear()}, Realvedic Powered by Ekoinfomatics
           </h1>
         </div>

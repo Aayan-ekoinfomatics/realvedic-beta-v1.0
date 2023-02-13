@@ -49,50 +49,137 @@ const CartPage = () => {
                         My cart
                     </h1>
 
+
+
+
                     {/* Cart Items for mobile*/}
                     <div className="w-[85%] mx-auto min-h-[40vh] pb-40 md:hidden">
                         <h1 className="text-[16px] text-[#5B5B5B]">Items</h1>
 
-                        <div className="">
-                            {cartDataApi?.cartItems?.map((data, index) => {
-                                return (
-                                    <div key={index}>
-                                        <div className="border-b py-5">
-                                            <div className="flex flex-col gap-2 items-start justify-between relative  ">
-                                                <div className="flex justify-between items-start w-full">
-                                                    <div className="flex gap-5">
-                                                        <div className="w-[40px] aspect-square">
-                                                            <img src={VITE_BASE_LINK + data?.image} className='' alt="" />
+                        {
+                            cartDataApi?.cartItems?.length > 0 ?
+                                <div className="">
+                                    {cartDataApi?.cartItems?.map((data, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <div className="border-b py-5">
+                                                    <div className="flex flex-col gap-2 items-start justify-between relative  ">
+                                                        <div className="flex justify-between items-start w-full">
+                                                            <div className="flex gap-5">
+                                                                <div className="w-[40px] aspect-square">
+                                                                    <img src={VITE_BASE_LINK + data?.image} className='' alt="" />
+                                                                </div>
+                                                                <h1 className="text-[12px]">{data?.name}</h1>
+                                                            </div>
+
+                                                            <img src={cross} onClick={async () => {
+                                                                    let formdata = new FormData()
+                                                                    formdata.append('prod_id', data?.product_id)
+                                                                    formdata.append('token', localStorage.getItem('token'))
+                                                                    formdata.append('price', data?.unit_price)
+                                                                    formdata.append('size', data?.size)
+                                                                    await axios.post(VITE_BASE_LINK + 'CartitemDelete', formdata).then((response) => {
+                                                                        // console.log(response?.data)
+                                                                        toast.warn('Item deleted successfully', {
+                                                                            position: "top-right",
+                                                                            autoClose: 2000,
+                                                                            hideProgressBar: false,
+                                                                            closeOnClick: true,
+                                                                            pauseOnHover: true,
+                                                                            // draggable: true,
+                                                                            progress: undefined,
+                                                                            theme: "colored",
+                                                                        })
+                                                                    })
+                                                                    await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                                                        // console.log(response?.data)
+                                                                        setCartDataApi(response?.data)
+                                                                    })
+                                                                }} alt="..." className="cursor-pointer w-[20px]" />
                                                         </div>
-                                                        <h1 className="text-[12px]">{data?.name}</h1>
+
+                                                        <div className=" w-full flex justify-between items-center gap-10">
+                                                            <div className="flex items-center gap-5">
+                                                                <button
+                                                                    className="text-base cursor-pointer"
+                                                                    onClick={async () => {
+                                                                        let formdata = new FormData()
+                                                                        formdata.append('prod_id', data?.product_id)
+                                                                        formdata.append('token', localStorage.getItem('token'))
+                                                                        formdata.append('price', data?.unit_price)
+                                                                        formdata.append('size', data?.size)
+                                                                        formdata.append('update_type', '-')
+                                                                        await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                                                            console.log(response?.data)
+                                                                            toast.warn(response?.data?.message, {
+                                                                                position: "top-right",
+                                                                                autoClose: 2000,
+                                                                                hideProgressBar: false,
+                                                                                closeOnClick: true,
+                                                                                pauseOnHover: true,
+                                                                                // draggable: true,
+                                                                                progress: undefined,
+                                                                                theme: "colored",
+                                                                            })
+                                                                        })
+                                                                        await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                                                            // console.log(response?.data)
+                                                                            setCartDataApi(response?.data)
+                                                                        })
+                                                                    }}
+                                                                >
+                                                                    -
+                                                                </button>
+                                                                <span className="text-[14px]">{data?.quantity}</span>
+                                                                <button className="text-base cursor-pointer" onClick={async () => {
+                                                                let formdata = new FormData()
+                                                                formdata.append('prod_id', data?.product_id)
+                                                                formdata.append('token', localStorage.getItem('token'))
+                                                                formdata.append('price', data?.unit_price)
+                                                                formdata.append('size', data?.size)
+                                                                formdata.append('update_type', '+')
+                                                                await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                                                    console.log(response?.data)
+                                                                    toast.warn(response?.data?.message, {
+                                                                        position: "top-right",
+                                                                        autoClose: 2000,
+                                                                        hideProgressBar: false,
+                                                                        closeOnClick: true,
+                                                                        pauseOnHover: true,
+                                                                        // draggable: true,
+                                                                        progress: undefined,
+                                                                        theme: "colored",
+                                                                    })
+                                                                })
+                                                                await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                                                    // console.log(response?.data)
+                                                                    setCartDataApi(response?.data)
+                                                                })
+                                                            }}>+</button>
+                                                            </div>
+
+                                                            <h1 className="text-[16px] font-bold">
+                                                                ₹ <span>{data?.price}</span>
+                                                            </h1>
+                                                        </div>
                                                     </div>
-
-                                                    <img src={cross} alt="..." className="cursor-pointer w-[20px]" />
-                                                </div>
-
-                                                <div className=" w-full flex justify-between items-center gap-10">
-                                                    <div className="flex items-center gap-5">
-                                                        <span
-                                                            className="text-base cursor-pointer"
-                                                            onClick={() => { }}
-                                                        >
-                                                            -
-                                                        </span>
-                                                        <span className="text-[14px]">{data?.quantity}</span>
-                                                        <span className="text-base cursor-pointer">+</span>
-                                                    </div>
-
-                                                    <h1 className="text-[16px] font-bold">
-                                                        ₹ <span>{data?.price}</span>
-                                                    </h1>
                                                 </div>
                                             </div>
-                                        </div>
+                                        );
+                                    })}
+                                </div>
+                                :
+                                <div className="w-full h-[50vh] flex justify-center items-center">
+                                    <div className="w-full max-w-[600px] flex flex-col justify-center items-center gap-6">
+                                        <h1 className="text-[20px] poppins">Your cart is empty..</h1>
+                                        <Link to='/'><button className="text-[14px] bg-[color:var(--button-primary)] py-2 px-4 shadow-md active:scale-[0.96]">Continue Shopping</button></Link>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                </div>
+                        }
                     </div>
+
+
+
 
                     {/* Cart Items for PC view */}
                     <div className="w-[85%] mx-auto hidden md:flex gap-20 xl:gap-0 flex-col xl:flex-row pb-4">
@@ -127,7 +214,7 @@ const CartPage = () => {
                                                             <span>{data?.name}</span>
                                                         </div>
                                                         <div className="text-center">Rs {data?.unit_price}</div>
-                                                        <div className="text-center">{data?.size}g</div>
+                                                        <div className="text-center">{data?.size}</div>
                                                         <div className="text-center flex justify-center items-start gap-4 ">
                                                             <span className="cursor-pointer" onClick={async () => {
                                                                 let formdata = new FormData()
@@ -146,7 +233,7 @@ const CartPage = () => {
                                                                         pauseOnHover: true,
                                                                         // draggable: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -173,7 +260,7 @@ const CartPage = () => {
                                                                         pauseOnHover: true,
                                                                         // draggable: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -209,7 +296,7 @@ const CartPage = () => {
                                                                             pauseOnHover: true,
                                                                             // draggable: true,
                                                                             progress: undefined,
-                                                                            theme: "light",
+                                                                            theme: "colored",
                                                                         })
                                                                     })
                                                                     await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {

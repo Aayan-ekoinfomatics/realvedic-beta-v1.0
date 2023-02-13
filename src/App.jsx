@@ -71,7 +71,7 @@ function App() {
       <div className="relative">
         <Sidebar />
         <Navbar />
-        <div className=' md:mt-16 lg:mt-20 xl:mt-[90px]'>
+        <div className=' md:mt-16 lg:mt-20 xl:mt-[40px]'>
           <Routes>
 
 

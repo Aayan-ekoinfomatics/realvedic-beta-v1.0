@@ -9,9 +9,9 @@ const TopSellers = (props) => {
 
   const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
-  useEffect(() => {
-    console.log(landingApiData)
-  }, [landingApiData])
+  // useEffect(() => {
+  //   console.log(landingApiData)
+  // }, [landingApiData])
 
 
   return (

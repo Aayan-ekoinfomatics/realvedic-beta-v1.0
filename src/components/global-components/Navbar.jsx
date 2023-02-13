@@ -60,10 +60,6 @@ const Navbar = () => {
     }, [cartView])
 
 
-    // useEffect(() => {
-    //   console.log(sidebarToggle)
-    // }, [sidebarToggle])
-
 
 
     return (
@@ -146,7 +142,7 @@ const Navbar = () => {
                                                                         closeOnClick: true,
                                                                         pauseOnHover: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -169,7 +165,7 @@ const Navbar = () => {
                                                                         closeOnClick: true,
                                                                         pauseOnHover: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -194,7 +190,7 @@ const Navbar = () => {
                                                                         closeOnClick: true,
                                                                         pauseOnHover: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -228,7 +224,7 @@ const Navbar = () => {
                 </div>
             </nav> */}
 
-            <nav className='hidden md:block w-full bg-[color:var(--primary-color)] z-[400] fixed top-0 pb-[1px]'>
+            <nav className='hidden md:block w-full bg-[color:var(--primary-color)] z-[400] fixed top-0'>
                 <div className='w-full flex justify-center items-center shadow-md '>
                     <div className='w-[70%] flex justify-start items-center gap-14 pl-14'>
                         <div className='w-fit'>
@@ -255,7 +251,15 @@ const Navbar = () => {
                             <img src={profile} className="w-full max-w-[25px]" alt="" />
                         </Link>
                         <NavLink to='/cart' className='w-fit cursor-pointer' onMouseEnter={() => setCartView(true)} onMouseLeave={() => setCartView(false)}>
-                            <img src={cart} className="w-full max-w-[25px]" alt="" />
+                            {
+                                cartData?.cartItems?.length > 0 ?
+                                    <div className='relative flex justify-center items-center p-[6px]'>
+                                        <div className='bg-red-500 h-[7px] w-[7px] rounded-full absolute top-0 right-0'></div>
+                                        <img src={cart} className='w-[20px] cursor-pointer' alt="" />
+                                    </div>
+                                    :
+                                    <img src={cart} className='w-[20px] cursor-pointer' alt="" />
+                            }
                         </NavLink>
                         <div className={`absolute poppins max-w-[500px] right-[3%] top-[65%] bg-[#f2f2f2] transition-all duration-100 ${cartView ? 'visible ease-in w-full max-h-[400px] pb-3' : 'invisible ease-out max-h-0 max-w-0 overflow-hidden'} shadow-md `} onMouseEnter={() => setCartView(true)} onMouseLeave={() => setCartView(false)}>
                             <div className='w-[95%] px-2 mx-auto max-h-[190px] overflow-y-scroll mt-6 bg-white border pt-2'>
@@ -288,14 +292,14 @@ const Navbar = () => {
                                                                 formdata.append('update_type', '-')
                                                                 await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
                                                                     // console.log(response?.data)
-                                                                    toast.warn('Item quantity decreased', {
+                                                                    toast.warn(response?.data?.message, {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
                                                                         hideProgressBar: false,
                                                                         closeOnClick: true,
                                                                         pauseOnHover: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -313,14 +317,14 @@ const Navbar = () => {
                                                                 formdata.append('update_type', '+')
                                                                 await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
                                                                     // console.log(response?.data)
-                                                                    toast.warn('Item quantity increased', {
+                                                                    toast.warn(response?.data?.message, {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
                                                                         hideProgressBar: false,
                                                                         closeOnClick: true,
                                                                         pauseOnHover: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -340,14 +344,14 @@ const Navbar = () => {
                                                                 formdata.append('size', data?.size)
                                                                 await axios.post(VITE_BASE_LINK + 'CartitemDelete', formdata).then((response) => {
                                                                     // console.log(response?.data)
-                                                                    toast.warn('Item deleted successfully', {
+                                                                    toast.warn(response?.data?.message, {
                                                                         position: "top-right",
                                                                         autoClose: 2000,
                                                                         hideProgressBar: false,
                                                                         closeOnClick: true,
                                                                         pauseOnHover: true,
                                                                         progress: undefined,
-                                                                        theme: "light",
+                                                                        theme: "colored",
                                                                     })
                                                                 })
                                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -384,7 +388,7 @@ const Navbar = () => {
 
             {/* mobie */}
             <nav className='block sticky top-0 md:hidden w-full bg-[color:var(--primary-color)] min-h-[10vh] z-[400]'>
-                <div className='w-full relative flex justify-between items-center py-2'>
+                <div className='w-full relative flex justify-between items-center'>
 
                     <div className='flex-1'>
 
@@ -394,8 +398,19 @@ const Navbar = () => {
                         <img src={logo} className="cursor-pointer w-[100px]" alt="" />
                     </span>
 
-                    <div className='w-fit mt-8 flex-1 flex justify-end items-center'>
-                        <img src={sidebar_icon} className='w-[25px] cursor-pointer mr-2 mb-2' alt="" onClick={() => setSidebarToggle(true)} />
+                    <div className='w-fit mt-8 flex-1 flex justify-end items-center gap-4'>
+                        {
+                            cartData?.cartItems?.length > 0 ?
+                                <Link to='/cart'>
+                                    <div className='relative flex justify-center items-center p-[6px]'>
+                                        <div className='bg-red-500 h-[7px] w-[7px] rounded-full absolute top-0 right-0'></div>
+                                        <img src={cart} className='w-[20px] cursor-pointer' alt="" />
+                                    </div>
+                                </Link>
+                                :
+                                <Link to='/cart'><img src={cart} className='w-[20px] cursor-pointer' alt="" /></Link>
+                        }
+                        <img src={sidebar_icon} className='w-[20px] cursor-pointer mr-2 mb-2' alt="" onClick={() => setSidebarToggle(true)} />
                     </div>
                 </div>
             </nav>

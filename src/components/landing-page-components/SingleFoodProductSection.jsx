@@ -46,7 +46,7 @@ const SingleFoodProductSection = () => {
                                         </div>
                                         <div className='w-full flex flex-col'>
                                             <div className='flex justify-end'>
-                                                <p className='px-2 py-1 bg-[#FFF5D1] text-[13px] md:text-[16px] font-[500]'>{data?.weight}g</p>
+                                                <p className='px-2 py-1 bg-[#FFF5D1] text-[13px] md:text-[16px] font-[500]'>{data?.weight}</p>
                                             </div>
                                             <div className='flex justify-end'>
                                                 <p>Rs {data?.price}</p>

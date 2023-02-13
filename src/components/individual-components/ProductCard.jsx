@@ -24,10 +24,10 @@ const ProductCard = (props) => {
 
 
     useEffect(() => {
-        console.log("cartData", cartData)
+        console.log("cartData", props?.weight)
 
      
-    }, [cartData]);
+    }, [props]);
 
 
     return (
@@ -41,7 +41,7 @@ const ProductCard = (props) => {
                     <div className='w-full lg:w-[51%] xl:w-auto'>
                         <h1 className='poppins text-[13px]'>{props?.title}</h1>
                     </div>
-                    <div className='w-fit pt-1 px-[6px] flex justify-end items-center relative gap-2 cursor-pointer' onClick={() => {
+                    <div className='w-full min-w-[100px] pt-1 px-[6px] flex justify-end items-center relative gap-2 cursor-pointer' onClick={() => {
                         // console.log('clicked')
                         setVariantDropdown(!variantDropdown);
                         if (selectedProductID) {
@@ -52,7 +52,7 @@ const ProductCard = (props) => {
                         }
                     }}>
                         <h1 className='poppins text-[12px] font-[600]'>
-                            {props?.weight[activeIndex]}{props?.weight[activeIndex] === '1' ? <span>kg</span> : <span>g</span>}
+                            {props?.weight[activeIndex]}
                         </h1>
                         <span><img src={arrow} className='w-[14px]' alt="" /></span>
                         <div className={`w-full overflow-hidden absolute top-[100%] transition-all duration-300 bg-white shadow-2xl ${variantDropdown === true ? 'max-h-[120px] px-2 py-3 ease-in z-[150]' : 'max-h-0 ease-out'}`}>
@@ -61,7 +61,7 @@ const ProductCard = (props) => {
                                     <div key={i} onClick={() => {
                                         setVariantDropdown(false);
                                         setActiveIndex(i)
-                                    }} className='border-b py-1 text-[12px] poppins cursor-pointer'>{data}{data === '1' ? <span>kg</span> : <span>g</span>}</div>
+                                    }} className='border-b py-1 text-[12px] poppins cursor-pointer'>{data}</div>
                                 ))
                             }
                         </div>
@@ -101,14 +101,14 @@ const ProductCard = (props) => {
                                                     formdata.append('update_type', '-')
                                                     await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
                                                         console.log(response?.data)
-                                                        toast.warn('Item quantity decreased', {
+                                                        toast.warn(response?.data?.message, {
                                                             position: "top-right",
                                                             autoClose: 2000,
                                                             hideProgressBar: false,
                                                             closeOnClick: true,
                                                             pauseOnHover: true,
                                                             progress: undefined,
-                                                            theme: "light",
+                                                            theme: "colored",
                                                         })
                                                     })
                                                     await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -139,14 +139,14 @@ const ProductCard = (props) => {
                                                     formdata.append('size', props?.weight[activeIndex])
                                                     formdata.append('update_type', '+')
                                                     await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
-                                                        toast.warn('Item quantity increased', {
+                                                        toast.warn(response?.data?.message, {
                                                             position: "top-right",
                                                             autoClose: 2000,
                                                             hideProgressBar: false,
                                                             closeOnClick: true,
                                                             pauseOnHover: true,
                                                             progress: undefined,
-                                                            theme: "light",
+                                                            theme: "colored",
                                                         })
                                                     })
                                                     await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -186,7 +186,7 @@ const ProductCard = (props) => {
                                                                 closeOnClick: true,
                                                                 pauseOnHover: true,
                                                                 progress: undefined,
-                                                                theme: "light",
+                                                                theme: "colored",
                                                             })
                                                         } else {
                                                             // console.log('sklnaso')
@@ -230,7 +230,7 @@ const ProductCard = (props) => {
                                                     closeOnClick: true,
                                                     pauseOnHover: true,
                                                     progress: undefined,
-                                                    theme: "light",
+                                                    theme: "colored",
                                                 })
                                             } else {
                                                 // console.log('sklnaso')

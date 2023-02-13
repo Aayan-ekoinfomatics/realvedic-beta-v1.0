@@ -56,8 +56,8 @@ const AllProductsView = () => {
 
             {/* banner */}
             <div className='w-full flex justify-center items-center relative bg-[color:var(--primary-color)] mb-4'>
-                {/* <img src={VITE_BASE_LINK + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" /> */}
-                <img src="../bannerNew.jpg" className='w-full object-cover bg-bottom' alt="" />
+                <img src={VITE_BASE_LINK + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" />
+                {/* <img src="../bannerNew.jpg" className='w-full object-cover bg-bottom' alt="" /> */}
                 <h1 className='text-[20px] md:text-[40px] xl:text-[65px] poppins absolute bottom-[30%] md:bottom-[80px] left-[5%] md:left-[40px] font-[600]'>{allproductsApiData?.category}</h1>
             </div>
 

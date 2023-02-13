@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
 import { useRecoilState } from 'recoil';
 import { VITE_BASE_LINK } from '../../../baseLink';
+import { Link } from 'react-router-dom';
 
 const PreviousBtn = (props) => {
     const { className, onClick } = props;
@@ -37,7 +38,7 @@ const SmallImageCarousal = () => {
         // dots: true,
         arrows: false,
         infinite: true,
-        slidesToShow: 10,
+        slidesToShow: 8,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 2000,
@@ -58,7 +59,7 @@ const SmallImageCarousal = () => {
 
     return (
         <>
-            <div className='hidden md:block w-full bg-[color:var(--primary-color)] mt-10 py-2'>
+            <div className='hidden md:block w-[96%] mx-auto bg-[color:var(--primary-color)] mt-10 py-2 pt-4'>
                 <div className='flex justify-between items-center gap-2'>
                     <div className='w-full max-w-[80px] flex justify-center items-center ml-4 font-[500]'>
                         <h1 className='poppins font-[600] text-[17px]'>Our Best Products</h1>
@@ -69,9 +70,10 @@ const SmallImageCarousal = () => {
                     >
                         {
                             landingApiData?.small_carousal_images?.map((data, index) => (
-                                <div className="w-full max-w-[150px] flex justify-center items-center outline-none cursor-pointer" key={index}>
+                                <Link to={`/single-product/` + data?.product_id} className="w-full max-w-[150px] flex justify-center items-center outline-none cursor-pointer mx-2" key={index}>
                                     <img src={VITE_BASE_LINK + data?.image} className=" w-full object-contain" />
-                                </div>
+                                    <h1 className='text-[12px] text-center'>{data?.title}</h1>
+                                </Link>
                             ))
                         }
                     </Slider >

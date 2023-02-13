@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { VITE_BASE_LINK } from '../../../baseLink';
 import { toast } from 'react-toastify';
+import logout from '../../assets/icons/logout.svg'
 
 const AccountDetails = () => {
 
@@ -43,7 +44,9 @@ const AccountDetails = () => {
         <div className='w-full'>
             <div className='w-[90%] md:w-[70%] mx-auto mt-[100px] md:mt-[150px] mb-[180px]'>
 
-                <div className='w-full flex justify-center poppins items-center pb-10'><h1 className='text-[28px] font-[700]'>ACCOUNT DETAILS</h1></div>
+                <div className='w-full flex justify-center poppins items-center pb-10 relative'><h1 className=' text-[28px] font-[700]'>ACCOUNT DETAILS</h1><div className='absolute top-0 right-0 w-fit'><img src={logout} onClick={() => {
+                    // localStorage.removeItem('status')
+                }} className='w-[20px] cursor-pointer' alt="" /></div></div>
 
                 {/* personal info line */}
                 <h1 className='text-[17px] pb-4 font-[500]'>Personal information</h1>
