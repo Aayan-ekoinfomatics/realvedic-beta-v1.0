@@ -303,13 +303,28 @@ const SingleProduct = () => {
                                                             theme: "colored",
                                                         })
                                                     } else {
-                                                        console.log('error in backend')
+                                                        if (response?.data?.status) {
+
+                                                        } else {
+                                                            toast.warn('Please log in first', {
+                                                                position: "top-right",
+                                                                autoClose: 2000,
+                                                                hideProgressBar: false,
+                                                                closeOnClick: true,
+                                                                pauseOnHover: true,
+                                                                // draggable: true,
+                                                                progress: undefined,
+                                                                theme: "colored",
+                                                            })
+                                                            console.log('error in backend')
+                                                            console.log(response)
+                                                        }
                                                     }
                                                 })
-                                                setCartData({
-                                                    ...cartData,
-                                                    frontend: true,
-                                                })
+                                            setCartData({
+                                                ...cartData,
+                                                frontend: true,
+                                            })
                                         }}>ADD TO CART</button>
                                 }
 
@@ -367,7 +382,7 @@ const SingleProduct = () => {
                             {productData?.product_details?.images?.map((data, i) => (
                                 <div key={i} className=" max-w-[100%] h-[100%]">
                                     <img
-                                        src={data}
+                                        src={VITE_BASE_LINK + data}
                                         alt=""
                                         className="object-contain w-[95%] mx-auto"
                                     />
@@ -385,7 +400,7 @@ const SingleProduct = () => {
                     </div>
 
                     {/* prices */}
-                    <div className='w-full mt-4 border border-red-500'>
+                    <div className='w-full mt-4'>
                         <div className='w-full'>
                             <p className='text-[23px] font-[500] line-through'>₹ {packSizeSelect?.price}</p>
                         </div>

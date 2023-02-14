@@ -5,11 +5,14 @@ import fb from '../../assets/icons/facebook-blue.svg'
 import google from '../../assets/icons/google.svg'
 import axios from 'axios'
 import { VITE_BASE_LINK } from '../../../baseLink'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const SignUpPage = () => {
 
     const [passwordView, setPasswordView] = useState(false);
+
+    const navigate = useNavigate();
 
     const [signUpData, setSignUpData] = useState({});
 
@@ -17,13 +20,13 @@ const SignUpPage = () => {
 
     useEffect(() => {
         setSignUpData({
-        ...signUpData,
-        gender: gender
-      })
+            ...signUpData,
+            gender: gender
+        })
     }, [gender])
 
     useEffect(() => {
-      console.log(signUpData)
+        console.log(signUpData)
     }, [signUpData])
 
 
@@ -31,17 +34,36 @@ const SignUpPage = () => {
         axios.post(VITE_BASE_LINK + 'signUp', signUpData).then((response) => {
             if (response?.data?.status === true) {
                 console.log(response?.data)
-                alert(response?.data?.message)
-            }else {
-                alert(response?.data?.message)
+                toast.success(response?.data?.message, {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    // draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
+                navigate('/login')
+            } else {
+                toast.error(response?.data?.message, {
+                    position: "top-right",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    // draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
             }
         })
     }
-    
+
 
     return (
         <div className='w-full flex justify-center items-center h-[80vh] poppins px-4'>
-            <div className='w-full max-w-[500px] flex flex-col justify-between items-center shadow-lg p-4 bg-[#fdfdfd]'>
+            <div className='w-full max-w-[500px] flex flex-col justify-between items-center shadow-lg p-4 bg-[#f3f3f3]'>
 
                 <div className='w-full flex gap-2'>
                     <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
@@ -58,26 +80,28 @@ const SignUpPage = () => {
                     <span className='w-fit'>Or</span>
                     <span className='w-full bg-[#000] h-[1px]'></span>
                 </div>
+
+
                 <div className='w-full'>
                     <div className='w-full flex justify-between items-start py-2'>
                         <div className='w-fit flex justify-center items-center gap-2 cursor-pointer' onClick={() => setGender('Male')}>
                             <label htmlFor="gender" className='text-[12px]'>Male</label>
-                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Male' ? 'bg-[color:var(--primary-color)]' : 'border border-[#696969b6]'} `}>
+                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Male' ? 'bg-[#575757b6]' : 'border border-[#696969b6]'} `}>
                             </div>
                         </div>
                         <div className='w-fit flex justify-center items-center gap-2 cursor-pointer' onClick={() => setGender('Female')}>
                             <label htmlFor="gender" className='text-[12px]'>Female</label>
-                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Female' ? 'bg-[color:var(--primary-color)]' : 'border border-[#696969b6]'}`}>
+                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Female' ? 'bg-[#575757b6]' : 'border border-[#696969b6]'}`}>
                             </div>
                         </div>
                         <div className='w-fit flex justify-center items-center gap-2 cursor-pointer' onClick={() => setGender('Unisex')}>
                             <label htmlFor="gender" className='text-[12px]'>Unisex</label>
-                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Unisex' ? 'bg-[color:var(--primary-color)]' : 'border border-[#696969b6]'}`}>
+                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Unisex' ? 'bg-[#575757b6]' : 'border border-[#696969b6]'}`}>
                             </div>
                         </div>
                     </div>
 
-                    <div className='w-full flex justify-between gap-5 items-center'>
+                    <div className='w-full flex flex-col md:flex-row justify-between md:gap-5 items-center'>
                         <div className='w-full flex flex-col my-2'>
                             <label htmlFor="first name" className='text-[12px]'>First Name</label>
                             <input type="text" name='first name' className='border py-2 outline-none px-2 text-[13px]' onChange={(e) => setSignUpData({
@@ -93,7 +117,7 @@ const SignUpPage = () => {
                             })} placeholder='Enter last name' />
                         </div>
                     </div>
-                    <div className='w-full flex justify-between gap-5 items-center'>
+                    <div className='w-full flex flex-col md:flex-row justify-between md:gap-5 items-center'>
                         <div className='w-full flex flex-col my-2'>
                             <label htmlFor="email" className='text-[12px]'>Email</label>
                             <input type="text" name='email' className='border py-2 outline-none px-2 text-[13px]' onChange={(e) => setSignUpData({
@@ -109,21 +133,23 @@ const SignUpPage = () => {
                             })} placeholder='Enter password' /><span className=''><img onClick={() => setPasswordView(!passwordView)} src={passwordView ? eye_closed : eye_open} className='w-[20px] cursor-pointer' alt="" /></span></span>
                         </div>
                     </div>
-                    
-                    <div className='w-full flex justify-between gap-5 items-center'>
-                        <div className=' w-full max-w-[80px] flex flex-col my-2'>
-                            <label htmlFor="ph-code" className='text-[12px]'>Ph. Code</label>
-                            <input type="number" name='ph-code' className='border py-2 outline-none px-2 text-[13px]' onChange={(e) => setSignUpData({
-                                ...signUpData,
-                                phone_code: e?.target?.value
-                            })} placeholder='Code' />
-                        </div>
-                        <div className='w-full flex flex-col my-2'>
-                            <label htmlFor="phone-number" className='text-[12px]'>Phone Number</label>
-                            <input type="number" min={0} name='email' className='border py-2 outline-none px-2 text-[13px]' onChange={(e) => setSignUpData({
-                                ...signUpData,
-                                phone_no: e?.target?.value
-                            })} placeholder='Enter phone number' />
+
+                    <div className='w-full flex flex-col md:flex-row justify-between md:gap-5 items-center'>
+                        <div className='w-full flex gap-4'>
+                            <div className=' w-full max-w-[80px] flex flex-col my-2'>
+                                <label htmlFor="ph-code" className='text-[12px]'>Ph. Code</label>
+                                <input type="number" name='ph-code' className='border py-2 outline-none px-2 text-[13px]' onChange={(e) => setSignUpData({
+                                    ...signUpData,
+                                    phone_code: e?.target?.value
+                                })} placeholder='Code' />
+                            </div>
+                            <div className='w-full flex flex-col my-2'>
+                                <label htmlFor="phone-number" className='text-[12px]'>Phone Number</label>
+                                <input type="number" min={0} name='email' className='border py-2 outline-none px-2 text-[13px]' onChange={(e) => setSignUpData({
+                                    ...signUpData,
+                                    phone_no: e?.target?.value
+                                })} placeholder='Enter phone number' />
+                            </div>
                         </div>
                         <div className=' w-full max-w-[130px] flex flex-col my-2'>
                             <label htmlFor="dob" className='text-[12px]'>Date of Birth</label>

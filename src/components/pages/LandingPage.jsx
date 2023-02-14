@@ -19,7 +19,7 @@ const LandingPage = () => {
 
     useEffect(() => {
         axios.get( VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
-          console.log(response?.data)
+          // console.log(response?.data)
           setLandingApiData(response?.data)
         })
       }, [])
@@ -31,7 +31,7 @@ const LandingPage = () => {
 
 
     return (
-        <div>
+        <div className=''>
             <CategoryTabs />
             <LandingPageBanners />
             <TopSellers />

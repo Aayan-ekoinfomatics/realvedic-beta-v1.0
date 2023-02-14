@@ -24,9 +24,9 @@ const ProductCard = (props) => {
 
 
     useEffect(() => {
-        console.log("cartData", props?.weight)
+        // console.log("cartData", props?.weight)
 
-     
+
     }, [props]);
 
 
@@ -35,7 +35,7 @@ const ProductCard = (props) => {
 
             <div className='w-full border shadow-md p-2'>
                 <Link to={`/single-product/` + props?.id} className='w-full flex justify-center items-center'>
-                    <img src={VITE_BASE_LINK + props?.image} className='w-full' alt="" />
+                    <img src={VITE_BASE_LINK + props?.image} className='w-[85%] mx-auto' alt="" />
                 </Link>
                 <div className='w-full flex justify-between items-center mt-1'>
                     <div className='w-full lg:w-[51%] xl:w-auto'>
@@ -177,8 +177,8 @@ const ProductCard = (props) => {
                                                 formdata.append('size', props?.weight[activeIndex]);
                                                 formdata.append('price', props?.price[activeIndex]),
                                                     await axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
-                                                        // console.log(response?.data)
-                                                        if (response?.data?.status === true) {
+                                                        console.log(response?.data)
+                                                        if (response?.data?.status) {
                                                             toast.success(response?.data?.message, {
                                                                 position: "top-right",
                                                                 autoClose: 2000,
@@ -189,7 +189,7 @@ const ProductCard = (props) => {
                                                                 theme: "colored",
                                                             })
                                                         } else {
-                                                            // console.log('sklnaso')
+                                                            console.log(response?.data)
                                                         }
                                                     })
                                                 await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
@@ -221,8 +221,8 @@ const ProductCard = (props) => {
                                     formdata.append('size', props?.weight[activeIndex]);
                                     formdata.append('price', props?.price[activeIndex]),
                                         await axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
-                                            // console.log(response?.data)
-                                            if (response?.data?.status === true) {
+                                            console.log(response?.data)
+                                            if (response?.data?.status) {
                                                 toast.success(response?.data?.message, {
                                                     position: "top-right",
                                                     autoClose: 2000,
@@ -233,7 +233,15 @@ const ProductCard = (props) => {
                                                     theme: "colored",
                                                 })
                                             } else {
-                                                // console.log('sklnaso')
+                                                toast.warn('Please log in first', {
+                                                    position: "top-right",
+                                                    autoClose: 2000,
+                                                    hideProgressBar: false,
+                                                    closeOnClick: true,
+                                                    pauseOnHover: true,
+                                                    progress: undefined,
+                                                    theme: "colored",
+                                                })
                                             }
                                         })
                                     await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {

@@ -6,6 +6,7 @@ import google from '../../assets/icons/google.svg'
 import axios from 'axios'
 import { VITE_BASE_LINK } from '../../../baseLink'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const LoginPage = () => {
 
@@ -25,14 +26,14 @@ const LoginPage = () => {
             <div className='w-full max-w-[500px] flex flex-col justify-between items-center'>
 
                 <div className='w-full flex gap-2'>
-                <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
-                    {/* bg-[#1877f2] */}
-                    <img src={fb} className='w-[28px]' alt="" />
-                </div>
-                <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
-                    {/* bg-[#d4462f] */}
-                    <img src={google} className='w-[28px]' alt="" />
-                </div>
+                    <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
+                        {/* bg-[#1877f2] */}
+                        <img src={fb} className='w-[28px]' alt="" />
+                    </div>
+                    <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
+                        {/* bg-[#d4462f] */}
+                        <img src={google} className='w-[28px]' alt="" />
+                    </div>
                 </div>
                 <div className='w-full flex justify-center items-center gap-3 my-2'>
                     <span className='w-full bg-[#000] h-[1px]'></span>
@@ -67,10 +68,32 @@ const LoginPage = () => {
                             formdata.append('email', loginData?.email)
                             formdata.append('password', loginData?.password)
                             axios.post(VITE_BASE_LINK + 'login', formdata).then((response) => {
-                                console.log(response?.data)
-                                localStorage.setItem('token', response?.data?.token)
-                                alert(response?.data?.message)
-                                navigate('/')
+                                if (response?.data?.status) {
+                                    console.log(response?.data)
+                                    localStorage.setItem('token', response?.data?.token)
+                                    toast.success(response?.data?.message, {
+                                        position: "top-right",
+                                        autoClose: 2000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        // draggable: true,
+                                        progress: undefined,
+                                        theme: "colored",
+                                    })
+                                    navigate('/')
+                                }else {
+                                    toast.error(response?.data?.message, {
+                                        position: "top-right",
+                                        autoClose: 2000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        // draggable: true,
+                                        progress: undefined,
+                                        theme: "colored",
+                                    })
+                                }
                             })
                         }}>Login</button>
                     </div>

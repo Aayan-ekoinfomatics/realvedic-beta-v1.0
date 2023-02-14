@@ -43,34 +43,43 @@ const MyOrders = () => {
                 <div className='w-full poppins'>
                     <div className='w-[95%] md:w-[70%] xl:w-[50%] mx-auto h-[60vh] overflow-y-scroll'>
                         {
-                            orderData?.orders?.map((data, i) => (
-                                <div key={i} className='w-full bg-[#f8f9fa] border-b px-8 py-6'>
-                                    <div className='w-full'>
-                                        <div className='flex justify-between items-center'>
-                                            <div className='text-[16px]  font-[500]'>{data?.status}</div>
-                                            <div className='text-[13px]'>{data?.date}</div>
-                                        </div>
-                                        <div className='flex justify-between items-center mb-2'>
-                                            <div className='text-[13px]'>{data?.items?.length} Products</div>
-                                            <div className='text-[14px] lg:text-[16px] xl:text-[19px] font-[600]'>Rs {data?.total_price}</div>
-                                        </div>
-                                        <div className='w-full flex justify-between gap-4 items-end'>
-                                            <div className='w-fit grid grid-cols-3 justify-items-start items-center gap-2 md:gap-4'>
-                                                {
-                                                    data?.items?.map((item_data, item_index) => (
-                                                        <div key={item_index} className='bg-[#fff] py-2 border'>
-                                                            <img src={VITE_BASE_LINK + item_data?.image} className='w-[60px]' alt="" />
+                            orderData?.orders?.length > 0 ?
+                                <>
+                                    {
+                                        orderData?.orders?.map((data, i) => (
+                                            <div key={i} className='w-full bg-[#f8f9fa] border-b px-8 py-6'>
+                                                <div className='w-full'>
+                                                    <div className='flex justify-between items-center'>
+                                                        <div className='text-[16px]  font-[500]'>{data?.status}</div>
+                                                        <div className='text-[13px]'>{data?.date}</div>
+                                                    </div>
+                                                    <div className='flex justify-between items-center mb-2'>
+                                                        <div className='text-[13px]'>{data?.items?.length} Products</div>
+                                                        <div className='text-[14px] lg:text-[16px] xl:text-[19px] font-[600]'>Rs {data?.total_price}</div>
+                                                    </div>
+                                                    <div className='w-full flex justify-between gap-4 items-end'>
+                                                        <div className='w-fit grid grid-cols-3 justify-items-start items-center gap-2 md:gap-4'>
+                                                            {
+                                                                data?.items?.map((item_data, item_index) => (
+                                                                    <div key={item_index} className='bg-[#fff] py-2 border'>
+                                                                        <img src={VITE_BASE_LINK + item_data?.image} className='w-[60px]' alt="" />
+                                                                    </div>
+                                                                ))
+                                                            }
                                                         </div>
-                                                    ))
-                                                }
+                                                        <div className='w-fit'>
+                                                            <Link to={`orders/` + data?.order_id}><button className='text-[13px] md:text-[16px] px-2 md:px-3 py-1 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]'>View</button></Link>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className='w-fit'>
-                                                <Link to={`orders/` + data?.order_id}><button className='text-[13px] md:text-[16px] px-2 md:px-3 py-1 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]'>View</button></Link>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        ))
+                                    }
+                                </>
+                                :
+                                <div className='w-full h-[20vh] flex justify-center items-center'>
+                                    <h1 className='poppins text-[16px]'>You have no orders</h1>
                                 </div>
-                            ))
                         }
                     </div>
                 </div>

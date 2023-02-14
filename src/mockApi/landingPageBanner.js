@@ -1,5 +1,5 @@
-import banner1 from '../assets/images/Home_Page_Banners_1.jpg';
-import banner2 from '../assets/images/Home_Page_Banners_2.jpg';
+import banner1 from '../assets/images/Home_Page_Banners_1_2.jpg';
+import banner2 from '../assets/images/Home_Page_Banners_2_2.jpg';
 
 const bannerData = {
     banners: [

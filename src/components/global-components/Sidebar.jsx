@@ -28,7 +28,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     axios.get(VITE_BASE_LINK + 'NavbarCategoryView').then((response) => {
-      console.log(response?.data)
+      // console.log(response?.data)
       setSidebarCategory(response?.data)
     })
   }, [])
@@ -37,14 +37,14 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`h-screen bg-[color:var(--primary-color)] fixed right-0 z-[500] transition-all duration-200 ${sidebarToggle ? 'ease-in w-[80%]' : 'w-0 ease-out'}`}>
-        <div className='w-full flex justify-end mt-10 pr-4'>
+      <div className={`h-screen bg-[color:var(--primary-color)] fixed right-0 z-[500] transition-all duration-200 ${sidebarToggle ? 'ease-in w-[80%]' : 'w-0 ease-out opacity-0'}`}>
+        <div className='w-full flex justify-end mt-[53px] pr-4'>
           <span className='w-fit'>
             <img src={cross} className='w-[28px]' alt="" onClick={() => setSidebarToggle(false)} />
           </span>
         </div>
 
-        <div className='w-full mt-10'>
+        <div className='w-full mt-14'>
           <h1 className='text-[14px] poppins py-3 pb-2 border-b px-5 flex justify-between items-center' onClick={() => setShowCat(!showCat)}>Categories
             <span><img src={down} className='w-[12px] opacity-70' alt="" /></span>
           </h1>
@@ -102,8 +102,8 @@ const Sidebar = () => {
           </NavLink> */}
         </div>
 
-        <div className='w-full h-[20vh]'>
-          <div className='w-full absolute bottom-0 poppins flex justify-center gap-3 items-center px-5'>
+        <div className='w-full relative h-full flex justify-end'>
+          <div className='w-full bottom-0 poppins flex justify-center gap-3 items-center px-5'>
             <p className='text-[15px] poppins'>Logout</p>
             <img src={logout} className='w-[16px]' alt="" /> 
           </div>

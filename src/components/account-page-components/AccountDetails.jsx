@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { VITE_BASE_LINK } from '../../../baseLink';
 import { toast } from 'react-toastify';
 import logout from '../../assets/icons/logout.svg'
+import { useNavigate } from 'react-router-dom';
 
 const AccountDetails = () => {
 
     // const [accountData, setAccountData] = useState();
+
+    const navigate = useNavigate();
 
     const [accountData, setAccountData] = useState({
         "first_name": "",
@@ -29,7 +32,7 @@ const AccountDetails = () => {
         let formdata = new FormData();
         formdata.append('token', localStorage.getItem('token'))
         axios.post(VITE_BASE_LINK + 'userAccountView', formdata).then((response) => {
-            // console.log(response?.data)
+            console.log(response?.data)
             setAccountData(response?.data)
         })
     }, [])
@@ -44,9 +47,7 @@ const AccountDetails = () => {
         <div className='w-full'>
             <div className='w-[90%] md:w-[70%] mx-auto mt-[100px] md:mt-[150px] mb-[180px]'>
 
-                <div className='w-full flex justify-center poppins items-center pb-10 relative'><h1 className=' text-[28px] font-[700]'>ACCOUNT DETAILS</h1><div className='absolute top-0 right-0 w-fit'><img src={logout} onClick={() => {
-                    // localStorage.removeItem('status')
-                }} className='w-[20px] cursor-pointer' alt="" /></div></div>
+                <div className='w-full flex justify-center poppins items-center pb-10 relative'><h1 className=' text-[28px] font-[700]'>ACCOUNT DETAILS</h1></div>
 
                 {/* personal info line */}
                 <h1 className='text-[17px] pb-4 font-[500]'>Personal information</h1>
@@ -70,11 +71,11 @@ const AccountDetails = () => {
                     </div>
                     <div className='w-fit flex gap-2 justify-center items-center' onClick={() => setAccountData({
                         ...accountData,
-                        gender: 'unisex',
+                        gender: 'other',
                     })}>
-                        <div className={`w-[10px] h-[10px] rounded-full ${accountData?.gender === 'unisex' ? 'bg-[#696969]' : 'border border-[#696969] '}`}>
+                        <div className={`w-[10px] h-[10px] rounded-full ${accountData?.gender === 'other' ? 'bg-[#696969]' : 'border border-[#696969] '}`}>
                         </div>
-                        <h1 className='text-[13px] pb-1'>Unisex</h1>
+                        <h1 className='text-[13px] pb-1'>Other</h1>
                     </div>
                 </div>
 
@@ -209,7 +210,8 @@ const AccountDetails = () => {
                         formdata.append('token', localStorage.getItem('token'))
                         formdata.append('data', JSON.stringify(accountData))
                         await axios.post(VITE_BASE_LINK + 'UserAccountEdit', formdata).then((response) => {
-                            console.log(response?.data)
+                            if (response?.data?.message) {
+                                // console.log(response?.data)
                             // setAccountData(response?.data)
                             toast.success(response?.data?.message, {
                                 position: "top-right",
@@ -219,8 +221,20 @@ const AccountDetails = () => {
                                 pauseOnHover: true,
                                 // draggable: true,
                                 progress: undefined,
-                                theme: "light",
+                                theme: "colored",
                             })
+                            }else {
+                            toast.error(response?.data?.message, {
+                                position: "top-right",
+                                autoClose: 2000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                // draggable: true,
+                                progress: undefined,
+                                theme: "colored",
+                            })
+                            }
                         })
                         await axios.post(VITE_BASE_LINK + 'userAccountView', formdata).then((response) => {
                             // console.log(response?.data)

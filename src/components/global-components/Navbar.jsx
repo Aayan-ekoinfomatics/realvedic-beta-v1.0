@@ -4,12 +4,13 @@ import blog from '../../assets/icons/blog.svg'
 import mom_baby from '../../assets/icons/mom&baby.svg'
 import products from '../../assets/icons/products.svg'
 import doctors from '../../assets/icons/doctors.svg'
-import profile from '../../assets/icons/profile.svg'
-import cart from '../../assets/icons/cart.svg'
+import profile from '../../assets/icons/account_2.svg'
+import cart from '../../assets/icons/cart_2.svg'
 import sidebar_icon from '../../assets/icons/sidebar-icon.svg'
 import sidebarAtom from '../../recoil/atoms/sidebarAtom'
+import logout from '../../assets/icons/logout_2.svg'
 import { useRecoilState } from 'recoil'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import navbar from '../../mockApi/navbarApi'
 import item from '../../assets/images/about-us.png'
 import axios from 'axios'
@@ -27,13 +28,19 @@ const Navbar = () => {
 
     const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
+    const [allproductsApiData, setAllproductsApiData] = useState();
+
     const [cartData, setCartData] = useRecoilState(cartPageAtom)
 
     const [productsHover, setProductsHover] = useState(false);
 
     const [cartView, setCartView] = useState(false);
 
-    const [sarchData, setSearchData] = useState();
+    const [searchData, setSearchData] = useState();
+
+    const [searchDropDown, setSearchDropDown] = useState(false);
+
+    const navigate = useNavigate()
 
     // const [cartData, setCartData] = useState();
 
@@ -60,6 +67,17 @@ const Navbar = () => {
     }, [cartView])
 
 
+    useEffect(() => {
+        axios.get(VITE_BASE_LINK + 'search_bar').then((response) => {
+            // console.log(response?.data)
+            setAllproductsApiData(response?.data)
+        })
+    }, [])
+
+
+    useEffect(() => {
+        console.log(allproductsApiData)
+    }, [allproductsApiData])
 
 
     return (
@@ -232,35 +250,58 @@ const Navbar = () => {
                                 <img src={logo} className="cursor-pointer w-[70px]" alt="" />
                             </NavLink>
                         </div>
-                        <div className='w-[70%]'>
-                            <div className=' rounded-[5px] bg-white flex px-2 py-2 w-full'>
+                        <div className='w-[70%] relative'>
+                            <div className=' rounded-[5px] bg-white flex px-2 py-2 w-full border border-red-500'>
                                 <span className=' flex justify-center items-center'><img src={search} className="w-[16px]" /></span><input className='rounded-[15px] text-[13px] poppins w-full outline-none pl-2' placeholder='Search Products' onChange={(e) => {
                                     setSearchData(e?.target?.value)
                                 }} type="text" />
+                                <div className={`absolute top-[100%] left-0 rounded-b-[10px] shadow-md w-full bg-white overflow-hidden transition-all ${searchData?.length > 0 ? 'h-[300px] overflow-y-scroll ease-in' : 'h-0 ease-out'}`}>
+                                    <div className='w-full'>
+                                    {
+                                        allproductsApiData?.map((data, i) => (
+                                            <div className='w-full'>
+                                                <h1>{data?.title}</h1>
+                                            </div>
+                                        ))
+                                    }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className='w-[30%] flex justify-around items-center'>
-                        <Link to='/blogs' className='w-fit cursor-pointer'>
+                    <div className='w-[30%] flex justify-end gap-6 pr-10 items-center'>
+                        {/* <Link to='/blogs' className='w-fit cursor-pointer'>
                             <img src={blog} className='w-full max-w-[30px]' alt="" />
                         </Link>
                         <Link to='/doctors' className='w-fit cursor-pointer'>
                             <img src={doctors} className='w-full max-w-[35px]' alt="" />
-                        </Link>
+                        </Link> */}
                         <Link to='/account' className='w-fit cursor-pointer'>
-                            <img src={profile} className="w-full max-w-[25px]" alt="" />
+                            <img src={profile} className="w-full max-w-[30px]" alt="" />
                         </Link>
+                        
                         <NavLink to='/cart' className='w-fit cursor-pointer' onMouseEnter={() => setCartView(true)} onMouseLeave={() => setCartView(false)}>
                             {
                                 cartData?.cartItems?.length > 0 ?
                                     <div className='relative flex justify-center items-center p-[6px]'>
                                         <div className='bg-red-500 h-[7px] w-[7px] rounded-full absolute top-0 right-0'></div>
-                                        <img src={cart} className='w-[20px] cursor-pointer' alt="" />
+                                        <img src={cart} className='w-[30px] cursor-pointer' alt="" />
                                     </div>
                                     :
-                                    <img src={cart} className='w-[20px] cursor-pointer' alt="" />
+                                    <img src={cart} className='w-[30px] cursor-pointer' alt="" />
                             }
                         </NavLink>
+                        {
+                            localStorage.getItem('token') ?
+                            <div className='w-fit'>
+                                <img src={logout} className='w-[30px]' onClick={() => {
+                                    localStorage.clear()
+                                    navigate('/login')
+                                }} alt="" />
+                            </div>
+                            :
+                            ''
+                        }
                         <div className={`absolute poppins max-w-[500px] right-[3%] top-[65%] bg-[#f2f2f2] transition-all duration-100 ${cartView ? 'visible ease-in w-full max-h-[400px] pb-3' : 'invisible ease-out max-h-0 max-w-0 overflow-hidden'} shadow-md `} onMouseEnter={() => setCartView(true)} onMouseLeave={() => setCartView(false)}>
                             <div className='w-[95%] px-2 mx-auto max-h-[190px] overflow-y-scroll mt-6 bg-white border pt-2'>
                                 {
@@ -395,22 +436,24 @@ const Navbar = () => {
                     </div>
                     {/* logo */}
                     <span className=' flex justify-center items-center flex-1'>
-                        <img src={logo} className="cursor-pointer w-[100px]" alt="" />
+                        <Link to='/'><img src={logo} className="cursor-pointer w-[100px]" alt="" /></Link>
                     </span>
 
-                    <div className='w-fit mt-8 flex-1 flex justify-end items-center gap-4'>
+                    <div className='w-fit mt-8 flex-1 flex justify-end items-end gap-4'>
                         {
                             cartData?.cartItems?.length > 0 ?
                                 <Link to='/cart'>
-                                    <div className='relative flex justify-center items-center p-[6px]'>
+                                    <div className='relative flex justify-center items-center p-[4px]'>
                                         <div className='bg-red-500 h-[7px] w-[7px] rounded-full absolute top-0 right-0'></div>
-                                        <img src={cart} className='w-[20px] cursor-pointer' alt="" />
+                                        <img src={cart} className='min-w-[28px] cursor-pointer' alt="" />
                                     </div>
                                 </Link>
                                 :
                                 <Link to='/cart'><img src={cart} className='w-[20px] cursor-pointer' alt="" /></Link>
                         }
-                        <img src={sidebar_icon} className='w-[20px] cursor-pointer mr-2 mb-2' alt="" onClick={() => setSidebarToggle(true)} />
+                        <div className=' flex justify-center items-center' onClick={() => setSidebarToggle(true)}>
+                            <img src={sidebar_icon} className='w-[28px] cursor-pointer mr-2' alt=""  />
+                        </div>
                     </div>
                 </div>
             </nav>
