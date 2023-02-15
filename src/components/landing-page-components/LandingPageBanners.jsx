@@ -27,7 +27,7 @@ const LandingPageBanners = () => {
 
 
   return (
-    <div className='w-full md:px-10 mt-8'>
+    <div className='w-full md:px-10 md:mt-8'>
     {/* <div className='w-full flex flex-col md:flex-row gap-4 md:gap-8 justify-between max-h-[400px] overflow-hidden'> */}
       {/* {
         landingApiData?.dual_banners?.map((data, i) => (

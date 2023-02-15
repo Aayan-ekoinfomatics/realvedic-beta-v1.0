@@ -10,15 +10,28 @@ const Footer = () => {
   // Footer data
   const footerData = [
     {
-      heading: "THE REALLY IMPORTANT STUFF",
+      heading: "ABOUT",
       contents: [
         {
           linkName: "The Realvedic Story",
           linkTo: "/about-us",
         },
         {
-          linkName: "Online Doctor Appointment",
+          linkName: "Shop By Category ",
+          linkTo: "/all-products/0",
         },
+        // {
+        //   linkName: "Online Doctor Appointment",
+        // },
+    
+        // {
+        //   linkName: "Privacy Policy",
+        // },
+      ],
+    },
+    {
+      heading: "POLICY",
+      contents: [
         {
           linkName: "Return, Refund and Cancellation Policy",
           linkTo: "/cancellation-policy",
@@ -26,23 +39,6 @@ const Footer = () => {
         {
           linkName: "Terms  & Conditions",
           linkTo: "/terms-conditions",
-        },
-        {
-          linkName: "Privacy Policy",
-        },
-      ],
-    },
-    {
-      heading: "THE IMPORTANT STUFF",
-      contents: [
-        {
-          linkName: "Shop By Categories",
-        },
-        {
-          linkName: "Gifting",
-        },
-        {
-          linkName: "Subscription Club",
         },
       ],
     },
@@ -92,14 +88,14 @@ const Footer = () => {
                     ? setSelectedHeading(null)
                     : setSelectedHeading(data?.heading);
                 }}
-                className=" border-b-2 border-b-[#FCEDD1] transition-all cursor-pointer "
+                className=" border-b border-b-gray-400 transition-all cursor-pointer "
               >
                 <div className="flex justify-between items-center py-5 ">
                   <h1 className="font-semibold">{data?.heading}</h1>
                   <img
                     src={arrow}
                     alt="..."
-                    className={`  ${selectedHeading === data?.heading ? "rotate-180" : ""
+                    className={` grayscale ${selectedHeading === data?.heading ? "rotate-180" : ""
                       } `}
                   />
                 </div>
@@ -107,7 +103,7 @@ const Footer = () => {
 
               <div
                 className={`overflow-y-hidden transition-all duration-300 ${selectedHeading === data?.heading
-                  ? "accordian_open ease-in border-b-2 border-b-[#FCEDD1]"
+                  ? "accordian_open ease-in border-b   border-b-gray-400"
                   : "accordian_close ease-out"
                   }  `}
               >
@@ -159,7 +155,7 @@ const Footer = () => {
         })}
 
         <div className="flex justify-center items-end h-[200px] w-full ">
-          <h1 className="opacity-[35%] font-bold text-[#555555]">
+          <h1 className="opacity-[35%] text-xs text-[#555555]">
             © {new Date().getFullYear()} Realvedic Powered by Ekoinfomatics
           </h1>
         </div>
@@ -227,7 +223,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-20 mx-auto w-[85%]">
-          <h1 className="font-bold text-xl text-center pb-5 text-[#555555]">
+          <h1 className="text-xs text-center pb-5 text-[#555555]">
             © {new Date().getFullYear()}, Realvedic Powered by Ekoinfomatics
           </h1>
         </div>

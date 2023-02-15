@@ -65,13 +65,13 @@ const SignUpPage = () => {
         <div className='w-full flex justify-center items-center h-[80vh] poppins px-4'>
             <div className='w-full max-w-[500px] flex flex-col justify-between items-center shadow-lg p-4 bg-[#f3f3f3]'>
 
-                <div className='w-full flex gap-2'>
+                {/* <div className='w-full flex gap-2'>
                     <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
-                        {/* bg-[#1877f2] */}
+                        
                         <img src={fb} className='w-[28px]' alt="" />
                     </div>
                     <div className='w-full py-3 bg-[#fcfcfc] text-white flex justify-center items-center my-2 cursor-pointer active:scale-[0.96] active:bg-[#f0f0f0] shadow-md'>
-                        {/* bg-[#d4462f] */}
+                        
                         <img src={google} className='w-[28px]' alt="" />
                     </div>
                 </div>
@@ -79,7 +79,7 @@ const SignUpPage = () => {
                     <span className='w-full bg-[#000] h-[1px]'></span>
                     <span className='w-fit'>Or</span>
                     <span className='w-full bg-[#000] h-[1px]'></span>
-                </div>
+                </div> */}
 
 
                 <div className='w-full'>
@@ -94,9 +94,9 @@ const SignUpPage = () => {
                             <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Female' ? 'bg-[#575757b6]' : 'border border-[#696969b6]'}`}>
                             </div>
                         </div>
-                        <div className='w-fit flex justify-center items-center gap-2 cursor-pointer' onClick={() => setGender('Unisex')}>
-                            <label htmlFor="gender" className='text-[12px]'>Unisex</label>
-                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Unisex' ? 'bg-[#575757b6]' : 'border border-[#696969b6]'}`}>
+                        <div className='w-fit flex justify-center items-center gap-2 cursor-pointer' onClick={() => setGender('Other')}>
+                            <label htmlFor="gender" className='text-[12px]'>Other</label>
+                            <div className={`w-[10px] h-[10px] rounded-[50%] ${gender === 'Other' ? 'bg-[#575757b6]' : 'border border-[#696969b6]'}`}>
                             </div>
                         </div>
                     </div>

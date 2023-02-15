@@ -18,8 +18,9 @@ const LandingPage = () => {
     const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
     useEffect(() => {
+      console.log('landing call')
         axios.get( VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
-          // console.log(response?.data)
+          console.log(response?.data)
           setLandingApiData(response?.data)
         })
       }, [])

@@ -40,7 +40,7 @@ import cartProductIDs from './recoil/atoms/cartProductsIDs'
 
 
 function App() {
-  const [count, setCount] = useState(0);
+
 
   const [cartData, setCartData] = useRecoilState(cartPageAtom)
   

@@ -62,7 +62,7 @@ const SmallImageCarousal = () => {
             <div className='hidden md:block w-[96%] mx-auto bg-[color:var(--primary-color)] mt-10 py-2 pt-4'>
                 <div className='flex justify-between items-center gap-2'>
                     <div className='w-full max-w-[80px] flex justify-center items-center ml-4 font-[500]'>
-                        <h1 className='poppins font-[600] text-[17px]'>Our Best Products</h1>
+                        <h1 className='poppins font-[600] text-[17px]'>Best Sellers</h1>
                     </div>
                     <Slider
                         className="w-full overflow-hidden"

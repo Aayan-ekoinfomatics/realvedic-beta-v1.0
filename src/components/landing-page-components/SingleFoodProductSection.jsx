@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil'
 import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom'
 import { VITE_BASE_LINK } from '../../../baseLink'
 import YouTube from 'react-youtube'
+import ProductCard from '../individual-components/ProductCard'
 
 const SingleFoodProductSection = () => {
 
@@ -117,8 +118,8 @@ const SingleFoodProductSection = () => {
                 </div>
 
 
-                <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px]'>
-                    <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.food?.title}</p>
+                <div className='flex-1 rounded-[15px]'>
+                    {/* <p className='poppins text-[15px] md:text-[18px] font-[500] py-4 text-center'>{landingApiData?.single_product_details?.food?.title}</p>
                     <div className='w-[80%] md:w-[65%] mx-auto flex justify-center items-center bg-[#FCEDD1] mt-6'>
                         <img src={VITE_BASE_LINK + landingApiData?.single_product_details?.food?.image} className='w-[200px]' alt="" />
                     </div>
@@ -136,8 +137,10 @@ const SingleFoodProductSection = () => {
                             <button className='bg-[#FCF55C] active:scale-[0.96] active:bg-[#dad24a] text-[13px] md:text-[15px] px-2 md:px-4 py-1 '>ADD TO CART</button>
                             <p className='text-[12px] md:text-[13px] underline'>View more</p>
                         </div>
-                    </div>
+                    </div> */}
+                <ProductCard id={landingApiData?.single_product_details?.food?.id} title={landingApiData?.single_product_details?.food?.title} image={landingApiData?.single_product_details?.food?.image} weight={landingApiData?.single_product_details?.food?.weight} price={landingApiData?.single_product_details?.food?.price} status={landingApiData?.single_product_details?.food?.cart_status} />
                 </div>
+                
 
 
                 <div className='flex-1 bg-[color:var(--primary-color)] rounded-[15px]'>
@@ -155,9 +158,9 @@ const SingleFoodProductSection = () => {
                                 }
                             </div>
                         </div>
-                        <div className='w-full flex justify-center items-center mb-3'>
+                        {/* <div className='w-full flex justify-center items-center mb-3'>
                             <button className='bg-[#371106] px-8 py-2 text-white text-[13px] md:text-[15px] active:scale-[0.96] active:bg-[#371106d7]'>Read More</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
