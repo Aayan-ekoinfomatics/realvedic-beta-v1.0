@@ -40,7 +40,7 @@ const LandingPage = () => {
             <SingleImageCarousal />
             <SingleFoodProductSection />
             <BestOffersSection />
-            <BlogsSection />
+            {/* <BlogsSection /> */}
         </div>
     )
 }

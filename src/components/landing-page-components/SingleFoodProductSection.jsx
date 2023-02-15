@@ -138,7 +138,18 @@ const SingleFoodProductSection = () => {
                             <p className='text-[12px] md:text-[13px] underline'>View more</p>
                         </div>
                     </div> */}
-                <ProductCard id={landingApiData?.single_product_details?.food?.id} title={landingApiData?.single_product_details?.food?.title} image={landingApiData?.single_product_details?.food?.image} weight={landingApiData?.single_product_details?.food?.weight} price={landingApiData?.single_product_details?.food?.price} status={landingApiData?.single_product_details?.food?.cart_status} />
+               {
+                landingApiData?.single_product_details?.food && 
+                <ProductCard 
+                id={landingApiData?.single_product_details?.food?.id} 
+                title={landingApiData?.single_product_details?.food?.title} 
+                image={landingApiData?.single_product_details?.food?.image} 
+                weight={landingApiData?.single_product_details?.food?.weight} 
+                price={landingApiData?.single_product_details?.food?.price} 
+                status={landingApiData?.single_product_details?.food?.cart_status} />}
+
+
+                
                 </div>
                 
 

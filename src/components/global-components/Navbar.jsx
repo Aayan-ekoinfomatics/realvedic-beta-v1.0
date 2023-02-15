@@ -318,9 +318,18 @@ const Navbar = () => {
                         <Link to='/doctors' className='w-fit cursor-pointer'>
                             <img src={doctors} className='w-full max-w-[30px]' alt="" />
                         </Link> */}
-                        <Link to='/account' className='w-fit cursor-pointer'>
-                            <img src={profile} className="w-full max-w-[30px]" alt="" />
-                        </Link>
+                        {
+                            localStorage?.getItem('token') ?
+                                <Link to='/account' className='w-fit cursor-pointer'>
+                                    <img src={profile} className="w-full max-w-[30px]" alt="" />
+                                </Link>
+                                :
+                                <Link to='/login' className='w-fit cursor-pointer'>
+                                    <img src={profile} className="w-full max-w-[30px]" alt="" />
+                                </Link>
+                        }
+
+
 
                         {
                             localStorage.getItem('token') ?

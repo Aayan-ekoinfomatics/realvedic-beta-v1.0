@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 const landingPageApiDataAtom = atom({
     key: 'landingPageApiDataAtom',
-    default: '',
+    default: {},
 })
 
 export default landingPageApiDataAtom

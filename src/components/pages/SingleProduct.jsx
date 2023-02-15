@@ -153,9 +153,9 @@ const SingleProduct = () => {
                     </div>
                     <div className='w-fit md:w-full max-w-[170px] flex justify-between gap-2 items-center'>
                         <div className='w-full'>
-                            <h1 className='poppins text-[12px] md:text-[14px] xl:text-[16px]'>Share on</h1>
+                            {/* <h1 className='poppins text-[12px] md:text-[14px] xl:text-[16px]'>Share on</h1> */}
                         </div>
-                        <div className='w-full flex justify-center gap-2 items-center'>
+                        {/* <div className='w-full flex justify-center gap-2 items-center'>
                             <span>
                                 <img src={fb} className='w-[14px] md:w-[16px] xl:w-[18px]' alt="" />
                             </span>
@@ -165,7 +165,7 @@ const SingleProduct = () => {
                             <span>
                                 <img src={twitter} className='w-[14px] md:w-[16px] xl:w-[18px]' alt="" />
                             </span>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
