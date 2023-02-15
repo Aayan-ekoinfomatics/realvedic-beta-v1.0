@@ -132,7 +132,6 @@ const AllProductsView = () => {
                                     //     }
                                     // })
                                     allproductsApiData?.products?.map((data, i) => {
-                                        console.log('all products viewsssssssssssss', data)
                                         return (
                                             <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} status={data?.cart_status} />
                                         )
