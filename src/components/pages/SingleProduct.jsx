@@ -413,11 +413,119 @@ const SingleProduct = () => {
                     </div>
 
                     {/* add to cart button */}
-                    <div className='w-full flex py-2'>
-                        <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border'>-</div>
-                        <div className='w-full text-[16px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center' >ADD TO CART</div>
-                        <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border'>+</div>
-                    </div>
+                    {
+                        productData?.product_details?.cart_status ?
+                            <div className='w-full flex py-2'>
+                                <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border' onClick={async () => {
+                                    let formdata = new FormData()
+                                    formdata.append('prod_id', productData?.product_details?.id)
+                                    formdata.append('token', localStorage.getItem('token'))
+                                    formdata.append('price', packSizeSelect?.price)
+                                    formdata.append('size', packSizeSelect?.weight)
+                                    formdata.append('update_type', '-')
+                                    await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                        console.log(response?.data)
+                                        toast.warn(response?.data?.message, {
+                                            position: "top-right",
+                                            autoClose: 2000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            progress: undefined,
+                                            theme: "colored",
+                                        })
+                                    })
+                                    await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                        console.log(response?.data)
+                                        setCartData(response?.data)
+                                    })
+                                    if (location?.pathname === "/") {
+                                        await axios.get(VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
+                                            // console.log(response?.data)
+                                            setLandingApiData(response?.data)
+                                        })
+                                    }
+                                }}>-</div>
+                                <div className='w-full text-[16px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center' >{productData?.product_details?.quantity}</div>
+                                <div className='w-fit px-4 text-[20px] poppins flex justify-center items-center border' onClick={async () => {
+                                    let formdata = new FormData()
+                                    formdata.append('prod_id', productData?.product_details?.id)
+                                    formdata.append('token', localStorage.getItem('token'))
+                                    formdata.append('price', packSizeSelect?.price)
+                                    formdata.append('size', packSizeSelect?.weight)
+                                    formdata.append('update_type', '+')
+                                    await axios.post(VITE_BASE_LINK + 'CartUpdate', formdata).then((response) => {
+                                        console.log(response?.data)
+                                        toast.warn(response?.data?.message, {
+                                            position: "top-right",
+                                            autoClose: 2000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            progress: undefined,
+                                            theme: "colored",
+                                        })
+                                    })
+                                    await axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+                                        console.log(response?.data)
+                                        setCartData(response?.data)
+                                    })
+                                    if (location?.pathname === "/") {
+                                        await axios.get(VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
+                                            // console.log(response?.data)
+                                            setLandingApiData(response?.data)
+                                        })
+                                    }
+                                }}>+</div>
+                            </div>
+                            :
+                            <div className='w-full flex justify-center items-center'>
+                                <div className='w-full text-[16px] py-[10px] font-[500] bg-[color:var(--primary-color)] flex justify-center items-center' onClick={() => {
+                                    let formdata = new FormData();
+                                    formdata.append('product_id', productData?.product_details?.id);
+                                    formdata.append('token', localStorage.getItem('token'));
+                                    formdata.append('size', packSizeSelect?.weight);
+                                    formdata.append('price', packSizeSelect?.price),
+                                        axios.post(VITE_BASE_LINK + 'add_to_cart', formdata).then((response) => {
+                                            // console.log(response?.data)
+                                            if (response?.data?.status === true) {
+                                                // alert(response?.data?.message)
+                                                toast.success(response?.data?.message, {
+                                                    position: "top-right",
+                                                    autoClose: 2000,
+                                                    hideProgressBar: false,
+                                                    closeOnClick: true,
+                                                    pauseOnHover: true,
+                                                    // draggable: true,
+                                                    progress: undefined,
+                                                    theme: "colored",
+                                                })
+                                            } else {
+                                                if (response?.data?.status) {
+
+                                                } else {
+                                                    toast.warn('Please log in first', {
+                                                        position: "top-right",
+                                                        autoClose: 2000,
+                                                        hideProgressBar: false,
+                                                        closeOnClick: true,
+                                                        pauseOnHover: true,
+                                                        // draggable: true,
+                                                        progress: undefined,
+                                                        theme: "colored",
+                                                    })
+                                                    console.log('error in backend')
+                                                    console.log(response)
+                                                }
+                                            }
+                                        })
+                                    setCartData({
+                                        ...cartData,
+                                        frontend: true,
+                                    })
+                                }}>ADD TO CART</div>
+                            </div>
+                    }
 
                     {/* pack sizes */}
                     <div className='w-full mt-4 relative mb-2'>
