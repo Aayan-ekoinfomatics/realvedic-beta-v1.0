@@ -4,7 +4,7 @@ import eye_closed from '../../assets/icons/eye-closed.svg'
 import fb from '../../assets/icons/facebook-blue.svg'
 import google from '../../assets/icons/google.svg'
 import axios from 'axios'
-import { VITE_BASE_LINK } from '../../../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -31,7 +31,7 @@ const SignUpPage = () => {
 
 
     const signUp = () => {
-        axios.post(VITE_BASE_LINK + 'signUp', signUpData).then((response) => {
+        axios.post(VITE_BASE_LINK_2 + 'signUp', signUpData).then((response) => {
             if (response?.data?.status === true) {
                 console.log(response?.data)
                 toast.success(response?.data?.message, {

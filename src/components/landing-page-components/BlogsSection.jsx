@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { VITE_BASE_LINK } from '../../../baseLink';
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink';
 import blog_data from '../../mockApi/blogsSection'
 import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
 
@@ -25,7 +25,7 @@ const BlogsSection = () => {
                     landingApiData?.blog?.map((data, i) => (
                         <div key={i} className='w-full max-w-[300px] md:max-w-[400px] flex flex-col justify-center items-center px-4 pt-4 bg-[color:var(--primary-color)] rounded-[15px]'>
                             <div className='w-full  flex justify-center items-center'>
-                                <img src={VITE_BASE_LINK + data?.image} className='w-full' alt="" />
+                                <img src={VITE_BASE_LINK_2 + data?.image} className='w-full' alt="" />
                             </div>
                             <div className='py-3'>
                                 <h1 className='poppins text-[16px] font-[600]'>{data?.title}</h1>

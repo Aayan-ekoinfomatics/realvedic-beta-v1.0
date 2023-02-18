@@ -32,7 +32,7 @@ import SingleProduct from './components/pages/SingleProduct'
 import TermsAndConditionsPage from './components/pages/TermsAndConditionsPage'
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './helpers/routes/ProtectedRoute'
-import { VITE_BASE_LINK } from '../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../baseLink'
 import axios from 'axios'
 import cartPageAtom from './recoil/atoms/cartPageAtom'
 import { atom, useRecoilState } from 'recoil'
@@ -51,7 +51,8 @@ function App() {
   useEffect(() => {
     let formdata = new FormData();
     formdata.append('token', localStorage.getItem('token'))
-    axios.post(VITE_BASE_LINK + 'UserCartView', formdata).then((response) => {
+    formdata.append('no_login_token', localStorage.getItem('no_login_token'))
+    axios.post(VITE_BASE_LINK_2 + 'UserCartView', formdata).then((response) => {
         // console.log(response?.data)
         setCartData(response?.data)
         setCartProductId(response?.data?.cartItems?.map((data, i) => {

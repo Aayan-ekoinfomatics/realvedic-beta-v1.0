@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { VITE_BASE_LINK } from '../../../baseLink';
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink';
 import { toast } from 'react-toastify';
 import logout from '../../assets/icons/logout.svg'
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ const AccountDetails = () => {
     useEffect(() => {
         let formdata = new FormData();
         formdata.append('token', localStorage.getItem('token'))
-        axios.post(VITE_BASE_LINK + 'userAccountView', formdata).then((response) => {
+        axios.post(VITE_BASE_LINK_2 + 'userAccountView', formdata).then((response) => {
             console.log(response?.data)
             setAccountData(response?.data)
         })
@@ -206,10 +206,7 @@ const AccountDetails = () => {
                 <div className='w-full flex justify-between items-center my-8'>
                     <button className='py-1 px-2 text-[16px] text-white shadow-md active:scale-[0.96] bg-red-600'>Reset Password</button>
                     <button className='text-[16px] font-[500] px-4 py-2 active:scale-[0.96] bg-[color:var(--button-primary)]' onClick={async () => {
-                        let formdata = new FormData()
-                        formdata.append('token', localStorage.getItem('token'))
-                        formdata.append('data', JSON.stringify(accountData))
-                        await axios.post(VITE_BASE_LINK + 'UserAccountEdit', formdata).then((response) => {
+                        await axios.post(VITE_BASE_LINK_2 + 'UserAccountEdit', accountData).then((response) => {
                             if (response?.data?.message) {
                                 // console.log(response?.data)
                             // setAccountData(response?.data)
@@ -236,7 +233,7 @@ const AccountDetails = () => {
                             })
                             }
                         })
-                        await axios.post(VITE_BASE_LINK + 'userAccountView', formdata).then((response) => {
+                        await axios.post(VITE_BASE_LINK_2 + 'userAccountView', formdata).then((response) => {
                             // console.log(response?.data)
                             setAccountData(response?.data)
                         })

@@ -12,7 +12,7 @@ import profile from '../../assets/icons/profile.svg'
 import cart from '../../assets/icons/cart.svg'
 import logout from '../../assets/icons/logout_2.svg'
 import axios from 'axios'
-import { VITE_BASE_LINK } from '../../../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink'
 
 const Sidebar = () => {
 
@@ -29,7 +29,7 @@ const Sidebar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get(VITE_BASE_LINK + 'NavbarCategoryView').then((response) => {
+    axios.get(VITE_BASE_LINK_2 + 'NavbarCategoryView').then((response) => {
       // console.log(response?.data)
       setSidebarCategory(response?.data)
     })
@@ -42,8 +42,8 @@ const Sidebar = () => {
   return (
     <>
       <div className={`h-screen bg-[color:var(--primary-color)] fixed right-0 z-[500] transition-all duration-200 ${sidebarToggle ? 'ease-in w-[80%]' : 'w-0 ease-out opacity-0'}`}>
-        <div className='relative h-full pt-[53px]'>
-          <div className='w-full flex justify-end  pr-4'>
+        <div className='relative h-full pt-[13px]'>
+          <div className='w-full flex justify-end pr-[24px]'>
             <span className='w-fit'>
               <img src={cross} className='w-[28px]' alt="" onClick={() => setSidebarToggle(false)} />
             </span>
@@ -74,7 +74,7 @@ const Sidebar = () => {
                             data?.items?.map((sub_data, sub_index) => (
                               <Link to={`/single-product/` + sub_data?.id} key={sub_index} onClick={() => setSidebarToggle(false)} className='w-full mb-1 flex justify-start items-center gap-3'>
                                 <div className='w-fit'>
-                                  <img src={VITE_BASE_LINK + sub_data?.image} className='w-[35px]' alt="" />
+                                  <img src={VITE_BASE_LINK_2 + sub_data?.image} className='w-[35px]' alt="" />
                                 </div>
                                 <div>
                                   <h1 className='text-[12px]'>{sub_data?.title}</h1>

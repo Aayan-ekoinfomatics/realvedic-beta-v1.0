@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
 import { useRecoilState } from 'recoil';
-import { VITE_BASE_LINK } from '../../../baseLink';
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink';
 import { Link } from 'react-router-dom';
 
 const PreviousBtn = (props) => {
@@ -71,7 +71,7 @@ const SmallImageCarousal = () => {
                         {
                             landingApiData?.small_carousal_images?.map((data, index) => (
                                 <Link to={`/single-product/` + data?.product_id} className="w-full max-w-[150px] flex justify-center items-center outline-none cursor-pointer mx-2" key={index}>
-                                    <img src={VITE_BASE_LINK + data?.image} className=" w-full object-contain" />
+                                    <img src={VITE_BASE_LINK_2 + data?.image} className=" w-full object-contain" />
                                     <h1 className='text-[12px] text-center'>{data?.title}</h1>
                                 </Link>
                             ))
@@ -83,9 +83,9 @@ const SmallImageCarousal = () => {
 
 
             {/* mobile */}
-            <div className='block md:hidden w-full px-4'>
+            <nav className='block md:hidden w-full px-4'>
                 <div className='w-[50%] mx-auto bg-[color:var(--primary-color)] flex justify-center items-center font-[500] mb-2 py-1 rounded-[12px]'>
-                    <h1 className='poppins font-[500] text-[12px] pl-1'>Our Best Products</h1>
+                    <h1 className='poppins font-[500] text-[12px] pl-1'>Best Sellers</h1>
                 </div>
                 <div className=' w-full bg-[color:var(--primary-color)] mb-14 py-2 rounded-[15px] mt-2'>
                     <div className='flex justify-between items-center gap-2'>
@@ -103,7 +103,7 @@ const SmallImageCarousal = () => {
                         </Slider >
                     </div>
                 </div >
-            </div>
+            </nav>
         </>
     )
 }

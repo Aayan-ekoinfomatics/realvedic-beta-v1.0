@@ -4,7 +4,7 @@ import edit from '../../assets/icons/edit.svg'
 import cross from '../../assets/icons/cross.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { VITE_BASE_LINK } from '../../../baseLink';
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink';
 import { toast } from 'react-toastify';
 
 const CheckoutPage = () => {
@@ -52,12 +52,12 @@ const CheckoutPage = () => {
 
             // we will send the response we've got from razorpay to the backend to validate the payment
             bodyData.append("response", JSON.stringify(response));
-            bodyData.append("token", localStorage.getItem("token"));
-            bodyData.append("amount", checkoutData?.final_price);
-            bodyData.append("items", JSON.stringify(checkoutData?.items))
+            // bodyData.append("token", localStorage.getItem("token"));
+            // bodyData.append("amount", checkoutData?.final_price);
+            // bodyData.append("items", JSON.stringify(checkoutData?.items))
 
             await axios({
-                url: VITE_BASE_LINK + `handle_payment_success`,
+                url: VITE_BASE_LINK_2 + `handle_payment_success`,
                 method: "POST",
                 data: bodyData,
                 headers: {
@@ -75,7 +75,7 @@ const CheckoutPage = () => {
                         closeOnClick: true,
                         pauseOnHover: true,
                         progress: undefined,
-                        theme: "light",
+                        theme: "colored",
                     })
                     navigate('/order-confirmed')
                     // setName(checkoutData?.form?.content[0]?.value);
@@ -83,9 +83,29 @@ const CheckoutPage = () => {
                 })
                 .catch((err) => {
                     console.log(err);
+                    toast.error(response?.data?.message, {
+                        position: "top-right",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        progress: undefined,
+                        theme: "colored",
+                    })
+                    navigate('/order-confirmed')
                 });
         } catch (error) {
             console.log(console.error());
+            toast.error(response?.data?.message, {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                progress: undefined,
+                theme: "colored",
+            })
+            navigate('/order-confirmed')
         }
     };
 
@@ -111,13 +131,13 @@ const CheckoutPage = () => {
         bodyData.append("token", localStorage.getItem("token"));
 
         const data = await axios({
-            url: VITE_BASE_LINK + `start_payment`,
+            url: VITE_BASE_LINK_2 + `start_payment`,
             method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-            data: bodyData,
+            data: checkoutData,
         }).then((res) => {
             console.log(res)
             return res;
@@ -161,7 +181,7 @@ const CheckoutPage = () => {
     useEffect(() => {
         let formdata = new FormData()
         formdata.append('token', localStorage.getItem('token'))
-        axios.post(VITE_BASE_LINK + 'checkout', formdata).then((response) => {
+        axios.post(VITE_BASE_LINK_2 + 'checkout', formdata).then((response) => {
             console.log(response?.data)
             setCheckoutData(response?.data)
         })
@@ -257,21 +277,21 @@ const CheckoutPage = () => {
                                     <h1 className='text-[13px]'>Order Value:</h1>
                                     <h1 className='text-[13px]'>Rs {checkoutData?.item_total}</h1>
                                 </div>
-                                <div className='flex justify-between md:w-[60%] gap-2 items-center'>
+                                {/* <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[13px]'>Discount:</h1>
                                     <h1 className='text-[13px]'></h1>
-                                </div>
+                                </div> */}
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[13px]'>Tax:</h1>
                                     <h1 className='text-[13px]'>Rs {checkoutData?.tax}</h1>
                                 </div>
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[13px]'>Delivery charges:</h1>
-                                    <h1 className='text-[13px]'>Rs {checkoutData?.shipping}</h1>
+                                    <h1 className='text-[13px]'>Rs {checkoutData?.delivery_charges}</h1>
                                 </div>
                                 <div className='flex justify-between md:w-[60%] gap-2 items-center'>
                                     <h1 className='text-[14px] font-[600]'>Total:</h1>
-                                    <h1 className='text-[14px] font-[600]'>Rs {checkoutData?.final_price}</h1>
+                                    <h1 className='text-[14px] font-[600]'>Rs {checkoutData?.order_total}</h1>
                                 </div>
                                 <div className='w-full flex justify-between items-center mt-20 mb-3'>
                                     <h1 className='text-[14px] font-[600]'>Items</h1>
@@ -282,15 +302,16 @@ const CheckoutPage = () => {
                                         checkoutData?.items?.map((data, i) => (
                                             <div className='w-full flex justify-start items-start gap-2 my-2' key={i}>
                                                 <div className='w-fit'>
-                                                    <img src={VITE_BASE_LINK + data?.image} className='w-[60px]' alt="" />
+                                                    <img src={VITE_BASE_LINK_2 + data?.image} className='w-[60px]' alt="" />
                                                 </div>
                                                 <div className='w-full flex flex-col'>
                                                     <div className='w-full flex flex-col md:flex-row md:justify-between md:items-center'>
-                                                        <h1 className='text-[11px] md:text-[13px] font-[500]'>{data?.name}</h1>
+                                                        <h1 className='text-[11px] md:text-[13px] font-[500]'>{data?.title}</h1>
                                                         <h1 className='text-[11px] md:text-[13px] font-[500]'>Rs {data?.price}</h1>
                                                     </div>
+                                                    <h1 className='text-[9px]'>{data?.weight}</h1>
                                                     <h1 className='text-[9px]'>qty: x{data?.quantity}</h1>
-                                                    <h1 className='text-[9px]'>product code: {data?.product_id}</h1>
+                                                    {/* <h1 className='text-[9px]'>product code: {data?.product_id}</h1> */}
                                                 </div>
                                             </div>
                                         ))
@@ -306,9 +327,18 @@ const CheckoutPage = () => {
                 </div>
 
 
-                <div className='w-full flex justify-end items-center mt-4 px-4'>
-                    <button className='text-[14px font-[500] px-4 py-2 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]' onClick={() => showRazorpay()}>CONTINUE</button>
-                </div>
+                {
+                    checkoutData?.address_info?.address_line_1?.split('')?.length > 0 && checkoutData?.address_info?.address_line_2?.split('')?.length > 0 ?
+                        <div className='w-full flex justify-end items-center mt-4 px-4'>
+                            <button className='text-[14px font-[500] px-4 py-2 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]' onClick={() => showRazorpay()}>CONTINUE</button>
+                        </div>
+                        :
+                        <Link to='/account'>
+                            <div className='w-full flex justify-end items-center mt-4 px-4'>
+                                <button className='text-[14px font-[500] px-4 py-2 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]'>Add Address</button>
+                            </div>
+                        </Link>
+                }
 
 
             </div>

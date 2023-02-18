@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
-import { VITE_BASE_LINK } from '../../../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink'
 import recently_viewed from '../../mockApi/recentlyViewedProductsApi'
 import cartPageAtom from '../../recoil/atoms/cartPageAtom'
 import ProductCard from './ProductCard'
@@ -13,22 +13,26 @@ const RecentlyViewd = () => {
     const [cartDataApi, setCartDataApi] = useRecoilState(cartPageAtom);
 
     useEffect(() => {
-        axios.get(VITE_BASE_LINK + 'recently_viewed_oc?token=' + localStorage.getItem('token')).then((response) => {
-            // console.log(response?.data)
+        let formdata = new FormData()
+        formdata.append('token', localStorage?.getItem('token'))
+        axios.post(VITE_BASE_LINK_2 + 'recently_viewed_oc', formdata).then((response) => {
+            console.log(response?.data)
             setItemData(response?.data)
         })
     }, [])
 
     useEffect(() => {
-        axios.get(VITE_BASE_LINK + 'recently_viewed_oc?token=' + localStorage.getItem('token')).then((response) => {
-            // console.log(response?.data)
+        let formdata = new FormData()
+        formdata.append('token', localStorage?.getItem('token'))
+        axios.post(VITE_BASE_LINK_2 + 'recently_viewed_oc', formdata).then((response) => {
+            console.log(response?.data)
             setItemData(response?.data)
         })
     }, [cartDataApi])
 
-    useEffect(() => {
-        console.log(itemData)
-    }, [itemData])
+    // useEffect(() => {
+    //     console.log(itemData)
+    // }, [itemData])
 
 
   return (
@@ -60,7 +64,7 @@ const RecentlyViewd = () => {
                 //         <button className='bg-[#FCF55C] active:bg-[#f5ec4b] px-8 py-2 poppins text-[15px] font-[500] cursor-pointer active:scale-[0.98]'>ADD TO CART</button>
                 //     </div>
                 // </div>
-                <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} status={data?.cart_status} />
+                <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price}  status={data?.cart_status} statusArray={data?.cart_status_array} />
             ))
         }
         </div>

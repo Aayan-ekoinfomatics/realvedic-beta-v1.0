@@ -4,7 +4,7 @@ import allProducts from '../../mockApi/allProductsView'
 import banner from '../../assets/images/category-image.jpg'
 // import banner2 from  '../../assets/images/banner2.png'
 import axios from 'axios'
-import { VITE_BASE_LINK } from '../../../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink'
 import { useRecoilState } from 'recoil'
 import ProductCard from '../individual-components/ProductCard'
 import search from '../../assets/icons/search.svg'
@@ -29,15 +29,18 @@ const AllProductsView = () => {
     const params = useParams();
 
     useEffect(() => {
-
-        axios.get(VITE_BASE_LINK + 'categoryPage?category=' + params?.category_id + "&token=" + localStorage.getItem('token')).then((response) => {
+        let formdata = new FormData();
+        formdata.append('category', params?.category_id);
+        formdata.append('token', localStorage.getItem('token'));
+        formdata.append('no_login_token', localStorage.getItem('no_login_token'));
+        axios.post(VITE_BASE_LINK_2 + 'categoryPage2', formdata).then((response) => {
             console.log(response?.data)
             setAllproductsApiData(response?.data)
         })
     }, [params])
 
     useEffect(() => {
-        axios.get(VITE_BASE_LINK + 'NavbarCategoryView').then((response) => {
+        axios.get(VITE_BASE_LINK_2 + 'NavbarCategoryView').then((response) => {
             console.log(response?.data)
             setSidebarCategory(response?.data)
         })
@@ -56,7 +59,7 @@ const AllProductsView = () => {
 
             {/* banner */}
             <div className='w-full flex justify-center items-center relative bg-[color:var(--primary-color)] mb-4'>
-                <img src={VITE_BASE_LINK + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" />
+                <img src={VITE_BASE_LINK_2 + allproductsApiData?.category_banner} className='w-full object-cover bg-bottom' alt="" />
                 {/* <img src="../bannerNew.jpg" className='w-full object-cover bg-bottom' alt="" /> */}
                 <h1 className='text-[20px] md:text-[40px] xl:text-[65px] poppins absolute bottom-[30%] md:bottom-[80px] left-[5%] md:left-[40px] font-[600]'>{allproductsApiData?.category}</h1>
             </div>
@@ -97,7 +100,7 @@ const AllProductsView = () => {
                                                     data?.items?.map((sub_data, sub_index) => (
                                                         <Link to={`/single-product/` + sub_data?.id} key={sub_index} className='w-full mb-1 flex justify-start items-center gap-3'>
                                                             <div className='w-fit'>
-                                                                <img src={VITE_BASE_LINK + sub_data?.image} className='w-[35px]' alt="" />
+                                                                <img src={VITE_BASE_LINK_2 + sub_data?.image} className='w-[35px]' alt="" />
                                                             </div>
                                                             <div>
                                                                 <h1 className='text-[12px]'>{sub_data?.title}</h1>
@@ -133,7 +136,7 @@ const AllProductsView = () => {
                                     // })
                                     allproductsApiData?.products?.map((data, i) => {
                                         return (
-                                            <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} status={data?.cart_status} />
+                                            <ProductCard key={i} id={data?.id} title={data?.title} image={data?.image} weight={data?.weight} price={data?.price} status={data?.cart_status} statusArray={data?.cart_status_array}/>
                                         )
                                         // console.log('lalalalalalalalalal', cartProductId?.includes(data?.id))
                                         // if (cartProductId?.includes(data?.id)) {

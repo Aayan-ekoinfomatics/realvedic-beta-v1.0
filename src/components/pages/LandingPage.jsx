@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { VITE_BASE_LINK } from '../../../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink'
 import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom'
 import BestOffersSection from '../landing-page-components/BestOffersSection'
 import BlogsSection from '../landing-page-components/BlogsSection'
@@ -15,34 +15,36 @@ import TopSellers from '../landing-page-components/TopSellers'
 const LandingPage = () => {
 
 
-    const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
+  const [landingApiData, setLandingApiData] = useRecoilState(landingPageApiDataAtom);
 
-    useEffect(() => {
-      console.log('landing call')
-        axios.get( VITE_BASE_LINK + 'write_data?token=' + localStorage?.getItem('token')).then((response) => {
-          console.log(response?.data)
-          setLandingApiData(response?.data)
-        })
-      }, [])
+  useEffect(() => {
+    let formdata = new FormData();
+    formdata.append('token', localStorage.getItem('token'));
+    formdata.append('no_login_token', localStorage.getItem('no_login_token'));
+    axios.post(VITE_BASE_LINK_2 + 'write_data2', formdata).then((response) => {
+      // console.log(response?.data)
+      setLandingApiData(response?.data)
+    })
+  }, [])
 
-      // useEffect(() => {
-      //   console.log(landingApiData)
-      // }, [landingApiData])
-      
+  // useEffect(() => {
+  //   console.log(landingApiData)
+  // }, [landingApiData])
 
 
-    return (
-        <div className=''>
-            <CategoryTabs />
-            <LandingPageBanners />
-            <TopSellers />
-            <SmallImageCarousal />
-            <SingleImageCarousal />
-            <SingleFoodProductSection />
-            <BestOffersSection />
-            {/* <BlogsSection /> */}
-        </div>
-    )
+
+  return (
+    <div className=''>
+      <CategoryTabs />
+      <LandingPageBanners />
+      <TopSellers />
+      <SmallImageCarousal />
+      <SingleImageCarousal />
+      <SingleFoodProductSection />
+      <BestOffersSection />
+      {/* <BlogsSection /> */}
+    </div>
+  )
 }
 
 export default LandingPage

@@ -159,7 +159,7 @@ const SingleFoodProductSection = () => {
                     <div className='w-full flex flex-col justify-center items-center'>
                         <div className='w-[86%] md:w-[80%] mx-auto mb-2'>
                             <div className='w-full mt-5'>
-                                <h1 className='poppins text-[12px] md:text-[14px] lg:text-[15px] '>{landingApiData?.single_product_details?.blog?.Content}</h1>
+                                <h1 className='poppins text-[12px] md:text-[14px] lg:text-[14px] '>{landingApiData?.single_product_details?.blog?.content}</h1>
                             </div>
                             <div className='w-[90%] lg:w-[85%] mx-auto mt-6 mb-4 lg:mb-8'>
                                 {

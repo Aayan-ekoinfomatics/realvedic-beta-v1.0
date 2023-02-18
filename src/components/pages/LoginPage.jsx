@@ -5,7 +5,7 @@ import eye_closed from '../../assets/icons/eye-closed.svg'
 import fb from '../../assets/icons/facebook-blue.svg'
 import google from '../../assets/icons/google.svg'
 import axios from 'axios'
-import { VITE_BASE_LINK } from '../../../baseLink'
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -73,8 +73,10 @@ const LoginPage = () => {
                         <button className='w-full py-2 flex justify-center items-center text-[17px] bg-[color:var(--button-primary)] active:scale-[0.96] active:bg-[#d6cf4c] shadow-md tracking-[1px]' onClick={() => {
                             let formdata = new FormData()
                             formdata.append('email', loginData?.email)
+                            formdata.append('no_login_token', localStorage.getItem('no_login_token'))
                             formdata.append('password', loginData?.password)
-                            axios.post(VITE_BASE_LINK + 'login', formdata).then((response) => {
+                            axios.post(VITE_BASE_LINK_2 + 'login', formdata).then((response) => {
+                                localStorage.clear();
                                 if (response?.data?.status) {
                                     console.log(response?.data)
                                     localStorage.setItem('token', response?.data?.token)

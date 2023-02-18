@@ -3,7 +3,7 @@ import tabData from '../../mockApi/categoryTabs'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { VITE_BASE_LINK } from '../../../baseLink';
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink';
 import axios from 'axios';
 import landingPageApiDataAtom from '../../recoil/atoms/landingPageApiDataAtom';
 import { useRecoilState } from 'recoil';
@@ -50,10 +50,10 @@ const CategoryTabs = () => {
 
     <div className='hidden md:flex w-full h-full items-center justify-between gap-5 px-2 xl:px-20 overflow-x-scroll scrollbar-hide sticky top-[70px] py-2 bg-white z-[200] shadow-md'>
         {
-            tabData?.tab?.map((data, i) => (
-                <Link to={`/all-products/` + data?.id} key={i} className={`w-full flex flex-col lg:flex-row items-center hover:bg-[#e6e6e6] px-2 justify-center gap-3 py-2 ${data?.title === 'Noodles & Pasta' ? '' : 'border-r'}`}>
+            landingApiData?.tab?.map((data, i) => (
+                <Link to={`/all-products/` + data?.id} key={i} className={`w-full flex flex-col lg:flex-row items-center hover:bg-[#e6e6e6] px-2 justify-center gap-3 py-2 ${data?.title === 'Health Mix' ? '' : 'border-r'}`}>
                     <div className='w-fit h-full'>
-                        <img src={data?.image} className='w-[30px]' alt="" />
+                        <img src={VITE_BASE_LINK_2 + data?.image} className='w-[30px]' alt="" />
                     </div>
                     <div className='text-center w-fit h-full'>
                         <h1 className='helvetica text-[12px] font-[500] poppins pt-1'>{data?.title}</h1>

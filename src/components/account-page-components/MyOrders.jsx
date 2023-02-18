@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { VITE_BASE_LINK } from '../../../baseLink';
+import { VITE_BASE_LINK, VITE_BASE_LINK_2 } from '../../../baseLink';
 import item from '../../assets/images/about-us.png'
 
 const MyOrders = () => {
@@ -11,7 +11,7 @@ const MyOrders = () => {
     useEffect(() => {
         let formdata = new FormData();
         formdata.append('token', localStorage.getItem('token'))
-        axios.post(VITE_BASE_LINK + 'order_view', formdata).then((response) => {
+        axios.post(VITE_BASE_LINK_2 + 'order_view', formdata).then((response) => {
             // console.log(response?.data)
             setOrderData(response?.data);
         })
@@ -50,7 +50,7 @@ const MyOrders = () => {
                                             <div key={i} className='w-full bg-[#f8f9fa] border-b px-8 py-6'>
                                                 <div className='w-full'>
                                                     <div className='flex justify-between items-center'>
-                                                        <div className='text-[16px]  font-[500]'>{data?.status}</div>
+                                                        <div className='text-[16px] capitalize font-[500]'>{data?.status}</div>
                                                         <div className='text-[13px]'>{data?.date}</div>
                                                     </div>
                                                     <div className='flex justify-between items-center mb-2'>
@@ -62,13 +62,13 @@ const MyOrders = () => {
                                                             {
                                                                 data?.items?.map((item_data, item_index) => (
                                                                     <div key={item_index} className='bg-[#fff] py-2 border'>
-                                                                        <img src={VITE_BASE_LINK + item_data?.image} className='w-[60px]' alt="" />
+                                                                        <img src={VITE_BASE_LINK_2 + item_data?.image} className='w-[60px]' alt="" />
                                                                     </div>
                                                                 ))
                                                             }
                                                         </div>
                                                         <div className='w-fit'>
-                                                            <Link to={`orders/` + data?.order_id}><button className='text-[13px] md:text-[16px] px-2 md:px-3 py-1 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]'>View</button></Link>
+                                                            <Link to={`orders/` + data?.id}><button className='text-[13px] md:text-[16px] px-2 md:px-3 py-1 bg-[color:var(--button-primary)] shadow-md active:scale-[0.96]'>View</button></Link>
                                                         </div>
                                                     </div>
                                                 </div>
